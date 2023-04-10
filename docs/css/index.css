@@ -1,0 +1,33 @@
+.menuButtonTitleShort {
+  display: none;
+}
+
+@media only screen and (max-width: 550px) {
+  .menuButtonTitle {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .menuButtonTitleLong {
+    display: none;
+  }
+  .menuButtonTitleShort {
+    display: inline;
+  }
+}
+
+#logoBox {
+  background-color: white;
+  padding: 1px 10px 5px 10px;
+  border-radius: 2px;
+}
+
+#distSelect {
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 20px;
+  padding-top: 10px;
+}
