@@ -8,7 +8,7 @@ To use simulator just go to
 
 **[a-herzog.github.io/Distributions](https://a-herzog.github.io/Distributions/)**
 
-![Website status](https://img.shields.io/website?url=https%3A%2F%2Fa-herzog.github.io%Distributions%2F)
+![Website status](https://img.shields.io/website?url=https%3A%2F%2Fa-herzog.github.io%2FDistributions%2F)
 
 ## License
 
