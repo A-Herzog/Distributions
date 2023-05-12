@@ -67,7 +67,7 @@ lang.distributions.infoDiagramResetZoom="Standardzoom";
 lang.distributions.infoDiagramZoomInfo="Mit gedrückter <span class='border rounded-1 ps-1 pe-1 bg-light'><tt>Strg</tt></span>-Taste kann per Mausrad gezoomt werden und es können Zoom-Rahmen aufgezogen werden.";
 lang.distributions.infoDiagramShowValues="Tabelle";
 lang.distributions.infoDiagramShowValuesFile="table_de.html";
-lang.distributions.infoDiagramShowValuesStep="Step";
+lang.distributions.infoDiagramShowValuesStep="Schrittweite";
 lang.distributions.infoDiagramCopyValues="Werte kopieren";
 lang.distributions.infoDiagramSaveValues="Werte speichern";
 lang.distributions.infoDiagramSaveValuesTextFiles="Textdateien";
@@ -257,6 +257,18 @@ lang.distributions.pareto.wikipedia="https://de.wikipedia.org/wiki/Pareto-Vertei
 lang.distributions.pareto.parameterInfoxm="Skalierung";
 lang.distributions.pareto.parameterInfoAlpha="Form";
 
+lang.distributions.chi2={};
+lang.distributions.chi2.name="Chi-Quadrat-Verteilung";
+lang.distributions.chi2.info="Die Summe von <b>k</b> standardnormalverteilten Zufallsvariablen ist &Chi;<sup>2</sup>-verteilt. Die &Chi;<sup>2</sup>-Verteilung tritt u.a. in dem Schätzer für die Stichprobenvarianz auf.";
+lang.distributions.chi2.wikipedia="https://de.wikipedia.org/wiki/Chi-Quadrat-Verteilung";
+lang.distributions.chi2.parameterInfok="Freiheitsgrade";
+
+lang.distributions.chi={};
+lang.distributions.chi.name="Chi-Verteilung";
+lang.distributions.chi.info="Die Wurzel aus der Summe von <b>k</b> standardnormalverteilten Zufallsvariablen ist &Chi;-verteilt.";
+lang.distributions.chi.wikipedia="https://en.wikipedia.org/wiki/Chi_distribution"; /* Leide keine deutsche Seite vorhanden */
+lang.distributions.chi.parameterInfok="Freiheitsgrade";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -268,8 +280,9 @@ lang.numbers.RPlus0="Nichtnegative reelle Zahlen";
 lang.functions={};
 lang.functions.Gamma="Gammafunktion";
 lang.functions.gamma="Unvollständige untere Gammafunktion";
-lang.functions.Beta="betaFunktion";
+lang.functions.Beta="Betafunktion";
 lang.functions.I="Regularisierte unvollständige Betafunktion";
+lang.functions.P="Regularisierte Gammafunktion";
 
 /* English */
 
@@ -319,8 +332,8 @@ lang.distributions.infoDiagramCDF="Cumulative distribution function";
 lang.distributions.infoDiagramResetZoom="Reset zoom";
 lang.distributions.infoDiagramZoomInfo="By holding down the <span class='border rounded-1 ps-1 pe-1 bg-light'><tt>Ctrl</tt></span> key, the mouse wheel can be used to zoom in and out, and zoom frames can be drawn.";
 lang.distributions.infoDiagramShowValues="Table";
-lang.distributions.infoDiagramShowValuesStep="Schrittweite";
 lang.distributions.infoDiagramShowValuesFile="table.html";
+lang.distributions.infoDiagramShowValuesStep="Step";
 lang.distributions.infoDiagramCopyValues="Copy values";
 lang.distributions.infoDiagramSaveValues="Save values";
 lang.distributions.infoDiagramSaveValuesTextFiles="Text files";
@@ -510,6 +523,18 @@ lang.distributions.pareto.wikipedia="https://en.wikipedia.org/wiki/Pareto_distri
 lang.distributions.pareto.parameterInfoxm="Scale";
 lang.distributions.pareto.parameterInfoAlpha="Shape";
 
+lang.distributions.chi2={};
+lang.distributions.chi2.name="Chi-squared distribution";
+lang.distributions.chi2.info="The sum of <b>k</b> standard normally distributed random variables is &Chi;<sup>2</sup> distributed. The &Chi;<sup>2</sup> distribution occurs, among other things, in the estimator for the sample variance.";
+lang.distributions.chi2.wikipedia="https://en.wikipedia.org/wiki/Chi-squared_distribution";
+lang.distributions.chi2.parameterInfok="Degrees of freedom";
+
+lang.distributions.chi={};
+lang.distributions.chi.name="Chi distribution";
+lang.distributions.chi.info="The square root of the sum of <b>k</b> standard normally distributed random variables is &Chi; distributed.";
+lang.distributions.chi.wikipedia="https://en.wikipedia.org/wiki/Chi_distribution";
+lang.distributions.chi.parameterInfok="Degrees of freedom";
+
 lang.numbers={};
 lang.numbers.N="Natural numbers";
 lang.numbers.N0="Natural numbers and zero";
@@ -523,6 +548,7 @@ lang.functions.Gamma="gamma function";
 lang.functions.gamma="lower incomplete gamma function";
 lang.functions.Beta="beta function";
 lang.functions.I="regularized incomplete beta function";
+lang.functions.P="regularized gamma function";
 
 /* Activate language */
 

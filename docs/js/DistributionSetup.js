@@ -36,6 +36,8 @@ import {CauchyDistribution} from './DistributionCauchy.js';
 import {FDistribution} from './DistributionF.js';
 import {LaplaceDistribution} from './DistributionLaplace.js';
 import {ParetoDistribution} from './DistributionPareto.js';
+import {Chi2Distribution} from './DistributionChi2.js';
+import {ChiDistribution} from './DistributionChi.js';
 
 
 
@@ -65,6 +67,8 @@ listDistributions.push(new CauchyDistribution());
 listDistributions.push(new FDistribution());
 listDistributions.push(new LaplaceDistribution());
 listDistributions.push(new ParetoDistribution());
+listDistributions.push(new Chi2Distribution());
+listDistributions.push(new ChiDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

@@ -19,14 +19,13 @@
   limitations under the License.
   -->
   <title>Wartescheinlichkeitsverteilungen</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Wartescheinlichkeitsverteilungen">
   <meta name="keywords" content="Wartescheinlichkeitsverteilungen, Probability distributions">
   <!-- Begin of language independent part -->
   <meta name="author" content="Alexander Herzog">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta http-equiv="Content-Security-Policy" content="base-uri 'none'; default-src 'none'; connect-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:;">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <link href="./libs/bootstrap.min.css" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" rel="stylesheet">
@@ -36,7 +35,7 @@
   <script defer src="./libs/chart.umd.js" integrity="sha384-BiPMXtnsIlCLtpW18KNAVAVUne12/C7avKY6nxUGeVE+Gtlrv743FfqXnvMvII8s"></script>
   <script defer src="./libs/chartjs-plugin-zoom.min.js" integrity="sha384-zPzbVRXfR492Sd5D+HydTYCxxgHAfgVO8KERbLlpeH5unsmbAEXrscGUUqLZG9BM"></script>
   <script defer src="./libs/jstat.min.js" integrity="sha384-7uGOMhLhjroTamet5l69PR8EGxKUyWZlZOFFDRymtVqIfsh4Hj7uZRctW67ZCdkD"></script>
-  <script src="./libs/neutralino.js"></script>
+  <script defer src="./libs/neutralino.js" integrity="sha384-PHLBc+h+UJz3gyDGfTR+noqhf4C5I+NRDT4nOeCyfsB2JvIQU8j/Y9GVh+FANPJm"></script>
 </head>
 
 <body>
@@ -69,7 +68,7 @@
 
 <!-- Footer -->
 
-<footer class="page-footer font-small bg-light">
+<footer class="page-footer font-small bg-light" style="margin-top: 20px; padding-top: 10px;">
 <div class="container-fluid text-center text-md-left">
 <div class="row">
 
@@ -111,25 +110,6 @@
 </span>
 </body>
 
-<script type="module">
-  /* Select language */
-  import {selectLanguage} from './js/LanguageTools.js';
-  selectLanguage([{name: "default", file: "index.html"}, {name: "de", file: "index_de.html"}]);
-
-  /* Init app */
-  import {initApp, isDesktopApp} from './js/Main.js';
-  initApp();
-
-  if (isDesktopApp) {
-    const footer=document.querySelector('footer');
-    for (let link of footer.querySelectorAll("a")) if (link.href!='') {
-      const href=link.href;
-      link.onclick=()=>Neutralino.os.open(href);
-      link.removeAttribute("href");
-      link.style.cursor="pointer";
-      link.classList.add("link-primary");
-    }
-  }
-</script>
+<script src='./index.js' type="module" integrity="sha384-IVljsdhwE3Z4P0eSRPjxe/lMe9hGmPI9yBVMvUdzr+konudw3FQ+8ndx4fgD3vL/"></script>
 
 </html>

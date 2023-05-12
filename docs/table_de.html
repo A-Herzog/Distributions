@@ -36,7 +36,7 @@
   <script defer src="./libs/chart.umd.js" integrity="sha384-BiPMXtnsIlCLtpW18KNAVAVUne12/C7avKY6nxUGeVE+Gtlrv743FfqXnvMvII8s"></script>
   <script defer src="./libs/chartjs-plugin-zoom.min.js" integrity="sha384-zPzbVRXfR492Sd5D+HydTYCxxgHAfgVO8KERbLlpeH5unsmbAEXrscGUUqLZG9BM"></script>
   <script defer src="./libs/jstat.min.js" integrity="sha384-7uGOMhLhjroTamet5l69PR8EGxKUyWZlZOFFDRymtVqIfsh4Hj7uZRctW67ZCdkD"></script>
-  <script src="./libs/neutralino.js"></script>
+  <script defer src="./libs/neutralino.js" integrity="sha384-PHLBc+h+UJz3gyDGfTR+noqhf4C5I+NRDT4nOeCyfsB2JvIQU8j/Y9GVh+FANPJm"></script>
 </head>
 
 <body>
@@ -84,10 +84,6 @@
 </span>
 </body>
 
-<script type="module">
-  /* Init app */
-  import {initTable} from './js/MainTable.js';
-  initTable();
-</script>
+<script src='./table.js' type="module" integrity="sha384-qTMH7Wn1qpMNRXuGlvwQwcL6DKjYH7Hu8XDTL/R/L7yZiqyeQqZBFjJC1z90b0ex"></script>
 
 </html>
