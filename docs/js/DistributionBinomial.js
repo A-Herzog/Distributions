@@ -33,7 +33,7 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
 
     this.support=setN0HTML;
     this.infoText=language.distributions.binomial.info;
-    this.infoImage="Urne.gif";
+    this.infoImage="Urne.webp";
     this.infoImageWidth=109;
     this.infoImageHeight=126;
     this.wikipediaURL=language.distributions.binomial.wikipedia;

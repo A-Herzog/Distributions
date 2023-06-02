@@ -34,7 +34,7 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
 
     this.support=setN0HTML;
     this.infoText=language.distributions.hypergeometric.info;
-    this.infoImage="Urne.gif";
+    this.infoImage="Urne.webp";
     this.infoImageWidth=109;
     this.infoImageHeight=126;
     this.wikipediaURL=language.distributions.hypergeometric.wikipedia;

@@ -23,6 +23,14 @@
   border-radius: 2px;
 }
 
+#languageButton {
+  color: white;
+}
+
+#languageButton:hover {
+  color: black;
+}
+
 #distSelect {
   font-weight: bold;
 }
@@ -30,4 +38,9 @@
 footer {
   margin-top: 20px;
   padding-top: 10px;
+}
+
+footer a {
+  color: blue;
+  text-decoration-color: blue;
 }

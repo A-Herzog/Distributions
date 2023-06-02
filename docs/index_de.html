@@ -32,15 +32,15 @@
   <link href="./libs/bootstrap-icons.css" integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
   <link href="./css/index.css" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
   <script defer src="./libs/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"></script>
-  <script defer src="./libs/chart.umd.js" integrity="sha384-BiPMXtnsIlCLtpW18KNAVAVUne12/C7avKY6nxUGeVE+Gtlrv743FfqXnvMvII8s"></script>
+  <script defer src="./libs/chart.umd.js" integrity="sha384-9R67RXFKxJXd/+QmlkaEyOhcfa0gbkwDQ4LUr1RvuTZp9u4VDylkCdExAVOi6zqz"></script>
   <script defer src="./libs/chartjs-plugin-zoom.min.js" integrity="sha384-zPzbVRXfR492Sd5D+HydTYCxxgHAfgVO8KERbLlpeH5unsmbAEXrscGUUqLZG9BM"></script>
   <script defer src="./libs/jstat.min.js" integrity="sha384-7uGOMhLhjroTamet5l69PR8EGxKUyWZlZOFFDRymtVqIfsh4Hj7uZRctW67ZCdkD"></script>
-  <script defer src="./libs/neutralino.js" integrity="sha384-PHLBc+h+UJz3gyDGfTR+noqhf4C5I+NRDT4nOeCyfsB2JvIQU8j/Y9GVh+FANPJm"></script>
+  <script defer src="./libs/neutralino.js"></script>
 </head>
 
 <body>
 <div id="infoLoading">Loading...</div>
-<span id="mainContent" style="display: none;">
+<div id="mainContent" style="display: none;">
 
 <!-- Navigation -->
 
@@ -64,6 +64,8 @@
 
 <div id="distributionArea"></div>
 
+<div id="downloadInfoArea"></div>
+
 </div></main>
 
 <!-- Footer -->
@@ -73,9 +75,9 @@
 <div class="row">
 
 <div class="col-md-4 mt-md-0 mt-4">
-<h3 class="h5 text-uppercase" id="appName2"></h3>
+<h3 class="h5 text-uppercase" id="appName2">&nbsp;</h3>
 <ul class="list-unstyled">
-  <li>&copy <a href="https://github.com/A-Herzog" target="_blank">Alexander Herzog</a></li>
+  <li>&copy; <a href="https://github.com/A-Herzog" target="_blank">Alexander Herzog</a></li>
   <li>
     <a href="https://github.com/A-Herzog/Distributions" target="_blank" class="bi-github"> GitHub</a>
     <span id="infoLocalDataOnly1">,
@@ -83,17 +85,17 @@
     <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" target="_blank" id="linkPrivacy"></a>
     </span>
   </li>
-  <li><a target="_blank" id="linkMainHome"></a></li>
+  <li><a target="_blank" id="linkMainHome" href=""></a></li>
 </ul>
 </div>
 
 <div class="col-md-4 mb-md-0 mb-4" id="infoLocalDataOnly2">
-<h3 class="h5 text-uppercase"></h3>
-<div class="text-secondary small"></div>
+<h3 class="h5 text-uppercase">&nbsp;</h3>
+<div class="small" style="color: black;"></div>
 </div>
 
 <div class="col-md-4 mb-md-0 mb-4">
-<h3 class="h5 text-uppercase" id="infoSimulators"></h3>
+<h3 class="h5 text-uppercase" id="infoSimulators">&nbsp;</h3>
 <ul class="list-unstyled">
   <li><a href="https://a-herzog.github.io/Warteschlangensimulator" target="_blank">Warteschlangensimulator</a></li>
   <li><a href="https://a-herzog.github.io/MiniWarteschlangensimulator" target="_blank">Mini Warteschlangensimulator (Webapp)</a></li>
@@ -107,9 +109,9 @@
 </div>
 </footer>
 
-</span>
-</body>
+</div>
 
 <script src='./index.js' type="module"></script>
 
+</body>
 </html>
