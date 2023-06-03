@@ -10,6 +10,10 @@ To use simulator just go to
 
 ![Website status](https://img.shields.io/website?url=https%3A%2F%2Fa-herzog.github.io%2FDistributions%2F)
 
+You can also download the distributions viewer as an offline usable Windows application:
+
+**[Distributions.exe](https://github.com/A-Herzog/Distributions/releases/latest/download/Distributions.exe)**
+
 ## License
 
 Distributions is licensed under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0).

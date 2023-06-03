@@ -37,6 +37,8 @@ lang.GUI.switchLanguageHint="Switch to English";
 lang.GUI.switchLanguageShort="English";
 lang.GUI.switchLanguageMode='default';
 lang.GUI.switchLanguageFile="index.html";
+lang.GUI.downloadLabel="Diese Webapp steht auch als offline-nutzbare Windows-Anwendung zur Verfügung:";
+lang.GUI.downloadButton="Windows-Anwendung (exe)";
 
 lang.distributions={};
 lang.distributions.typeDiscrete="diskret";
@@ -303,6 +305,8 @@ lang.GUI.switchLanguageHint="Auf Deutsch umschalten";
 lang.GUI.switchLanguageShort="Deutsch";
 lang.GUI.switchLanguageMode='de';
 lang.GUI.switchLanguageFile="index_de.html";
+lang.GUI.downloadLabel="This webapp is also available as an offline usable Windows application:";
+lang.GUI.downloadButton="Windows application (exe)";
 
 lang.distributions={};
 lang.distributions.typeDiscrete="discrete";
