@@ -35,7 +35,7 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._addContinuousParameter("lambda","&lambda;",language.distributions.hypergeometric.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
+    this._addContinuousParameter("lambda","&lambda;",language.distributions.exponential.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
 
     this._setCalcParameter("x",1);
   }

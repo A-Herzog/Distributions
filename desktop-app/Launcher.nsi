@@ -31,7 +31,7 @@ Section ""
 
   File "..\dist\Distributions\Distributions-win_x64.exe"
   File "..\dist\Distributions\resources.neu"
-  File "..\dist\Distributions\WebView2Loader.dll"
+  ; File "..\dist\Distributions\WebView2Loader.dll"
 
   ExecWait "$TEMP\${PrgTempPathName}\Distributions-win_x64.exe"
 

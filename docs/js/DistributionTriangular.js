@@ -42,7 +42,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     this.cdfText=this.#getCDFText();
 
     this._addContinuousParameter("a","a",language.distributions.triangular.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
-    this._addContinuousParameter("c","c",language.distributions.triangular.parameterInfoc+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,7);
+    this._addContinuousParameter("c","c",language.distributions.triangular.parameterInfoc+" (<i>c</i>"+isin+setRHTML+")",null,false,null,false,7);
     this._addContinuousParameter("b","b",language.distributions.triangular.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
 
     this._setCalcParameter("x",8);

@@ -502,6 +502,13 @@ class ProbabilityDistribution {
   }
 
   /**
+   * HTML canvas element
+   */
+  get canvas() {
+    return this.#canvas;
+  }
+
+  /**
    * HTML element for an optional info panel under the chart
    */
   get canvasInfo() {
@@ -731,6 +738,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    */
   _updateDiscreteDiagram() {
     const values=this._currentParameterValues;
+    const that=this;
 
     /* Get min and max X */
     let minX, maxX;
@@ -794,6 +802,44 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
           window.open(language.distributions.infoDiagramShowValuesFile+searchString);
         }
       }
+
+      /* Export diagram */
+      const div=document.createElement("div");
+      div.className="dropdown";
+      div.style.display="inline-block";
+      this.canvasInfo.appendChild(div);
+      div.appendChild(button=document.createElement("button"));
+      button.type="button";
+      button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
+      button.dataset.bsToggle="dropdown";
+      button.innerHTML=" "+language.distributions.infoDiagramExport;
+      const ul=document.createElement("ul");
+      ul.className="dropdown-menu";
+      div.appendChild(ul);
+      let li;
+      ul.appendChild(li=document.createElement("li"));
+      li.appendChild(button=document.createElement("button"));
+      button.type="button";
+      button.className="bi-clipboard dropdown-item";
+      button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+      button.onclick=()=>{
+        if (typeof(ClipboardItem)!="undefined") {
+          that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+        } else {
+          alert(language.distributions.infoDiagramExportCopyError);
+        }
+      };
+      ul.appendChild(li=document.createElement("li"));
+      li.appendChild(button=document.createElement("button"));
+      button.type="button";
+      button.className="bi-download dropdown-item";
+      button.innerHTML=" "+language.distributions.infoDiagramExportSave;
+      button.onclick=()=>{
+        const element=document.createElement("a");
+        element.href=that.canvas.toDataURL("image/png");
+        element.download="diagram.png";
+        element.click();
+      };
 
       /* Random numbers */
       this.canvasInfo.appendChild(button=document.createElement("button"));
@@ -984,6 +1030,8 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    * @param {Function} cdfCallback  Callback for getting an individual cdf value
    */
   _setContinuousDiagram(minX, maxX, pdfCallback, cdfCallback) {
+    const that=this;
+
     /* Build PDF and CDF data sets */
     const step=(maxX-minX)/500;
     const dataPDF=[];
@@ -1038,6 +1086,44 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
           window.open(language.distributions.infoDiagramShowValuesFile+searchString);
         }
       }
+
+      /* Export diagram */
+      const div=document.createElement("div");
+      div.className="dropdown";
+      div.style.display="inline-block";
+      this.canvasInfo.appendChild(div);
+      div.appendChild(button=document.createElement("button"));
+      button.type="button";
+      button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
+      button.dataset.bsToggle="dropdown";
+      button.innerHTML=" "+language.distributions.infoDiagramExport;
+      const ul=document.createElement("ul");
+      ul.className="dropdown-menu";
+      div.appendChild(ul);
+      let li;
+      ul.appendChild(li=document.createElement("li"));
+      li.appendChild(button=document.createElement("button"));
+      button.type="button";
+      button.className="bi-clipboard dropdown-item";
+      button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+      button.onclick=()=>{
+        if (typeof(ClipboardItem)!="undefined") {
+          that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+        } else {
+          alert(language.distributions.infoDiagramExportCopyError);
+        }
+      };
+      ul.appendChild(li=document.createElement("li"));
+      li.appendChild(button=document.createElement("button"));
+      button.type="button";
+      button.className="bi-download dropdown-item";
+      button.innerHTML=" "+language.distributions.infoDiagramExportSave;
+      button.onclick=()=>{
+        const element=document.createElement("a");
+        element.href=that.canvas.toDataURL("image/png");
+        element.download="diagram.png";
+        element.click();
+      };
 
       /* Random numbers */
       this.canvasInfo.appendChild(button=document.createElement("button"));
