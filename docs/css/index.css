@@ -17,10 +17,29 @@
   }
 }
 
+footer a {
+  color: blue;
+  text-decoration-color: blue;
+}
+
+[data-bs-theme="dark"] {
+  .bg-primary {
+    background-color: rgba(var(--bs-secondary-rgb),var(--bs-bg-opacity)) !important;
+  }
+
+  .bg-light {
+    background-color: rgba(var(--bs-secondary-rgb),var(--bs-bg-opacity)) !important;
+  }
+  
+  footer a {
+    color: rgb(139, 185, 254)
+  }
+}
+
 #logoBox {
-  background-color: white;
   padding: 1px 10px 5px 10px;
   border-radius: 2px;
+  background-color: white;
 }
 
 #languageButton {
@@ -38,9 +57,4 @@
 footer {
   margin-top: 20px;
   padding-top: 10px;
-}
-
-footer a {
-  color: blue;
-  text-decoration-color: blue;
 }

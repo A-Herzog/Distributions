@@ -32,6 +32,20 @@ function initGUILanguage() {
     document.location.href=language.GUI.switchLanguageFile;
   }
 
+  menuColorMode.title=language.GUI.tabColorMode;
+  menuColorModeLight.innerHTML=language.GUI.tabColorModeLight;
+  menuColorModeDark.innerHTML=language.GUI.tabColorModeDark;
+  menuColorModeSystemDefault.innerHTML=language.GUI.tabColorModeSystemDefault;
+
+  let selectedColorMode=localStorage.getItem('selectedColorMode');
+  if (selectedColorMode==null) {
+    menuColorModeSystemDefault.classList.add("bi-check");
+    const mode=(document.documentElement.dataset.bsTheme=='dark')?language.GUI.tabColorModeDark:language.GUI.tabColorModeLight;
+    menuColorModeSystemDefault.innerHTML=menuColorModeSystemDefault.innerHTML+" ("+mode+")";
+  } else {
+    if (document.documentElement.dataset.bsTheme=='dark') menuColorModeDark.classList.add("bi-check"); else menuColorModeLight.classList.add("bi-check");
+  }
+
   /* Content */
   distSelectLabel.innerHTML=language.GUI.selectDistribution;
 

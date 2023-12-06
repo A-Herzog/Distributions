@@ -34,7 +34,8 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
 
     this.support=setN0HTML;
     this.infoText=language.distributions.hypergeometric.info;
-    this.infoImage="Urne.webp";
+    const dark=(localStorage.getItem('selectedColorMode')=='dark' || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches))?'_dark':'';
+    this.infoImage="Urne"+dark+".webp";
     this.infoImageWidth=109;
     this.infoImageHeight=126;
     this.wikipediaURL=language.distributions.hypergeometric.wikipedia;

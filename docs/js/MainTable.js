@@ -378,6 +378,11 @@ function initTable() {
   [distribution,values,rndMode,rndCount]=getDistributionFromSearchString();
   if (distribution==null) return;
 
+  /* Select color mode */
+  let selectedColorMode=localStorage.getItem('selectedColorMode');
+  if (selectedColorMode==null) selectedColorMode=(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)?"dark":"light";
+  document.documentElement.dataset.bsTheme=selectedColorMode;
+
   initGUILanguage(distribution.name);
   if (rndMode) {
     /* Generate random numbers */
