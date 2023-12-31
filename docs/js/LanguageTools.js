@@ -16,11 +16,19 @@ limitations under the License.
 
 export {selectLanguage};
 
+/**
+ * Switches to a specific language dependent file, if this file is not already to current location
+ * @param {string} file Name of the language file to be used
+ */
 function selectLanguageFile(file) {
   if (window.location.href.endsWith(file)) return;
   window.location.href='./'+file;
 }
 
+/**
+ * Initializes the language system.
+ * @param {array} languages Array of language objects; each object has to have the properties "name" and "file". One fallback "default" named object has to be in the array.
+ */
 function selectLanguage(languages) {
   let selectedLanguage=localStorage.getItem('selectedLanguage');
 

@@ -728,7 +728,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumber(Math.sqrt(scv))]);
       lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumber(scv)]);
     }
-    
+
     const heading="<caption>Characteristics</caption><tr class='visually-hidden'><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristic+"</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicSymbol+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicFormula+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicValue+"</th></tr>";
     this.characteristics="<table>"+heading+lines.map(line=>"<tr><td class='pb-3'>"+line.join("</td><td class='pb-3'>")+"</td></tr>").join("\n")+"</table>";
   }
@@ -862,6 +862,11 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     }
   }
 
+  /**
+   * Starts calculating the probability for a specific value.
+   * @param {Object} parameterValues Object containing the values for the parameter ids
+   * @param {Number} value Value to calculate the probability for
+   */
   _calcValues(parameterValues, value) {
     const support=this.getDiscretePositiveSupport(parameterValues);
 
@@ -1147,6 +1152,11 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     }
   }
 
+  /**
+   * Starts calculating the probability for a specific value.
+   * @param {Object} parameterValues Object containing the values for the parameter ids
+   * @param {Number} value Value to calculate the probability for
+   */
   _calcValues(parameterValues, value) {
     const f=variable("f");
     const F=variable("F");

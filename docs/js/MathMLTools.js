@@ -21,6 +21,11 @@ import {language} from './Language.js';
 const beginMathML="<math style='font-size: 120%'><mrow>";
 const endMathML="</mrow></math>";
 
+/**
+ * Generates MathML code for a variable.
+ * @param {string} x Name of the variable
+ * @returns MathML code for the variable
+ */
 function variable(x) {
   return "<mi>"+x+"</mi>";
 }
@@ -51,6 +56,12 @@ const beginFrac="<mfrac><mrow>";
 const middleFrac="</mrow><mrow>";
 const endFrac="</mrow></mfrac>";
 
+/**
+ * Generates MathML code for a fraction.
+ * @param {string} a Numerator
+ * @param {string} b Denominator
+ * @returns MathML code for the fraction
+ */
 function frac(a,b) {
   return beginFrac+a+middleFrac+b+endFrac;
 }
@@ -59,18 +70,44 @@ const beginBinom="<mo>(</mo><mfrac linethickness='0'><mrow>";
 const middleBinom="</mrow><mrow>";
 const endBinom="</mrow></mfrac><mo>)</mo>";
 
+/**
+ * Generates MathML code for a binomial coefficient.
+ * @param {string} n n in n over k
+ * @param {string} k k in n over k
+ * @returns MathML code for the binomial coefficient
+ */
 function binom(n,k) {
   return beginBinom+n+middleBinom+k+endBinom;
 }
 
+/**
+ * Generates a function definition in the Form E[x] (with a non-italic "E")
+ * @param {string} e Function name
+ * @param {string} x Parameter
+ * @param {boolean} withEqual Add an "="?
+ * @returns MathML code for the function definition
+ */
 function defE(e, x, withEqual=true) {
   return "<mi mathvariant='normal'>"+e+"</mi><ms>[</ms>"+x+"<ms>]</ms>"+(withEqual?"<mo>=</mo>":"");
 }
 
+/**
+ * Generates a function definition in the Form f(x) (with an italic "f")
+ * @param {string} f Function name
+ * @param {string} x Parameter
+ * @param {boolean} withEqual Add an "="?
+ * @returns MathML code for the function definition
+ */
 function defF(f, x, withEqual=true) {
   return "<mi>"+f+"</mi><ms>(</ms>"+x+"<ms>)</ms>"+(withEqual?"<mo>=</mo>":"");
 }
 
+/**
+ * Generates a function definition in the Form P(x) (with a non-italic "P")
+ * @param {string} x Parameter
+ * @param {boolean} withEqual Add an "="?
+ * @returns MathML code for the function definition
+ */
 function defP(x, withEqual=true) {
   return "<mi mathvariant='normal'>P</mi><ms>(</ms>"+x+"<ms>)</ms>"+(withEqual?"<mo>=</mo>":"");
 }

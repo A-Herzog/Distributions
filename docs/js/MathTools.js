@@ -69,6 +69,12 @@ function gaussianRandomBoxMueller(mean=0, std=1) {
 let polarSpare;
 let polarHasSpare=false;
 
+/**
+ * Generates a gaussian distributed pseudo random number via the polar method
+ * @param {Number} mean Mean (defaults to 0)
+ * @param {Number} std Standard deviation (defaults to 1)
+ * @returns Gaussian distributed pseudo random number
+ */
 function gaussianRandomPolar(mean=0, std=1) {
   if (polarHasSpare) {polarHasSpare=false; return polarSpare*std+mean;}
 

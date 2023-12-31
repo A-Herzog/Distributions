@@ -19,8 +19,14 @@ export {isDesktopApp, initApp};
 import {language} from "./Language.js";
 import {listDistributions, getDistributionsByName} from "./DistributionSetup.js";
 
+/**
+ * Is the system running as Neutralions desktop app (true) or as a web page (false)?
+ */
 const isDesktopApp=(typeof(NL_OS)!='undefined'); if (isDesktopApp) Neutralino.init();
 
+/**
+ * Fills in the language strings to the GUI elements.
+ */
 function initGUILanguage() {
   /* Header */
   appName1.innerHTML=language.GUI.appName;
@@ -95,6 +101,10 @@ function selectDistribution(distribution, area) {
   area.appendChild(distribution.panel);
 }
 
+/**
+ * Prepares the layout switcher which will remove the "loading..." text
+ * and replace it with the app content.
+ */
 function startApp() {
   document.addEventListener('readystatechange',event=>{if (event.target.readyState=="complete") {
     if (isDesktopApp) {
@@ -106,6 +116,9 @@ function startApp() {
   }});
 }
 
+/**
+ * Initializes the complete web app.
+ */
 function initApp() {
   initGUILanguage();
   initDistributionsSelector(distSelect,distributionArea);

@@ -16,16 +16,31 @@ limitations under the License.
 
 export {getFloat, getPositiveFloat, getNotNegativeFloat, getInt, getPositiveInt, getNotNegativeInt, formatNumber}
 
+/**
+ * Parses a string to a floating point number
+ * @param {string} str String to be parsed to a floating point number (decimal separator has to be ".")
+ * @returns Floating point number or NaN, if the string could not be parsed to a floating point number
+ */
 function parseFloatStrict(str) {
   if(/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/.test(str)) return Number(str);
   return NaN;
 }
 
+/**
+ * Parses a string to an integer number
+ * @param {string} str String to be parsed to an integer number
+ * @returns Integer number or NaN, if the string could not be parsed to an integer number
+ */
 function parseIntStrict(str) {
   if(/^(\-|\+)?([0-9]+|Infinity)$/.test(str)) return Number(str);
   return NaN;
 }
 
+/**
+ * If the parameter is an object and has a "value" property, the content of this property is returned. Otherwise the parameter itself is returned.
+ * @param {any} elementOrString Object with "value" property or String
+ * @returns Content of the "value" property of (for example in case of a string) the parameter itself
+ */
 function getString(elementOrString) {
   if (typeof(elementOrString)=='object' && typeof(elementOrString.value)=='string') return elementOrString.value;
   return elementOrString;
@@ -102,8 +117,8 @@ function getNotNegativeInt(elementOrString) {
 
 /**
  * Formats a number as a two digits local string.
- * @param {Number} num Number to be formated
- * @returns Formated number
+ * @param {Number} num Number to be formatted
+ * @returns Formatted number
  */
 function formatNumber(num) {
   return (Math.round(num*1000)/1000).toLocaleString();

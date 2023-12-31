@@ -21,8 +21,9 @@ import {getDistributionByClassName, getAllDistributionParameterIds} from "./Dist
 import {isDesktopApp} from './Main.js';
 import {getFloat, getPositiveInt} from "./NumberTools.js";
 
-
-
+/**
+ * Fills in the language strings to the GUI elements.
+ */
 function initGUILanguage(distName) {
   /* Header */
   appName1.innerHTML=distName;
@@ -51,10 +52,16 @@ function initGUILanguage(distName) {
 
 let clipboardData="";
 
+/**
+ * Copies the table content to clipboard.
+ */
 function copyTable() {
   navigator.clipboard.writeText(clipboardData);
 }
 
+/**
+ * Saves the table content to a file.
+ */
 function saveTable() {
   if (isDesktopApp) {
     Neutralino.os.showSaveDialog(language.distributions.infoDiagramSaveValues, {defaultPath: 'table.txt', filters: [
@@ -76,6 +83,11 @@ function saveTable() {
   }
 }
 
+/**
+ * Loads data from the url search string into an object
+ * @param {Array} validKeys List of the search string parameters to be loaded
+ * @returns Object containing the names of the parameters and the values from the url search string as values
+ */
 function loadSearchStringParameters(validKeys) {
   const search=window.location.search;
   if (!search.startsWith("?")) return {};
@@ -87,6 +99,10 @@ function loadSearchStringParameters(validKeys) {
   return data;
 }
 
+/**
+ * Returns data on the information to be displayed based on the url search string values
+ * @returns Array containing: Distribution object, object of distribution parameter values, generate pseudo-random numbers (true) or show pdf/cdf (false), number of pseudo-random numbers to be generated
+ */
 function getDistributionFromSearchString() {
   const validKeys=["distribution","random","count"];
   getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
@@ -108,6 +124,13 @@ function getDistributionFromSearchString() {
   return [distribution, values, typeof(data.random)!='undefined', count];
 }
 
+/**
+ * Generated a html table element
+ * @param {Object} parent Parent html element
+ * @param {Array} cols List of the column titles for the table (entries can be strings or arrays; in case of an array the first entry of the array is used as title)
+ * @param {Boolean} longTable Add "table-sm" to css class list?
+ * @returns Array of already to parent added html table element und tbody element
+ */
 function buildTableElement(parent, cols, longTable=false) {
   const table=document.createElement("table");
   table.className="table table-striped border"+(longTable?" table-sm":"");
@@ -134,6 +157,13 @@ function buildTableElement(parent, cols, longTable=false) {
   return [table, tbody];
 }
 
+/**
+ * Adds a pdf/cdf row to a table
+ * @param {Object} tbody Table body element
+ * @param {Number} x Parameter x
+ * @param {Number} f f(x) value
+ * @param {Number} F F(x) value
+ */
 function addRow(tbody, x, f, F) {
   let tr, td;
 
@@ -150,6 +180,12 @@ function addRow(tbody, x, f, F) {
   clipboardData+=xStr+"\t"+fStr+"\t"+FStr+"\n";
 }
 
+/**
+ * Adds a simple row containing only one column to a table
+ * @param {Object} tbody Table body element
+ * @param {Number} value Value to be added in a new row
+ * @param {Boolean} discrete Is the value to be converted to a string in the simple way (true) or by using at least 8 digits (false)
+ */
 function addSimpleRow(tbody, value, discrete) {
   let tr, td;
 
@@ -161,6 +197,12 @@ function addSimpleRow(tbody, value, discrete) {
   clipboardData+=valueStr+"\n";
 }
 
+/**
+ * Generates a pdf/cdf table for a discrete probability distribution
+ * @param {DiscreteProbabilityDistribution} distribution Probability distribution to be used
+ * @param {Object} values Parameter values
+ * @param {Object} parent Html parent element for the table
+ */
 function initDiscreteTable(distribution, values, parent) {
   let table, tbody;
   [table, tbody]=buildTableElement(parent,["k","P(X=k)",["P(X&le;k)","P(X<=k)"]]);
@@ -175,6 +217,12 @@ function initDiscreteTable(distribution, values, parent) {
   }
 }
 
+/**
+ * Generates a pdf/cdf table for a continuous probability distribution
+ * @param {ContinuousProbabilityDistribution} distribution Probability distribution to be used
+ * @param {Object} values Parameter values
+ * @param {Object} parent Html parent element for the table
+ */
 function initContinuousTable(distribution, values, min, max, step, parent) {
   let table, tbody;
   [table, tbody]=buildTableElement(parent,["x","f(x)","F(x)"]);
@@ -185,6 +233,12 @@ function initContinuousTable(distribution, values, min, max, step, parent) {
   }
 }
 
+/**
+ * Updates the continuous probability distribution pdf/cdf table after a range update
+ * @param {Distribution} distribution Probability distribution to be used
+ * @param {Object} values Parameter values
+ * @param {Object} parent Html parent element for the table
+ */
 function rangeChanged(distribution, values, parent) {
   const min=getFloat(rangeMin.value);
   const max=getFloat(rangeMax.value);
@@ -220,6 +274,12 @@ function rangeChanged(distribution, values, parent) {
   initContinuousTable(distribution,values,min,max,step,parent);
 }
 
+/**
+ * Generates the info / setup area for the pseudo-random numbers viewer
+ * @param {Object} parent Parent html element
+ * @param {Array} info Info lines to be output
+ * @param {Number} currentCount Current number of generated pseudo-random numbers
+ */
 function buildRandomNumbersInfoArea(parent, info, currentCount) {
   let span;
 
@@ -284,6 +344,10 @@ function buildRandomNumbersInfoArea(parent, info, currentCount) {
   parent.appendChild(infoTextDiv);
 }
 
+/**
+ * Generates new pseudo-random numbers.
+ * @param {Number} newCount New number of pseudo-random numbers to be generated
+  */
 function randomNumbersReload(newCount) {
   const search=document.location.search;
   if (!search.startsWith("?")) return;
@@ -293,6 +357,14 @@ function randomNumbersReload(newCount) {
   document.location.search=newSearch;
 }
 
+/**
+ * Generates the pseudo-random numbers html output for a discrete probability distribution.
+ * @param {DiscreteProbabilityDistribution} distribution Probability distribution for which pseudo-random numbers are to be generated
+ * @param {Object} values Parameters of the probability distribution
+ * @param {Number} count Number of pseudo-random numbers to be generated
+ * @param {Object} infoArea Parent html element for the info/setup area
+ * @param {Object} tableArea Parent html element for the results table
+ */
 function generateDiscreteRandomNumbers(distribution, values, count, infoArea, tableArea) {
   const support=distribution.getDiscretePositiveSupport(values);
   const cdf=[];
@@ -335,6 +407,14 @@ function generateDiscreteRandomNumbers(distribution, values, count, infoArea, ta
   tableArea.appendChild(table);
 }
 
+/**
+ * Generates the pseudo-random numbers html output for a continuous probability distribution.
+ * @param {ContinuousProbabilityDistribution} distribution Probability distribution for which pseudo-random numbers are to be generated
+ * @param {Object} values Parameters of the probability distribution
+ * @param {Number} count Number of pseudo-random numbers to be generated
+ * @param {Object} infoArea Parent html element for the info/setup area
+ * @param {Object} tableArea Parent html element for the results table
+ */
 function generateContinuousRandomNumbers(distribution, values, count, infoArea, tableArea) {
   let table, tbody;
   [table, tbody]=buildTableElement(null,[language.distributions.infoDiagramGenerateRandomNumbersTitle],true);
@@ -366,6 +446,10 @@ function generateContinuousRandomNumbers(distribution, values, count, infoArea, 
   tableArea.appendChild(table);
 }
 
+/**
+ * Prepares the layout switcher which will remove the "loading..." text
+ * and replace it with the app content.
+ */
 function startTable() {
   document.addEventListener('readystatechange',event=>{if (event.target.readyState=="complete") {
     mainContent.style.display="";
@@ -373,6 +457,9 @@ function startTable() {
   }});
 }
 
+/**
+ * Initializes the complete web app.
+ */
 function initTable() {
   let distribution, values, rndMode, rndCount;
   [distribution,values,rndMode,rndCount]=getDistributionFromSearchString();
