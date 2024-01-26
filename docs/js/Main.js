@@ -22,7 +22,11 @@ import {listDistributions, getDistributionsByName} from "./DistributionSetup.js"
 /**
  * Is the system running as Neutralions desktop app (true) or as a web page (false)?
  */
-const isDesktopApp=(typeof(NL_OS)!='undefined'); if (isDesktopApp) Neutralino.init();
+const isDesktopApp=(typeof(NL_OS)!='undefined');
+if (isDesktopApp) {
+  Neutralino.init();
+  Neutralino.events.on("windowClose",()=>Neutralino.app.exit());
+}
 
 /**
  * Fills in the language strings to the GUI elements.
