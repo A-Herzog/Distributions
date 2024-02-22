@@ -103,6 +103,7 @@ lang.distributions.infoCalcValuesError="Bitte korrigieren Sie die Werte für die
 lang.distributions.PDFDiscrete="Zähldichte";
 lang.distributions.PDFContinuous="Dichte";
 lang.distributions.CDF="Verteilungsfunktion";
+lang.distributions.for="für";
 lang.distributions.parameterErrorInt="Es muss eine Ganzzahl angegeben werden.";
 lang.distributions.parameterErrorIntMin="Es muss eine Ganzzahl &ge; {0} angegeben werden.";
 lang.distributions.parameterErrorIntMax="Es muss eine Ganzzahl &le; {0} angegeben werden.";
@@ -283,6 +284,12 @@ lang.distributions.chi.info="Die Wurzel aus der Summe von <b>k</b> standardnorma
 lang.distributions.chi.wikipedia="https://en.wikipedia.org/wiki/Chi_distribution"; /* Leide keine deutsche Seite vorhanden */
 lang.distributions.chi.parameterInfok="Freiheitsgrade";
 
+lang.distributions.halfNormal={};
+lang.distributions.halfNormal.name="Halbe Normalverteilung";
+lang.distributions.halfNormal.info="Die halbe Normalverteilung kombiniert den Verlauf der Normalverteilung mit der Eigenschaft, dass nur nichtnegative x-Werte mit einer positiven Dichte belegt werden.";
+lang.distributions.halfNormal.wikipedia="https://de.wikipedia.org/wiki/Normalverteilung";
+lang.distributions.halfNormal.parameterInfoMu="Erwartungswert";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -383,6 +390,7 @@ lang.distributions.infoCalcValuesError="Please correct the values for the distri
 lang.distributions.PDFDiscrete="Count density";
 lang.distributions.PDFContinuous="Density";
 lang.distributions.CDF="Cumulative distribution function";
+lang.distributions.for="for";
 lang.distributions.parameterErrorInt="An integer number has to be specified.";
 lang.distributions.parameterErrorIntMin="An integer number &ge; {0} has to be specified.";
 lang.distributions.parameterErrorIntMax="An integer number &le; {0} has to be specified.";
@@ -464,7 +472,7 @@ lang.distributions.exponential.parameterInfoLambda="Scale parameter";
 lang.distributions.normal={};
 lang.distributions.normal.name="Normal distribution";
 lang.distributions.normal.info="If a series of independent and identically distributed random variables are added, the normal distribution is approximately obtained according to the central limit theorem.";
-lang.distributions.normal.wikipedia="https://en.wikipedia.org/wiki/Normal_distributionhttps://en.wikipedia.org/wiki/Exponential_distribution";
+lang.distributions.normal.wikipedia="https://en.wikipedia.org/wiki/Normal_distribution";
 lang.distributions.normal.parameterInfoMu="Location (mean)";
 lang.distributions.normal.parameterInfoSigma="Scale (standard deviation)";
 
@@ -562,6 +570,12 @@ lang.distributions.chi.name="Chi distribution";
 lang.distributions.chi.info="The square root of the sum of <b>k</b> standard normally distributed random variables is &Chi; distributed.";
 lang.distributions.chi.wikipedia="https://en.wikipedia.org/wiki/Chi_distribution";
 lang.distributions.chi.parameterInfok="Degrees of freedom";
+
+lang.distributions.halfNormal={};
+lang.distributions.halfNormal.name="Half normal distribution";
+lang.distributions.halfNormal.info="The half normal distribution combines the course of the normal distribution with the property that only non-negative x-values are assigned a positive density.";
+lang.distributions.halfNormal.wikipedia="https://en.wikipedia.org/wiki/Normal_distribution";
+lang.distributions.halfNormal.parameterInfoMu="Expected value";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

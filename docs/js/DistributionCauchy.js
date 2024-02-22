@@ -55,7 +55,7 @@ class CauchyDistribution extends ContinuousProbabilityDistribution {
     pdf+=frac("<mn>1</mn>",pi)+mul;
     pdf+=frac(s,"<msup>s<mn>2</mn></msup>"+plus+"<msup><mrow><mo>(</mo>"+x+minus+t+"<mo>)</mo></mrow><mn>2</mn></msup>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setR;
     pdf+=endMathML;
@@ -75,7 +75,7 @@ class CauchyDistribution extends ContinuousProbabilityDistribution {
     cdf+=frac("<mn>1</mn>","<mn>2</mn>")+plus+frac("<mn>1</mn>",pi)+mul;
     cdf+="<mi mathvariant='normal'>arctan</mi><mo>(</mo>"+frac(x+minus+t,s)+"<mo>)</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;

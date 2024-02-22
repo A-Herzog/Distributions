@@ -57,7 +57,7 @@ class FDistribution extends ContinuousProbabilityDistribution {
     pdf+=frac(Gamma+"<mo>(</mo>"+frac(m+plus+n,"<mn>2</mn>")+"<mo>)</mo>",Gamma+"<mo>(</mo>"+frac(m,"<mn>2</mn>")+"<mo>)</mo>"+Gamma+"<mo>(</mo>"+frac(n,"<mn>2</mn>")+"<mo>)</mo>")+mul;
     pdf+=frac("<msup>"+x+"<mrow>"+frac(m,"<mn>2</mn>")+minus+"<mn>1</mn></mrow>","<msup><mrow><mo>(</mo>"+m+x+plus+n+"<mo>)</mo></mrow>"+frac(m+plus+n,"<mn>2</mn>")+"</msup>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     pdf+=endMathML;
@@ -76,7 +76,7 @@ class FDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+="<msub>"+I+frac(m+mul+x,m+mul+x+plus+n)+"</msub><mo>(</mo>"+frac(m,"<mn>2</mn>")+"<mo>,</mo>"+frac(n,"<mn>2</mn>")+"<mo>)</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;

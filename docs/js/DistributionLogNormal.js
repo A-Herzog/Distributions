@@ -64,7 +64,7 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
     pdf+="<msup><mrow><mo>(</mo><mi mathvariant='normal'>log</mi><ms>(</ms>"+x+"<ms>)</ms>"+minus+mu+"<mo>)</mo></mrow><mn>2</mn></msup>";
     pdf+="<mo>)</mo>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setRPlus;
     pdf+=endMathML;

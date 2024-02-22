@@ -52,7 +52,7 @@ class UniformDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac("<mn>1</mn>",b+minus+a);
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo><ms>[</ms>"+a+"<mo>;</mo>"+b+"<ms>]</ms>";
     pdf+=endMathML;
@@ -70,7 +70,7 @@ class UniformDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+=frac(x+minus+a,b+minus+a);
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo><ms>[</ms>"+a+"<mo>;</mo>"+b+"<ms>]</ms>";
     cdf+=endMathML;

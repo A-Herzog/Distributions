@@ -50,7 +50,7 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=lambda+"<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+lambda+x+"</mrow></msup>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&ge;</mo><mn>0</mn>";
     pdf+=endMathML;
@@ -68,7 +68,7 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     cdf+="<mn>1</mn>"+minus;
     cdf+="<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+lambda+x+"</mrow></msup>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&ge;</mo><mn>0</mn>";
     cdf+=endMathML;

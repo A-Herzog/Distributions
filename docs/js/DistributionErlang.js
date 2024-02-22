@@ -55,7 +55,7 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac("<msup>"+x+"<mrow>"+n+minus+"<mn>1</mn></mrow></msup><msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac(x,lambda)+"</mrow></msup>","<msup>"+lambda+n+"</msup><ms>(</ms>"+n+minus+"<mn>1</mn><ms>)</ms><mo>!</mo>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     pdf+=endMathML;
@@ -79,7 +79,7 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
     cdf+="<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac(x,lambda)+"</mrow></msup>";
     cdf+="<msup><mrow><mo>(</mo>"+frac(x,lambda)+"<mo>)</mo></mrow><mn>"+k+"</mn></msup>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;

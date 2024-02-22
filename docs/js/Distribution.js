@@ -1269,7 +1269,7 @@ function getContinousDefaultCDF() {
     cdf+="<msubsup><mo>&int;</mo><mrow>"+minus+"<mi>&infin;</mi></mrow>"+x+"</msubsup>";
     cdf+=defF(f,t,false)+"<mo>dt</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;

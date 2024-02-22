@@ -52,7 +52,7 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=lambda+beta+"<msup><mrow><ms>(</ms>"+lambda+x+"<ms>)</ms></mrow><mrow>"+beta+minus+"<mn>1</mn></mrow></msup><msup><mi mathvariant='normal'>e</mi><mrow>"+minus+"<msup><mrow><ms>(</ms>"+lambda+x+"<ms>)</ms></mrow>"+beta+"</msup></mrow></msup>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     pdf+=endMathML;
@@ -70,7 +70,7 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+="<mn>1</mn>"+minus+"<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+"<msup><mrow><ms>(</ms>"+lambda+x+"<ms>)</ms></mrow>"+beta+"</msup></mrow></msup>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;

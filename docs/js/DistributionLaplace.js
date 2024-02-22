@@ -55,7 +55,7 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     pdf+=frac("<mn>1</mn>","<mn>2</mn>"+sigma);
     pdf+"<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac("|"+x+minus+mu+"|",sigma)+"</mrow></msup>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setR;
     pdf+=endMathML;
@@ -74,7 +74,7 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     cdf+=frac("<mn>1</mn>","<mn>2</mn>")+plus+frac("<mn>1</mn>","<mn>2</mn>")+"<mi mathvariant='normal'>sgn</mi><ms>(</ms>"+x+minus+mu+"<ms>)</ms>";
     cdf+="<mo>(</mo><mn>1</mn>"+minus+"<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac("<mo>|</mo>"+x+minus+mu+"<mo>|</mo>",sigma)+"</mrow></msup><mo>)</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;

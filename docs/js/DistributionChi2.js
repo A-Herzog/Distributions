@@ -53,7 +53,7 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
     pdf+="<msup>"+x+"<mrow>"+frac(k,"<mn>2</mn>")+minus+"<mn>1</mn></mrow></msup>";
     pdf+="<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac(x,"<mn>2</mn>")+"</mrow></msup>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     pdf+=endMathML;
@@ -73,7 +73,7 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
     cdf+=frac("<mn>1</mn>",Gamma+"<mo>(</mo>"+frac(k,"<mn>2</mn>")+"<mo>)</mo>");
     cdf+=gamma+"<mo>(</mo>"+frac(k,"<mn>2</mn>")+"<mo>,</mo>"+frac(x,"<mn>2</mn>")+"<mo>)</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;

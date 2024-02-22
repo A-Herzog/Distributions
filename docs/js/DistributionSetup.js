@@ -38,6 +38,7 @@ import {LaplaceDistribution} from './DistributionLaplace.js';
 import {ParetoDistribution} from './DistributionPareto.js';
 import {Chi2Distribution} from './DistributionChi2.js';
 import {ChiDistribution} from './DistributionChi.js';
+import {HalfNormalDistribution} from './DistributionHalfNormal.js';
 
 
 
@@ -69,6 +70,7 @@ listDistributions.push(new LaplaceDistribution());
 listDistributions.push(new ParetoDistribution());
 listDistributions.push(new Chi2Distribution());
 listDistributions.push(new ChiDistribution());
+listDistributions.push(new HalfNormalDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

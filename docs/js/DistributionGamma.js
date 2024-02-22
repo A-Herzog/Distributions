@@ -56,7 +56,7 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac("<msup>"+x+"<mrow>"+alpha+minus+"<mn>1</mn></mrow></msup><msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac(x,beta)+"</mrow></msup>","<msup>"+beta+alpha+"</msup>"+Gamma+"<ms>(</ms>"+alpha+"<ms>)</ms>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setRPlus;
     pdf+=endMathML;
@@ -76,7 +76,7 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+=frac(gamma+"<mo>(</mo>"+alpha+"<mo>,</mo>"+frac(x,beta)+"<mo>)</mo>",Gamma+"<mo>(</mo>"+alpha+"<mo>)</mo>");
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setRPlus;
     cdf+=endMathML;

@@ -60,7 +60,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac("<mn>2</mn><mo>(</mo>"+x+minus+a+"<mo>)</mo>","<mo>(</mo>"+b+minus+a+"<mo>)</mo><mo>(</mo>"+c+minus+a+"<mo>)</mo>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=a+"<mo>&le;</mo>"+x+"<mo>&le;</mo>"+c;
     pdf+=endMathML;
@@ -69,7 +69,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac("<mn>2</mn><mo>(</mo>"+b+minus+x+"<mo>)</mo>","<mo>(</mo>"+b+minus+a+"<mo>)</mo><mo>(</mo>"+b+minus+c+"<mo>)</mo>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=c+"<mo>&lt;</mo>"+x+"<mo>&le;</mo>"+b;
     pdf+=endMathML;
@@ -88,7 +88,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+=frac("<msup><mrow><mo>(</mo>"+x+minus+a+"<mo>)</mo></mrow><mn>2</mn>","<mo>(</mo>"+b+minus+a+"<mo>)</mo><mo>(</mo>"+c+minus+a+"<mo>)</mo>");
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=a+"<mo>&le;</mo>"+x+"<mo>&le;</mo>"+c;
     cdf+=endMathML;
@@ -98,7 +98,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     cdf+="<mn>1</mn>"+minus;
     cdf+=frac("<msup><mrow><mo>(</mo>"+b+minus+x+"<mo>)</mo></mrow><mn>2</mn>","<mo>(</mo>"+b+minus+a+"<mo>)</mo><mo>(</mo>"+b+minus+c+"<mo>)</mo>");
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=c+"<mo>&lt;</mo>"+x+"<mo>&le;</mo>"+b;
     cdf+=endMathML;

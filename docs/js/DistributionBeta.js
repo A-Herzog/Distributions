@@ -67,7 +67,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac("<msup>"+x+"<mrow>"+alpha+minus+"<mn>1</mn></mrow></msup><msup><mrow><mo>(</mo><mn>1</mn>"+minus+x+"<mo>)</mo></mrow><mrow>"+beta+minus+"<mn>1</mn></mrow></msup>",Beta+"<mo>(</mo>"+alpha+plus+beta+"<mo>)</mo>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo><ms>[</ms><mn>0</mn>;<mn>1</mn><ms>]</ms>";
     pdf+=endMathML;
@@ -85,7 +85,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     cdf+=beginMathML;
     cdf+="<msub>"+I+x+"</msub><ms>(</ms>"+alpha+"<mo>,</mo>"+beta+"<ms>)</ms>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo><ms>[</ms><mn>0</mn>;<mn>1</mn><ms>]</ms>";
     cdf+=endMathML;

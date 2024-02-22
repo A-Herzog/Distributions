@@ -56,7 +56,7 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
     pdf+=frac(Gamma+"<mo>(</mo>"+frac(nu+plus+"<mn>1</mn>","<mn>2</mn>")+"<mo>)</mo>","<msqrt>"+nu+"<mi mathvariant='normal'>&pi;</mi></msqrt>"+Gamma+"<mo>(</mo>"+frac(nu,"<mn>2</mn>")+"<mo>)</mo>");
     pdf+="<msup><mrow><mo>(</mo><mn>1</mn>"+plus+frac("<msup><mrow><ms>(</ms>"+x+minus+mu+"<ms>)</ms></mrow><mn>2</mn>",nu)+"<mo>)</mo></mrow><mrow>"+minus+frac(nu+plus+"<mn>1</mn>","<mn>2</mn>")+"</mrow></msup>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setR;
     pdf+=endMathML;
@@ -77,7 +77,7 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
     cdf+="<msub>"+I+frac(nu,"<msup>"+x+"<mn>2</mn></msup>"+plus+nu)+"</mrow></msub>";
     cdf+="<mo>(</mo>"+frac(nu,"<mn>2</mn>")+"<mo>,</mo>"+frac("<mn>1</mn>","<mn>2</mn>")+"<mo>)</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&le;</mo><mn>0</mn>";
     cdf+=endMathML;

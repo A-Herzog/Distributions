@@ -52,7 +52,7 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
     pdf+=defF(f,x);
     pdf+=frac(alpha+"<msup>"+xm+alpha+"</msup>","<msup>"+x+"<mrow>"+alpha+plus+"<mn>1</mn></mrow></msup>");
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&ge;</mo>"+xm;
     pdf+=endMathML;
@@ -70,7 +70,7 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+="<mn>1</mn>"+minus+"<msup><mrow><mo>(</mo>"+frac(xm,x)+"<mo>)</mo></mrow>"+alpha+"</msup>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&ge;</mo>"+xm;
     cdf+=endMathML;

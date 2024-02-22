@@ -63,7 +63,7 @@ class NormalDistribution extends ContinuousProbabilityDistribution {
     pdf+="<msup><mrow><mo>(</mo>"+frac(x+minus+mu,sigma)+"<mo>)</mo></mrow><mn>2</mn></msup>";
     pdf+="<mo>)</mo>";
     pdf+=endMathML;
-    pdf+=" für ";
+    pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
     pdf+=x+"<mo>&isin;</mo>"+setR;
     pdf+=endMathML;
@@ -84,7 +84,7 @@ class NormalDistribution extends ContinuousProbabilityDistribution {
     cdf+="<msubsup><mo>&int;</mo><mrow>"+minus+"<mi>&infin;</mi></mrow>"+x+"</msubsup>";
     cdf+=defF(phi,t,false)+"<mo>dt</mo>";
     cdf+=endMathML;
-    cdf+=" für ";
+    cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;
