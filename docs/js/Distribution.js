@@ -388,7 +388,7 @@ class ProbabilityDistribution {
         if (!parameter.hasMinValue && parameter.hasMaxValue) info=format(language.distributions.parameterErrorIntMax,parameter.maxValue);
         if (parameter.hasMinValue && parameter.hasMaxValue) info=format(language.distributions.parameterErrorIntMinMax,parameter.minValue,parameter.maxValue);
       } else {
-        if (!parameter.hasMinValue && !parameter.hasMaxValue) info=language.distributions.parameterErrorInt;
+        if (!parameter.hasMinValue && !parameter.hasMaxValue) info=language.distributions.parameterErrorFloat;
         if (parameter.hasMinValue && !parameter.hasMaxValue) {
           if (parameter.minValueInclusive) {
             info=format(language.distributions.parameterErrorFloatMinInclusive,parameter.minValue);

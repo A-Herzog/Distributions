@@ -107,13 +107,13 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
 
   _checkParameters(values) {
     if (values.c<values.a) {
-      this._setErrorMarker("c",language.distributions.uniform.parameterInfocError);
+      this._setErrorMarker("c",language.distributions.triangular.parameterInfocError);
       this._clearAllOutput();
       return false;
     }
 
     if (values.b<values.c) {
-      this._setErrorMarker("b",language.distributions.uniform.parameterInfobError);
+      this._setErrorMarker("b",language.distributions.triangular.parameterInfobError);
       this._clearAllOutput();
       return false;
     }
