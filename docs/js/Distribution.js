@@ -159,22 +159,81 @@ class ProbabilityDistribution {
     input.id=clsName+"-"+id;
     input.value=defaultValue.toLocaleString();
 
+    const buttonDown=document.createElement("button");
+    group.appendChild(buttonDown);
+    buttonDown.className="btn btn-outline-secondary bi-caret-down-fill";
+    buttonDown.type="button";
+    buttonDown.title=language.distributions.parameterValueDown;
+
+    const buttonUp=document.createElement("button");
+    group.appendChild(buttonUp);
+    buttonUp.className="btn btn-outline-secondary bi-caret-up-fill";
+    buttonUp.type="button";
+    buttonUp.title=language.distributions.parameterValueUp;
+
     const error=document.createElement("div");
     group.appendChild(error);
     error.className="invalid-feedback";
 
-    return [input, error];
+    return [input, error, buttonUp, buttonDown];
   }
 
   #addParameterToPanel(parent, parameter) {
-    let input, error;
-    [input, error]=this.#addInputToPanel(parent,parameter.id,parameter.shortName,parameter.fullName,parameter.defaultValue);
+    let input, error, buttonUp, buttonDown;
+    [input, error, buttonUp, buttonDown]=this.#addInputToPanel(parent,parameter.id,parameter.shortName,parameter.fullName,parameter.defaultValue);
 
     input.onkeyup=()=>this.#fireParameterUpdated();
     input.change=()=>this.#fireParameterUpdated();
 
     parameter.inputElement=input;
     parameter.errorElement=error;
+
+    if (parameter.discrete) {
+      buttonUp.onclick=()=>{
+        const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
+        const newValue=(parameter.hasMaxValue)?Math.min(parameter.maxValue,current+1):(current+1);
+        input.value=newValue.toLocaleString();
+        this.#fireParameterUpdated();
+      };
+      buttonDown.onclick=()=>{
+        const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
+        const newValue=(parameter.hasMinValue)?Math.max(parameter.minValue,current-1):(current-1);
+        input.value=newValue.toLocaleString();
+        this.#fireParameterUpdated();
+      };
+    } else {
+      const step=(parameter.hasMinValue && parameter.hasMaxValue)?((parameter.maxValue-parameter.minValue)/20):1;
+      buttonUp.onclick=()=>{
+        const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
+        let newValue;
+        if (parameter.hasMaxValue) {
+          if (parameter.maxValueInclusive) {
+            newValue=Math.min(parameter.maxValue,current+step);
+          } else {
+            newValue=Math.min(parameter.maxValue-step,current+step);
+          }
+        } else {
+          newValue=current+step;
+        }
+        input.value=newValue.toLocaleString();
+        this.#fireParameterUpdated();
+      };
+      buttonDown.onclick=()=>{
+        const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
+        let newValue;
+        if (parameter.hasMinValue) {
+          if (parameter.minValueInclusive) {
+            newValue=Math.max(parameter.minValue,current-step);
+          } else {
+            newValue=Math.max(parameter.minValue+step,current-step);
+          }
+        } else {
+          newValue=current-step;
+        }
+        input.value=newValue.toLocaleString();
+        this.#fireParameterUpdated();
+      };
+    }
   }
 
   #buildPanel() {
@@ -261,13 +320,27 @@ class ProbabilityDistribution {
     this.#cardCharacteristics=card;
 
     /* Calculate values */
+    let buttonUp, buttonDown;
     row.appendChild(col=document.createElement("div"));
     col.className="col-lg-6";
     card=this.#addCard(col,language.distributions.infoCalcValues);
-    [this.#calcInput, this.#calcError]=this.#addInputToPanel(card,"calc",this.#calcParameterShortName,language.distributions.infoCalcParameter,this.#calcParameterDefaultValue);
+    [this.#calcInput, this.#calcError, buttonUp, buttonDown]=this.#addInputToPanel(card,"calc",this.#calcParameterShortName,language.distributions.infoCalcParameter,this.#calcParameterDefaultValue);
     this.#calcInput.onkeyup=()=>this.#fireCalcParameterUpdated();
     this.#calcInput.change=()=>this.#fireCalcParameterUpdated();
     card.appendChild(this.#calcResults=document.createElement("div"));
+
+    buttonUp.onclick=()=>{
+      const value=(this.#continuous)?getFloat(this.#calcInput):getInt(this.#calcInput);
+      if (value==null) return;
+      this.#calcInput.value=(value+1).toLocaleString();
+      this.#fireCalcParameterUpdated();
+    };
+    buttonDown.onclick=()=>{
+      const value=(this.#continuous)?getFloat(this.#calcInput):getInt(this.#calcInput);
+      if (value==null) return;
+      this.#calcInput.value=(value-1).toLocaleString();
+      this.#fireCalcParameterUpdated();
+    };
 
     this.#fireParameterUpdated();
 

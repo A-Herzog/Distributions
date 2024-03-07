@@ -118,6 +118,8 @@ lang.distributions.parameterErrorFloatMinMaxInclusiveInclusive="Es muss eine Zah
 lang.distributions.parameterErrorFloatMinMaxInclusiveExclusive="Es muss eine Zahl im Bereich von {0} (inklusive) bis {1} (exklusive) angegeben werden.";
 lang.distributions.parameterErrorFloatMinMaxExclusiveInclusive="Es muss eine Zahl im Bereich von {0} (exklusive) bis {1} (inklusive) angegeben werden.";
 lang.distributions.parameterErrorFloatMinMaxExclusiveExclusive="Es muss eine Zahl im Bereich von {0} bis {1} (jeweils exklusive der Grenzen) angegeben werden.";
+lang.distributions.parameterValueDown="Wert verringern";
+lang.distributions.parameterValueUp="Wert vergrößern";
 
 lang.distributions.hypergeometric={};
 lang.distributions.hypergeometric.name="Hypergeometrische Verteilung";
@@ -418,6 +420,8 @@ lang.distributions.parameterErrorFloatMinMaxInclusiveInclusive="A number in the 
 lang.distributions.parameterErrorFloatMinMaxInclusiveExclusive="A number in the range from {0} (inclusive) to {1} (exclusive) has to be specified.";
 lang.distributions.parameterErrorFloatMinMaxExclusiveInclusive="A number in the range from {0} (exclusive) to {1} (inclusive) has to be specified.";
 lang.distributions.parameterErrorFloatMinMaxExclusiveExclusive="A number in the range from {0} to {1} (excluding the limits in each case) has to be specified.";
+lang.distributions.parameterValueDown="Decrease value";
+lang.distributions.parameterValueUp="Increase value";
 
 lang.distributions.hypergeometric={};
 lang.distributions.hypergeometric.name="Hypergeometric distribution";
