@@ -282,7 +282,13 @@ class ProbabilityDistribution {
     row.appendChild(col=document.createElement("div"));
     col.className="col-lg-6";
     card=this.#addCard(col,language.distributions.infoParameters);
-    for (let parameter of this.#parameters) this.#addParameterToPanel(card,parameter);
+    if (this.#parameters.length==0) {
+      const p=document.createElement("p");
+      p.innerHTML=language.distributions.infoNoParameters;
+      card.appendChild(p);
+    } else {
+      for (let parameter of this.#parameters) this.#addParameterToPanel(card,parameter);
+    }
 
     /* Visualization */
     card=this.#addCard(span,this.#continuous?language.distributions.infoVisualizationContinuous:language.distributions.infoVisualizationDiscrete);
@@ -816,7 +822,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
 
     /* Get min and max X */
     let minX, maxX;
-    [minX, maxX]=this.getDiscretePositiveSupport(values);
+    [minX, maxX]=this.getDiscreteSupport(values);
     if (isNaN(maxX) || maxX>1000) maxX=1000;
     const paddingX=Math.min(10,Math.max(3,Math.round((maxX-minX)/10)));
 
@@ -941,7 +947,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    * @param {Number} value Value to calculate the probability for
    */
   _calcValues(parameterValues, value) {
-    const support=this.getDiscretePositiveSupport(parameterValues);
+    const support=this.getDiscreteSupport(parameterValues);
 
     const k=variable("k");
     const X=variable("X");
@@ -973,7 +979,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    * @param {Object} values Object containing the values for the parameter ids
    * @returns 2 element array containing the minimum and the maximum value for which P(X=k)>0
    */
-  getDiscretePositiveSupport(values) {
+  getDiscreteSupport(values) {
     return [0,100];
   }
 

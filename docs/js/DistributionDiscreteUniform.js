@@ -100,7 +100,7 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscretePositiveSupport(values) {
+  getDiscreteSupport(values) {
     return [values.a,values.b];
   }
   calcProbability(values, k) {

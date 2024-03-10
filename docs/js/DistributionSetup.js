@@ -40,6 +40,7 @@ import {ParetoDistribution} from './DistributionPareto.js';
 import {Chi2Distribution} from './DistributionChi2.js';
 import {ChiDistribution} from './DistributionChi.js';
 import {HalfNormalDistribution} from './DistributionHalfNormal.js';
+import {RademacherDistribution} from './DistributionRademacher.js';
 
 
 
@@ -73,6 +74,7 @@ listDistributions.push(new ParetoDistribution());
 listDistributions.push(new Chi2Distribution());
 listDistributions.push(new ChiDistribution());
 listDistributions.push(new HalfNormalDistribution());
+listDistributions.push(new RademacherDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

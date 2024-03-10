@@ -79,7 +79,7 @@ class NegativeBinomialDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscretePositiveSupport(values) {
+  getDiscreteSupport(values) {
     const mean=(values.r*(1-values.p))/values.p;
     const sd=Math.sqrt((values.r*(1-values.p))/(values.p**2));
     return [0,Math.max(50,Math.round(mean+3*sd))];

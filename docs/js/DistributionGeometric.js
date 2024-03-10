@@ -87,7 +87,7 @@ class GeometricDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscretePositiveSupport(values) {
+  getDiscreteSupport(values) {
     const mean=(1-values.p)/values.p;
     const sd=Math.sqrt((1-values.p)/(values.p**2));
     return [0,Math.max(20,Math.round(mean+3*sd))];

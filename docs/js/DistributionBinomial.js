@@ -83,7 +83,7 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscretePositiveSupport(values) {
+  getDiscreteSupport(values) {
     return [0,values.n];
   }
   calcProbability(values, k) {

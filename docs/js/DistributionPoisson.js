@@ -77,7 +77,7 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscretePositiveSupport(values) {
+  getDiscreteSupport(values) {
     return [0,Math.max(20,Math.round(values.lambda+Math.sqrt(values.lambda)*3))];
   }
   calcProbability(values, k) {

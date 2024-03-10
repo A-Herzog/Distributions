@@ -55,6 +55,7 @@ lang.distributions.infoPropertiesType="Typ";
 lang.distributions.infoPropertiesSupport="Träger";
 lang.distributions.infoPropertiesWikipediaLink="Mehr Informationen in der Wikipedia";
 lang.distributions.infoParameters="Parameter";
+lang.distributions.infoNoParameters="Die Verteilung besitzt keine Parameter.";
 lang.distributions.infoVisualizationDiscrete="Zähldichte und Verteilungsfunktion";
 lang.distributions.infoVisualizationContinuous="Dichte und Verteilungsfunktion";
 lang.distributions.infoCharacteristic="Kenngröße";
@@ -105,6 +106,8 @@ lang.distributions.PDFContinuous="Dichte";
 lang.distributions.CDF="Verteilungsfunktion";
 lang.distributions.for="für";
 lang.distributions.with="mit";
+lang.distributions.and="und";
+lang.distributions.else="sonst";
 lang.distributions.parameterErrorInt="Es muss eine Ganzzahl angegeben werden.";
 lang.distributions.parameterErrorIntMin="Es muss eine Ganzzahl &ge; {0} angegeben werden.";
 lang.distributions.parameterErrorIntMax="Es muss eine Ganzzahl &le; {0} angegeben werden.";
@@ -164,6 +167,11 @@ lang.distributions.negativeBinomial.info="Die negative Binomialverteilung gibt W
 lang.distributions.negativeBinomial.wikipedia="https://de.wikipedia.org/wiki/Negative_Binomialverteilung";
 lang.distributions.negativeBinomial.parameterInfor="Anzahl Erfolge bis zum Abbruch";
 lang.distributions.negativeBinomial.parameterInfop="Wahrscheinlichkeit für einen Erfolg";
+
+lang.distributions.rademacher={};
+lang.distributions.rademacher.name="Rademacherverteilung";
+lang.distributions.rademacher.info="Die Rademacherverteilung wird u.a. zur Modellierung von einfachen Irrfahrten auf <abbr title='Ganze Zahlen &#x2124;=...,-3,-2,-1,0,1,2,3,...'>&#x2124;</abbr> verwendet.";
+lang.distributions.rademacher.wikipedia="https://de.wikipedia.org/wiki/Rademacherverteilung";
 
 lang.distributions.zeta={};
 lang.distributions.zeta.name="Zeta-Verteilung";
@@ -357,6 +365,7 @@ lang.distributions.infoPropertiesType="Type";
 lang.distributions.infoPropertiesSupport="Support";
 lang.distributions.infoPropertiesWikipediaLink="More information in Wikipedia";
 lang.distributions.infoParameters="Parameters";
+lang.distributions.infoNoParameters="The distribution has no parameters.";
 lang.distributions.infoVisualizationDiscrete="Count density and cumulative distribution function";
 lang.distributions.infoVisualizationContinuous="Density and cumulative distribution function";
 lang.distributions.infoCharacteristic="Characteristic";
@@ -407,6 +416,8 @@ lang.distributions.PDFContinuous="Density";
 lang.distributions.CDF="Cumulative distribution function";
 lang.distributions.for="for";
 lang.distributions.with="with";
+lang.distributions.and="and";
+lang.distributions.else="else";
 lang.distributions.parameterErrorInt="An integer number has to be specified.";
 lang.distributions.parameterErrorIntMin="An integer number &ge; {0} has to be specified.";
 lang.distributions.parameterErrorIntMax="An integer number &le; {0} has to be specified.";
@@ -466,6 +477,11 @@ lang.distributions.negativeBinomial.info="The negative binomial distribution giv
 lang.distributions.negativeBinomial.wikipedia="https://en.wikipedia.org/wiki/Negative_binomial_distribution";
 lang.distributions.negativeBinomial.parameterInfor="Number of successes until termination";
 lang.distributions.negativeBinomial.parameterInfop="Probability of success";
+
+lang.distributions.rademacher={};
+lang.distributions.rademacher.name="Rademacher distribution";
+lang.distributions.rademacher.info="The Rademacher distribution is used, among other things, to model basic wandering on <abbr title='Integer numbers &#x2124;=...,-3,-2,-1,0,1,2,3,...'>&#x2124;</abbr>.";
+lang.distributions.rademacher.wikipedia="https://en.wikipedia.org/wiki/Rademacher_distribution";
 
 lang.distributions.zeta={};
 lang.distributions.zeta.name="Zeta distribution";
