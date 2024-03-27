@@ -168,6 +168,16 @@ lang.distributions.negativeBinomial.wikipedia="https://de.wikipedia.org/wiki/Neg
 lang.distributions.negativeBinomial.parameterInfor="Anzahl Erfolge bis zum Abbruch";
 lang.distributions.negativeBinomial.parameterInfop="Wahrscheinlichkeit für einen Erfolg";
 
+lang.distributions.negativeHypergeometric={};
+lang.distributions.negativeHypergeometric.name="Negative hypergeometrische Verteilung";
+lang.distributions.negativeHypergeometric.info="In einer Urne befinden sich insgesamt <b>N</b> Kugeln, <b>R</b> rote und <b>N-R</b> schwarze. Es wird solange ohne Zurücklegen gezogen, bis rote <b>n</b> Kugeln gezogen wurden. Die negative hypergeometrische Verteilung gibt wie Wahrscheinlichkeit an, dafür <b>k</b> Kugeln ziehen zu müssen.";
+lang.distributions.negativeHypergeometric.wikipedia="https://de.wikipedia.org/wiki/Negative_hypergeometrische_Verteilung";
+lang.distributions.negativeHypergeometric.parameterInfoN="Anzahl an Kugeln in der Urne";
+lang.distributions.negativeHypergeometric.parameterInfoR="Anzahl an roten Kugeln in der Urne";
+lang.distributions.negativeHypergeometric.parameterInfoRError="Die Anzahl an roten Kugeln <i>R</i> kann nicht größer als die Gesamtanzahl an Kugeln <i>N</i> sein.";
+lang.distributions.negativeHypergeometric.parameterInfon="Anzahl der roten Kugeln, die ohne Zurücklegen gezogen werden sollen";
+lang.distributions.negativeHypergeometric.parameterInfonError="Es können nicht mehr rote Kugeln ohne Zurücklegen gezogen werden (<i>n</i>), als insgesamt in der Urne enthalten sind (<i>R</i>).";
+
 lang.distributions.rademacher={};
 lang.distributions.rademacher.name="Rademacherverteilung";
 lang.distributions.rademacher.info="Die Rademacherverteilung wird u.a. zur Modellierung von einfachen Irrfahrten auf <abbr title='Ganze Zahlen &#x2124;=...,-3,-2,-1,0,1,2,3,...'>&#x2124;</abbr> verwendet.";
@@ -477,6 +487,16 @@ lang.distributions.negativeBinomial.info="The negative binomial distribution giv
 lang.distributions.negativeBinomial.wikipedia="https://en.wikipedia.org/wiki/Negative_binomial_distribution";
 lang.distributions.negativeBinomial.parameterInfor="Number of successes until termination";
 lang.distributions.negativeBinomial.parameterInfop="Probability of success";
+
+lang.distributions.negativeHypergeometric={};
+lang.distributions.negativeHypergeometric.name="Negative hypergeometric distribution";
+lang.distributions.negativeHypergeometric.info="An urn contains a total of <b>N</b> balls, <b>R</b> red and <b>N-R</b> black. The balls are drawn without putting them back until <b>n</b> red balls have been drawn. The negative hypergeometric distribution indicates the probability of having to draw <b>k</b> balls.";
+lang.distributions.negativeHypergeometric.wikipedia="https://en.wikipedia.org/wiki/Negative_hypergeometric_distribution";
+lang.distributions.negativeHypergeometric.parameterInfoN="Number of balls in the urn";
+lang.distributions.negativeHypergeometric.parameterInfoR="Number of red balls in the urn";
+lang.distributions.negativeHypergeometric.parameterInfoRError="The number of red balls <i>R</u> cannot be greater than the total number of balls <i>N</i>.";
+lang.distributions.negativeHypergeometric.parameterInfon="Number of reds balls, which are drawn without putting them back";
+lang.distributions.negativeHypergeometric.parameterInfonError="No more reds balls can be drawn without putting them back (<i>n</i>) than the total number of balls in the urn (<i>R</i>).";
 
 lang.distributions.rademacher={};
 lang.distributions.rademacher.name="Rademacher distribution";
