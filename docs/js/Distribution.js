@@ -681,6 +681,30 @@ class ProbabilityDistribution {
   }
 
   /**
+   * Adds a discrete valued parameter to the editor for the probability distribution
+   * @param {String} id Internal id for the parameter
+   * @param {String} shortName Name to be displayed left to the parameter input field
+   * @param {String} fullName Name to be displayed above the parameter input field
+   * @param {Number} minValue Minimum value (typical 0 or 1)
+   * @param {Number} maxValue Maximum value
+   * @param {Number} defaultValue Default value in the editor for the parameter
+   */
+  _addDiscreteParameterMinMax(id, shortName, fullName, minValue, maxValue, defaultValue) {
+    const parameter={
+      id: id,
+      shortName: shortName,
+      fullName: fullName,
+      discrete: true,
+      hasMinValue: (minValue!=null),
+      minValue: minValue,
+      hasMaxValue: (maxValue!=null),
+      maxValue: maxValue,
+      defaultValue: defaultValue
+    };
+    this.#parameters.push(parameter);
+  }
+
+  /**
    * Adds a continuous valued parameter to the editor for the probability distribution
    * @param {String} id Internal id for the parameter
    * @param {String} shortName Name to be displayed left to the parameter input field
@@ -1014,6 +1038,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
  * Abstract base class for all continuous probability distribution classes
  */
 class ContinuousProbabilityDistribution extends ProbabilityDistribution {
+  #diagramMinX;
+  #diagramMaxX;
   #chartOptions;
   #diagramXValues;
   #mean;
@@ -1117,6 +1143,9 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    */
   _setContinuousDiagram(minX, maxX, pdfCallback, cdfCallback) {
     const that=this;
+
+    this.#diagramMinX=minX;
+    this.#diagramMaxX=maxX;
 
     /* Build PDF and CDF data sets */
     const step=(maxX-minX)/500;
@@ -1303,6 +1332,14 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    */
   get variance() {
     return this.#variance;
+  }
+
+    /**
+   * Gets the support used by the diagram.
+   * @returns 2 element array containing the minimum and the maximum x value in the diagram
+   */
+  getDiagramSupport() {
+    return [this.#diagramMinX,this.#diagramMaxX];
   }
 }
 

@@ -323,6 +323,12 @@ lang.distributions.halfNormal.info="Die halbe Normalverteilung kombiniert den Ve
 lang.distributions.halfNormal.wikipedia="https://de.wikipedia.org/wiki/Normalverteilung";
 lang.distributions.halfNormal.parameterInfoMu="Erwartungswert";
 
+lang.distributions.irwinhall={};
+lang.distributions.irwinhall.name="Irwin-Hall-Verteilung";
+lang.distributions.irwinhall.info="Die Irwin-Hall-Verteilung ist die Verteilung der Summe von unabhängigen, im Intervall [0;1] gleichverteilten Zufallsvariablen.";
+lang.distributions.irwinhall.wikipedia="https://de.wikipedia.org/wiki/Irwin-Hall-Verteilung";
+lang.distributions.irwinhall.parameterInfon="Anzahl der zu summierenden Gleichverteilungen";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -642,6 +648,12 @@ lang.distributions.halfNormal.name="Half normal distribution";
 lang.distributions.halfNormal.info="The half normal distribution combines the course of the normal distribution with the property that only non-negative x-values are assigned a positive density.";
 lang.distributions.halfNormal.wikipedia="https://en.wikipedia.org/wiki/Normal_distribution";
 lang.distributions.halfNormal.parameterInfoMu="Expected value";
+
+lang.distributions.irwinhall={};
+lang.distributions.irwinhall.name="Irwin-Hall distribution";
+lang.distributions.irwinhall.info="The Irwin-Hall distribution is the distribution of the sum of independent random variables that are uniform distributed in the interval [0;1].";
+lang.distributions.irwinhall.wikipedia="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution";
+lang.distributions.irwinhall.parameterInfon="Number uniform distributions to be summed";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

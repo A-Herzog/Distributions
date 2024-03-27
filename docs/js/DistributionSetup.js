@@ -23,6 +23,7 @@ import {DiscreteUniformDistribution} from './DistributionDiscreteUniform.js';
 import {NegativeHypergeometricDistribution} from './DistributionNegativeHypergeometric.js';
 import {NegativeBinomialDistribution} from './DistributionNegativeBinomial.js';
 import {ZetaDistribution} from './DistributionZeta.js';
+import {RademacherDistribution} from './DistributionRademacher.js';
 import {UniformDistribution} from './DistributionUniform.js';
 import {ExponentialDistribution} from './DistributionExponential.js';
 import {NormalDistribution} from './DistributionNormal.js';
@@ -41,7 +42,7 @@ import {ParetoDistribution} from './DistributionPareto.js';
 import {Chi2Distribution} from './DistributionChi2.js';
 import {ChiDistribution} from './DistributionChi.js';
 import {HalfNormalDistribution} from './DistributionHalfNormal.js';
-import {RademacherDistribution} from './DistributionRademacher.js';
+import {IrwinHallDistribution} from './DistributionIrwinHall.js';
 
 
 
@@ -77,6 +78,7 @@ listDistributions.push(new Chi2Distribution());
 listDistributions.push(new ChiDistribution());
 listDistributions.push(new HalfNormalDistribution());
 listDistributions.push(new RademacherDistribution());
+listDistributions.push(new IrwinHallDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
