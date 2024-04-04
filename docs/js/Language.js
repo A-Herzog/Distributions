@@ -329,6 +329,12 @@ lang.distributions.irwinhall.info="Die Irwin-Hall-Verteilung ist die Verteilung 
 lang.distributions.irwinhall.wikipedia="https://de.wikipedia.org/wiki/Irwin-Hall-Verteilung";
 lang.distributions.irwinhall.parameterInfon="Anzahl der zu summierenden Gleichverteilungen";
 
+lang.distributions.wignerSemicircle={};
+lang.distributions.wignerSemicircle.name="Wigner Halbkreisverteilung";
+lang.distributions.wignerSemicircle.info="Ber der nach dem Physiker Eugene Wigner benannten Verteilung bildet die Dichte einen Halbkreis mit Radius <b>R</b>. Die Verteilung tritt u.a. als Grenzverteilung der Eigenwerte verschiedener symmetrischer Matrizen auf.";
+lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution"; /* Leide keine deutsche Seite vorhanden */
+lang.distributions.wignerSemicircle.parameterInfoR="Radius";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -654,6 +660,12 @@ lang.distributions.irwinhall.name="Irwin-Hall distribution";
 lang.distributions.irwinhall.info="The Irwin-Hall distribution is the distribution of the sum of independent random variables that are uniform distributed in the interval [0;1].";
 lang.distributions.irwinhall.wikipedia="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution";
 lang.distributions.irwinhall.parameterInfon="Number uniform distributions to be summed";
+
+lang.distributions.wignerSemicircle={};
+lang.distributions.wignerSemicircle.name="Wigner semicircle distribution";
+lang.distributions.wignerSemicircle.info="In the distribution named after the physicist Eugene Wigner, the density forms a semicircle with a radius <b>R</b>. The distribution occurs, among other things, as a limit distribution of the eigenvalues of various symmetrical matrices.";
+lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution";
+lang.distributions.wignerSemicircle.parameterInfoR="Radius";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
