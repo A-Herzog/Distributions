@@ -741,6 +741,21 @@ class ProbabilityDistribution {
     this.#calcParameterShortName=shortName;
     this.#calcParameterDefaultValue=defaultValue;
   }
+
+  /**
+   * Creates and adds a button below the diagram.
+   * @param {String} icon class name of the icon to be displayed on the button
+   * @param {String} title Text to be displayed on the button
+   * @returns Button html element
+   */
+  _addButton(icon, title) {
+    const button=document.createElement("button");
+    this.canvasInfo.appendChild(button);
+    button.type="button";
+    button.className="btn btn-primary btn-sm "+icon+" mt-1 me-2";
+    button.innerHTML=" "+title;
+    return button;
+  }
 }
 
 
@@ -842,7 +857,6 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    */
   _updateDiscreteDiagram() {
     const values=this._currentParameterValues;
-    const that=this;
 
     /* Get min and max X */
     let minX, maxX;
@@ -878,89 +892,107 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     });
 
     /* Init table and random numbers buttons on first call */
-    if (this.canvasInfo.children.length==0) {
-      let button;
-      /* Reset zoom */
-      this.canvasInfo.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2";
-      button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
-      button.onclick=()=>this.chart.resetZoom();
+    if (this.canvasInfo.children.length==0) this._initButtons();
+  }
 
-      /* Show table */
-      this.canvasInfo.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-primary btn-sm bi-table mt-1 me-2";
-      button.innerHTML=" "+language.distributions.infoDiagramShowValues;
-      let distShortName=this.constructor.name;
-      distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
-      button.onclick=()=>{
-        const params=[];
-        for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-        const searchString="?distribution="+distShortName+"&"+params.join("&");
-        if (isDesktopApp) {
-          /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-          /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        } else {
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        }
+  /**
+   * Adds buttons below diagram.
+   */
+  _initButtons() {
+    const that=this;
+    let button;
+
+    /* Reset zoom */
+    this.canvasInfo.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2";
+    button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
+    button.onclick=()=>this.chart.resetZoom();
+    /* Show table */
+    this.canvasInfo.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-primary btn-sm bi-table mt-1 me-2";
+    button.innerHTML=" "+language.distributions.infoDiagramShowValues;
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&"+params.join("&");
+      if (isDesktopApp) {
+        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
+      } else {
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
       }
+    }
 
-      /* Export diagram */
-      const div=document.createElement("div");
-      div.className="dropdown";
-      div.style.display="inline-block";
-      this.canvasInfo.appendChild(div);
-      div.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
-      button.dataset.bsToggle="dropdown";
-      button.innerHTML=" "+language.distributions.infoDiagramExport;
-      const ul=document.createElement("ul");
-      ul.className="dropdown-menu";
-      div.appendChild(ul);
-      let li;
-      ul.appendChild(li=document.createElement("li"));
-      li.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="bi-clipboard dropdown-item";
-      button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
-      button.onclick=()=>{
-        if (typeof(ClipboardItem)!="undefined") {
-          that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
-        } else {
-          alert(language.distributions.infoDiagramExportCopyError);
-        }
-      };
-      ul.appendChild(li=document.createElement("li"));
-      li.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="bi-download dropdown-item";
-      button.innerHTML=" "+language.distributions.infoDiagramExportSave;
-      button.onclick=()=>{
-        const element=document.createElement("a");
-        element.href=that.canvas.toDataURL("image/png");
-        element.download="diagram.png";
-        element.click();
-      };
+    /* Export diagram */
+    const div=document.createElement("div");
+    div.className="dropdown";
+    div.style.display="inline-block";
+    this.canvasInfo.appendChild(div);
+    div.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
+    button.dataset.bsToggle="dropdown";
+    button.innerHTML=" "+language.distributions.infoDiagramExport;
+    const ul=document.createElement("ul");
+    ul.className="dropdown-menu";
+    div.appendChild(ul);
+    let li;
+    ul.appendChild(li=document.createElement("li"));
+    li.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="bi-clipboard dropdown-item";
+    button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+    button.onclick=()=>{
+      if (typeof(ClipboardItem)!="undefined") {
+        that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+      } else {
+        alert(language.distributions.infoDiagramExportCopyError);
+      }
+    };
+    ul.appendChild(li=document.createElement("li"));
+    li.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="bi-download dropdown-item";
+    button.innerHTML=" "+language.distributions.infoDiagramExportSave;
+    button.onclick=()=>{
+      const element=document.createElement("a");
+      element.href=that.canvas.toDataURL("image/png");
+      element.download="diagram.png";
+      element.click();
+    };
 
-      /* Random numbers */
-      this.canvasInfo.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-primary btn-sm bi-123 mt-1";
-      button.innerHTML=" "+language.distributions.infoDiagramGenerateRandomNumbers;
-      button.onclick=()=>{
-        const params=[];
-        for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-        const searchString="?distribution="+distShortName+"&random=1&"+params.join("&");
-        if (isDesktopApp) {
-          /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-          /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        } else {
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        }
+    /* Random numbers */
+    button=this._addButton("bi-123",language.distributions.infoDiagramGenerateRandomNumbers);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&random=1&"+params.join("&");
+      if (isDesktopApp) {
+        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
+      } else {
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
+      }
+    }
+
+    /* Law of large numbers */
+    button=this._addButton("bi-bar-chart",language.distributions.infoDiagramLawOfLargeNumbers);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&"+params.join("&");
+      if (isDesktopApp) {
+        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
+        window.open(language.distributions.infoDiagramSimFile+searchString);
+      } else {
+        window.open(language.distributions.infoDiagramSimFile+searchString);
       }
     }
   }
@@ -1142,8 +1174,6 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    * @param {Function} cdfCallback  Callback for getting an individual cdf value
    */
   _setContinuousDiagram(minX, maxX, pdfCallback, cdfCallback) {
-    const that=this;
-
     this.#diagramMinX=minX;
     this.#diagramMaxX=maxX;
 
@@ -1173,89 +1203,108 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     });
 
     /* Init download and random numbers buttons on first call */
-    if (this.canvasInfo.children.length==0) {
-      let button;
-      /* Reset zoom */
-      this.canvasInfo.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2";
-      button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
-      button.onclick=()=>this.chart.resetZoom();
+    if (this.canvasInfo.children.length==0) this._initButtons();
+  }
 
-      /* Show table */
-      this.canvasInfo.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-primary btn-sm bi-table mt-1 me-2";
-      button.innerHTML=" "+language.distributions.infoDiagramShowValues;
-      let distShortName=this.constructor.name;
-      distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
-      button.onclick=()=>{
-        const params=[];
-        for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-        const searchString="?distribution="+distShortName+"&"+params.join("&");
-        if (isDesktopApp) {
-          /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-          /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        } else {
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        }
+  /**
+   * Adds buttons below diagram.
+   */
+  _initButtons() {
+    const that=this;
+    let button;
+
+    /* Reset zoom */
+    this.canvasInfo.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2";
+    button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
+    button.onclick=()=>this.chart.resetZoom();
+
+    /* Show table */
+    this.canvasInfo.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-primary btn-sm bi-table mt-1 me-2";
+    button.innerHTML=" "+language.distributions.infoDiagramShowValues;
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&"+params.join("&");
+      if (isDesktopApp) {
+        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
+      } else {
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
       }
+    }
 
-      /* Export diagram */
-      const div=document.createElement("div");
-      div.className="dropdown";
-      div.style.display="inline-block";
-      this.canvasInfo.appendChild(div);
-      div.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
-      button.dataset.bsToggle="dropdown";
-      button.innerHTML=" "+language.distributions.infoDiagramExport;
-      const ul=document.createElement("ul");
-      ul.className="dropdown-menu";
-      div.appendChild(ul);
-      let li;
-      ul.appendChild(li=document.createElement("li"));
-      li.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="bi-clipboard dropdown-item";
-      button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
-      button.onclick=()=>{
-        if (typeof(ClipboardItem)!="undefined") {
-          that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
-        } else {
-          alert(language.distributions.infoDiagramExportCopyError);
-        }
-      };
-      ul.appendChild(li=document.createElement("li"));
-      li.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="bi-download dropdown-item";
-      button.innerHTML=" "+language.distributions.infoDiagramExportSave;
-      button.onclick=()=>{
-        const element=document.createElement("a");
-        element.href=that.canvas.toDataURL("image/png");
-        element.download="diagram.png";
-        element.click();
-      };
+    /* Export diagram */
+    const div=document.createElement("div");
+    div.className="dropdown";
+    div.style.display="inline-block";
+    this.canvasInfo.appendChild(div);
+    div.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
+    button.dataset.bsToggle="dropdown";
+    button.innerHTML=" "+language.distributions.infoDiagramExport;
+    const ul=document.createElement("ul");
+    ul.className="dropdown-menu";
+    div.appendChild(ul);
+    let li;
+    ul.appendChild(li=document.createElement("li"));
+    li.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="bi-clipboard dropdown-item";
+    button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+    button.onclick=()=>{
+      if (typeof(ClipboardItem)!="undefined") {
+        that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+      } else {
+        alert(language.distributions.infoDiagramExportCopyError);
+      }
+    };
+    ul.appendChild(li=document.createElement("li"));
+    li.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="bi-download dropdown-item";
+    button.innerHTML=" "+language.distributions.infoDiagramExportSave;
+    button.onclick=()=>{
+      const element=document.createElement("a");
+      element.href=that.canvas.toDataURL("image/png");
+      element.download="diagram.png";
+      element.click();
+    };
 
-      /* Random numbers */
-      this.canvasInfo.appendChild(button=document.createElement("button"));
-      button.type="button";
-      button.className="btn btn-primary btn-sm bi-123 mt-1";
-      button.innerHTML=" "+language.distributions.infoDiagramGenerateRandomNumbers;
-      button.onclick=()=>{
-        const params=[];
-        for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-        const searchString="?distribution="+distShortName+"&random=&"+params.join("&");
-        if (isDesktopApp) {
-          /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-          /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        } else {
-          window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-        }
+    /* Random numbers */
+    button=this._addButton("bi-123",language.distributions.infoDiagramGenerateRandomNumbers);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&random=&"+params.join("&");
+      if (isDesktopApp) {
+        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
+      } else {
+        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
+      }
+    }
+
+    /* Law of large numbers */
+    button=this._addButton("bi-bar-chart",language.distributions.infoDiagramLawOfLargeNumbers);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&"+params.join("&");
+      if (isDesktopApp) {
+        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
+        window.open(language.distributions.infoDiagramSimFile+searchString);
+      } else {
+        window.open(language.distributions.infoDiagramSimFile+searchString);
       }
     }
   }

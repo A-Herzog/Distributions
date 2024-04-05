@@ -78,6 +78,7 @@ lang.distributions.infoDiagramResetZoom="Standardzoom";
 lang.distributions.infoDiagramZoomInfo="Mit gedrückter <span class='border rounded-1 ps-1 pe-1 bg-light'><tt>Strg</tt></span>-Taste kann per Mausrad gezoomt werden und es können Zoom-Rahmen aufgezogen werden.";
 lang.distributions.infoDiagramShowValues="Tabelle";
 lang.distributions.infoDiagramShowValuesFile="table_de.html";
+lang.distributions.infoDiagramSimFile="sim_de.html";
 lang.distributions.infoDiagramShowValuesStep="Schrittweite";
 lang.distributions.infoDiagramCopyValues="Werte kopieren";
 lang.distributions.infoDiagramSaveValues="Werte speichern";
@@ -101,6 +102,34 @@ lang.distributions.infoDiagramGenerateRandomNumbersGenerateNewShort="Neu";
 lang.distributions.infoCalcParameter="Parameter";
 lang.distributions.infoCalcValues="Werte berechnen";
 lang.distributions.infoCalcValuesError="Bitte korrigieren Sie die Werte für die Verteilungsparameter. Dann werden können hier konkrete Wahrscheinlichkeiten berechnet werden.";
+lang.distributions.infoDiagramLawOfLargeNumbers="Gesetz der großen Zahlen";
+lang.distributions.infoDiagramLawOfLargeNumbersInfo=`Das arithmetische Mittel
+<math><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><munderover><mo>&sum;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>X</mi><mi>i</mi></msub></math>
+aus i.i.d. verteilten Zufallsvariablen konvergiert fast sicher gegen den Erwartungswert
+<math><mrow><mi mathvariant='normal'>E</mi><mo>[</mo><msub><mi>X</mi><mn>1</mn></msub><mo>]</mo></mrow></math>.
+Zur Veranschaulichung werden Zufallszahlen zu der auswählten Verteilung erzeugt (dies entspricht einer Beobachtung von <math><msub><mi>X</mi><mn>1</mn></msub></math>, <math><msub><mi>X</mi><mn>2</mn></msub></math>, ...).
+Im rechten Bild werden die (Zähl-) Dichte der Verteilung und die relativen Häufigkeiten der simulierten Werte gezeigt. Im linken Bild markiert die grüne Linie den Erwartungswert <math><mrow><mi mathvariant='normal'>E</mi><mo>[</mo><msub><mi>X</mi><mn>1</mn></msub><mo>]</mo></mrow></math>,
+die rote Linie zeigt den Verlauf des arithmetischen Mittels der Zufallszahlen.`;
+lang.distributions.infoDiagramLawOfLargeNumbersHeadingMeanExpectedValue="Mittelwert und Erwartungswert";
+lang.distributions.infoDiagramLawOfLargeNumbersHeadingDensitySample="Dichte und Stichprobe";
+lang.distributions.infoDiagramLawOfLargeNumbersScaleExpectedValueMean="Erwartungswert bzw. Mittelwert";
+lang.distributions.infoDiagramLawOfLargeNumbersScalePercentage="Anteil (in %)";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetExpectedValue="Erwartungswert";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetMean="Arithmetisches Mittel";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetDiscreteDensity="Zähldichte";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetDiscreteSample="Stichprobe";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensity="Dichte";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensityHistogramBarWidth="Histogrammbalkenbreite";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousSample="Stichprobe";
+lang.distributions.infoDiagramLawOfLargeNumbersControlStep="Einzelschritt";
+lang.distributions.infoDiagramLawOfLargeNumbersControlStart="Start";
+lang.distributions.infoDiagramLawOfLargeNumbersControlStop="Stopp";
+lang.distributions.infoDiagramLawOfLargeNumbersControlReset="Zurücksetzen";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber="Neuste Zufallszahl";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoSampleValues="Stichprobenwerte";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoExpectedValueOfDistribution="Erwartungswert der Wahrscheinlichkeitsverteilung";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues="Arithmetisches Mittel der Stichprobenwerte";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue="Relative Abweichung Mittelwert zu Erwartungswert";
 lang.distributions.PDFDiscrete="Zähldichte";
 lang.distributions.PDFContinuous="Dichte";
 lang.distributions.CDF="Verteilungsfunktion";
@@ -410,6 +439,7 @@ lang.distributions.infoDiagramResetZoom="Reset zoom";
 lang.distributions.infoDiagramZoomInfo="By holding down the <span class='border rounded-1 ps-1 pe-1 bg-light'><tt>Ctrl</tt></span> key, the mouse wheel can be used to zoom in and out, and zoom frames can be drawn.";
 lang.distributions.infoDiagramShowValues="Table";
 lang.distributions.infoDiagramShowValuesFile="table.html";
+lang.distributions.infoDiagramSimFile="sim.html";
 lang.distributions.infoDiagramShowValuesStep="Step";
 lang.distributions.infoDiagramCopyValues="Copy values";
 lang.distributions.infoDiagramSaveValues="Save values";
@@ -433,6 +463,34 @@ lang.distributions.infoDiagramGenerateRandomNumbersGenerateNewShort="New";
 lang.distributions.infoCalcParameter="Parameter";
 lang.distributions.infoCalcValues="Calculate values";
 lang.distributions.infoCalcValuesError="Please correct the values for the distribution parameters. Then probability values can be calculated here.";
+lang.distributions.infoDiagramLawOfLargeNumbers="Law of large numbers";
+lang.distributions.infoDiagramLawOfLargeNumbersInfo=`The arithmetic mean
+<math><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><munderover><mo>&sum;</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><msub><mi>X</mi><mi>i</mi></msub></math>
+of i.i.d. distributed random variables almost certainly converges towards the expected value
+<math><mrow><mi mathvariant='normal'>E</mi><mo>[</mo><msub><mi>X</mi><mn>1</mn></msub><mo>]</mo></mrow></math>.
+To illustrate this, random numbers are generated for the selected distribution (this corresponds to an observation of <math><msub><mi>X</mi><mn>1</mn></msub></math>, <math><msub><mi>X</mi><mn>2</mn></msub></math>, ...).
+The disgram on the right shows the (count) density of the distribution and the relative frequencies of the simulated values. In the left-hand diagram, the green line marks the expected value <math><mrow><mi mathvariant='normal'>E</mi><mo>[</mo><msub><mi>X</mi><mn>1</mn></msub><mo>]</mo></mrow></math>,
+the red line shows the course of the arithmetic mean of the random numbers.`;
+lang.distributions.infoDiagramLawOfLargeNumbersHeadingMeanExpectedValue="Mean and expected value";
+lang.distributions.infoDiagramLawOfLargeNumbersHeadingDensitySample="Density and sample";
+lang.distributions.infoDiagramLawOfLargeNumbersScaleExpectedValueMean="Expected value or mean value";
+lang.distributions.infoDiagramLawOfLargeNumbersScalePercentage="Percentage";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetExpectedValue="Expected value";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetMean="Arithmetic mean";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetDiscreteDensity="Count density";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetDiscreteSample="Sample";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensity="Density";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensityHistogramBarWidth="Histogram bar width";
+lang.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousSample="Simaple";
+lang.distributions.infoDiagramLawOfLargeNumbersControlStep="Step";
+lang.distributions.infoDiagramLawOfLargeNumbersControlStart="Start";
+lang.distributions.infoDiagramLawOfLargeNumbersControlStop="Stop";
+lang.distributions.infoDiagramLawOfLargeNumbersControlReset="Reset";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber="Newest random number";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoSampleValues="Sample values";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoExpectedValueOfDistribution="Expected value of the probability distribution";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues="Arithmetic mean of the sample values";
+lang.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue="Relative deviation of mean value from expected value";
 lang.distributions.PDFDiscrete="Count density";
 lang.distributions.PDFContinuous="Density";
 lang.distributions.CDF="Cumulative distribution function";
