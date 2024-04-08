@@ -361,8 +361,16 @@ lang.distributions.irwinhall.parameterInfon="Anzahl der zu summierenden Gleichve
 lang.distributions.wignerSemicircle={};
 lang.distributions.wignerSemicircle.name="Wigner Halbkreisverteilung";
 lang.distributions.wignerSemicircle.info="Ber der nach dem Physiker Eugene Wigner benannten Verteilung bildet die Dichte einen Halbkreis mit Radius <b>R</b>. Die Verteilung tritt u.a. als Grenzverteilung der Eigenwerte verschiedener symmetrischer Matrizen auf.";
-lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution"; /* Leide keine deutsche Seite vorhanden */
+lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution"; /* Leider keine deutsche Seite vorhanden */
 lang.distributions.wignerSemicircle.parameterInfoR="Radius";
+
+lang.distributions.uQuadratic={}
+lang.distributions.uQuadratic.name="U-quadratische Verteilung";
+lang.distributions.uQuadratic.info="Die U-quadratische Verteilung wird zur Modellierung von bimodalen Prozessen verwendet.";
+lang.distributions.uQuadratic.wikipedia="https://en.wikipedia.org/wiki/U-quadratic_distribution"; /* Leider keine deutsche Seite vorhanden */
+lang.distributions.uQuadratic.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.uQuadratic.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.uQuadratic.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
@@ -724,6 +732,14 @@ lang.distributions.wignerSemicircle.name="Wigner semicircle distribution";
 lang.distributions.wignerSemicircle.info="In the distribution named after the physicist Eugene Wigner, the density forms a semicircle with a radius <b>R</b>. The distribution occurs, among other things, as a limit distribution of the eigenvalues of various symmetrical matrices.";
 lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution";
 lang.distributions.wignerSemicircle.parameterInfoR="Radius";
+
+lang.distributions.uQuadratic={}
+lang.distributions.uQuadratic.name="U-quadratic distribution";
+lang.distributions.uQuadratic.info="The U-quadratic distribution can be used for modelling symmetric bimodal processes.";
+lang.distributions.uQuadratic.wikipedia="https://en.wikipedia.org/wiki/U-quadratic_distribution";
+lang.distributions.uQuadratic.parameterInfoa="Lower bound";
+lang.distributions.uQuadratic.parameterInfob="Upper bound";
+lang.distributions.uQuadratic.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
