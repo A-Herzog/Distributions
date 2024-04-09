@@ -24,7 +24,7 @@ import {getFloat, getPositiveInt} from "./NumberTools.js";
 /**
  * Fills in the language strings to the GUI elements.
  */
-function initGUILanguage(distName) {
+function initGUILanguage(distName, mainTitle) {
   /* Header */
   appName1.innerHTML=distName;
   closeButton.title=language.distributions.infoDiagramCloseWindow;
@@ -39,6 +39,9 @@ function initGUILanguage(distName) {
       window.close();
     }
   }
+
+  /* Title */
+  document.getElementsByTagName("h1")[0].innerHTML=mainTitle;
 
   /* Range editor */
   rangeStepLabel.innerHTML=language.distributions.infoDiagramShowValuesStep+":=";
@@ -471,9 +474,9 @@ function initTable() {
   if (selectedColorMode==null) selectedColorMode=(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)?"dark":"light";
   document.documentElement.dataset.bsTheme=selectedColorMode;
 
-  initGUILanguage(distribution.name);
   if (rndMode) {
     /* Generate random numbers */
+    initGUILanguage(distribution.name,language.distributions.infoDiagramGenerateRandomNumbersTitle);
     if (distribution.discrete) {
       generateDiscreteRandomNumbers(distribution,values,rndCount,infoArea,tableArea);
     } else {
@@ -481,6 +484,7 @@ function initTable() {
     }
   } else {
     /* Show PDF and CDF table */
+    initGUILanguage(distribution.name,language.distributions.infoDiagramTable);
     const info=document.createElement("div");
     info.innerHTML=language.GUI.selectDistribution+": <b>"+distribution.nameWithParameters+"</b>";
     infoArea.appendChild(info);

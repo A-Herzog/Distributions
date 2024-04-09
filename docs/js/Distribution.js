@@ -752,7 +752,7 @@ class ProbabilityDistribution {
     const button=document.createElement("button");
     this.canvasInfo.appendChild(button);
     button.type="button";
-    button.className="btn btn-primary btn-sm "+icon+" mt-1 me-2";
+    button.className="btn btn-primary btn-sm "+icon+" mt-1 me-2 mb-2";
     button.innerHTML=" "+title;
     return button;
   }
@@ -896,6 +896,20 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
   }
 
   /**
+   * Opens a new window either in browser or in desktop app.
+   * @param {String} url URL for new window
+   */
+  _openWindow(url) {
+    if (isDesktopApp) {
+      /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+      /* Neutralino.window.create(url); */
+      window.open(url);
+    } else {
+      window.open(url);
+    }
+  }
+
+  /**
    * Adds buttons below diagram.
    */
   _initButtons() {
@@ -905,13 +919,14 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     /* Reset zoom */
     this.canvasInfo.appendChild(button=document.createElement("button"));
     button.type="button";
-    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2";
+    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
     button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
     button.onclick=()=>this.chart.resetZoom();
+
     /* Show table */
     this.canvasInfo.appendChild(button=document.createElement("button"));
     button.type="button";
-    button.className="btn btn-primary btn-sm bi-table mt-1 me-2";
+    button.className="btn btn-primary btn-sm bi-table mt-1 me-2 mb-2";
     button.innerHTML=" "+language.distributions.infoDiagramShowValues;
     let distShortName=this.constructor.name;
     distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
@@ -919,13 +934,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
       const searchString="?distribution="+distShortName+"&"+params.join("&");
-      if (isDesktopApp) {
-        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      } else {
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      }
+      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
 
     /* Export diagram */
@@ -935,7 +944,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     this.canvasInfo.appendChild(div);
     div.appendChild(button=document.createElement("button"));
     button.type="button";
-    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
+    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 mb-2 dropdown-toggle";
     button.dataset.bsToggle="dropdown";
     button.innerHTML=" "+language.distributions.infoDiagramExport;
     const ul=document.createElement("ul");
@@ -972,13 +981,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
       const searchString="?distribution="+distShortName+"&random=1&"+params.join("&");
-      if (isDesktopApp) {
-        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      } else {
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      }
+      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
 
     /* Law of large numbers */
@@ -987,13 +990,16 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
       const searchString="?distribution="+distShortName+"&"+params.join("&");
-      if (isDesktopApp) {
-        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-        window.open(language.distributions.infoDiagramSimFile+searchString);
-      } else {
-        window.open(language.distributions.infoDiagramSimFile+searchString);
-      }
+      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
+    }
+
+    /* Central limit theorem */
+    button=this._addButton("bi-plus-lg",language.distributions.infoDiagramCentralLimitTheorem);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&mode=1&"+params.join("&");
+      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
   }
 
@@ -1207,6 +1213,20 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
   }
 
   /**
+   * Opens a new window either in browser or in desktop app.
+   * @param {String} url URL for new window
+   */
+  _openWindow(url) {
+    if (isDesktopApp) {
+      /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
+      /* Neutralino.window.create(url); */
+      window.open(url);
+    } else {
+      window.open(url);
+    }
+  }
+
+  /**
    * Adds buttons below diagram.
    */
   _initButtons() {
@@ -1216,14 +1236,14 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     /* Reset zoom */
     this.canvasInfo.appendChild(button=document.createElement("button"));
     button.type="button";
-    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2";
+    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
     button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
     button.onclick=()=>this.chart.resetZoom();
 
     /* Show table */
     this.canvasInfo.appendChild(button=document.createElement("button"));
     button.type="button";
-    button.className="btn btn-primary btn-sm bi-table mt-1 me-2";
+    button.className="btn btn-primary btn-sm bi-table mt-1 me-2 mb-2";
     button.innerHTML=" "+language.distributions.infoDiagramShowValues;
     let distShortName=this.constructor.name;
     distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
@@ -1231,13 +1251,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
       const searchString="?distribution="+distShortName+"&"+params.join("&");
-      if (isDesktopApp) {
-        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      } else {
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      }
+      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
 
     /* Export diagram */
@@ -1247,7 +1261,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     this.canvasInfo.appendChild(div);
     div.appendChild(button=document.createElement("button"));
     button.type="button";
-    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle";
+    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 mb-2 dropdown-toggle";
     button.dataset.bsToggle="dropdown";
     button.innerHTML=" "+language.distributions.infoDiagramExport;
     const ul=document.createElement("ul");
@@ -1284,13 +1298,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
       const searchString="?distribution="+distShortName+"&random=&"+params.join("&");
-      if (isDesktopApp) {
-        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      } else {
-        window.open(language.distributions.infoDiagramShowValuesFile+searchString);
-      }
+      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
 
     /* Law of large numbers */
@@ -1299,13 +1307,16 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
       const searchString="?distribution="+distShortName+"&"+params.join("&");
-      if (isDesktopApp) {
-        /* Search strings (parts after "?" or "#") are not supported in Neutralino.js :( */
-        /* Neutralino.window.create('/'+language.distributions.infoDiagramShowValuesFile+searchString); */
-        window.open(language.distributions.infoDiagramSimFile+searchString);
-      } else {
-        window.open(language.distributions.infoDiagramSimFile+searchString);
-      }
+      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
+    }
+
+    /* Central limit theorem */
+    button=this._addButton("bi-plus-lg",language.distributions.infoDiagramCentralLimitTheorem);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      const searchString="?distribution="+distShortName+"&mode=1&"+params.join("&");
+      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
   }
 
