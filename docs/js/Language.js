@@ -387,6 +387,14 @@ lang.distributions.uQuadratic.parameterInfoa="Untere Bereichsgrenze";
 lang.distributions.uQuadratic.parameterInfob="Obere Bereichsgrenze";
 lang.distributions.uQuadratic.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 
+lang.distributions.reciprocal={}
+lang.distributions.reciprocal.name="Reziproke Verteilung";
+lang.distributions.reciprocal.info="Die reziproke Verteilung ist auch unter dem Namen Log-Gleichverteilung bekannt.";
+lang.distributions.reciprocal.wikipedia="https://en.wikipedia.org/wiki/Reciprocal_distribution"; /* Leider keine deutsche Seite vorhanden */
+lang.distributions.reciprocal.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.reciprocal.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.reciprocal.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -770,6 +778,14 @@ lang.distributions.uQuadratic.wikipedia="https://en.wikipedia.org/wiki/U-quadrat
 lang.distributions.uQuadratic.parameterInfoa="Lower bound";
 lang.distributions.uQuadratic.parameterInfob="Upper bound";
 lang.distributions.uQuadratic.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+
+lang.distributions.reciprocal={}
+lang.distributions.reciprocal.name="Reciprocal distribution";
+lang.distributions.reciprocal.info="The reciprocal distribution is also known as the log-uniform distribution.";
+lang.distributions.reciprocal.wikipedia="https://en.wikipedia.org/wiki/Reciprocal_distribution"; /* Leider keine deutsche Seite vorhanden */
+lang.distributions.reciprocal.parameterInfoa="Lower bound";
+lang.distributions.reciprocal.parameterInfob="Upper bound";
+lang.distributions.reciprocal.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

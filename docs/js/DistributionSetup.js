@@ -45,7 +45,7 @@ import {HalfNormalDistribution} from './DistributionHalfNormal.js';
 import {IrwinHallDistribution} from './DistributionIrwinHall.js';
 import {WignerSemicircleDistribution} from './DistributionWignerSemicircle.js';
 import {UQuadraticDistribution} from './DistributionUQuadratic.js';
-
+import {ReciprocalDistribution} from './DistributionReciprocal.js';
 
 
 /**
@@ -83,6 +83,7 @@ listDistributions.push(new RademacherDistribution());
 listDistributions.push(new IrwinHallDistribution());
 listDistributions.push(new WignerSemicircleDistribution());
 listDistributions.push(new UQuadraticDistribution());
+listDistributions.push(new ReciprocalDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
