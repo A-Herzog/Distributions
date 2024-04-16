@@ -192,6 +192,34 @@ let running=false;
 let runTimeout=null;
 const continuousHistogramSteps=20;
 
+function drawCircle(ctx, x, y, radius) {
+  ctx.strokeStyle='black';
+  ctx.fillStyle='rgb(0,140,79)';
+
+  ctx.beginPath();
+  ctx.arc(x,y,radius,0,2*Math.PI,false);
+  ctx.fill();
+  ctx.stroke();
+}
+
+function drawDice(nr) {
+  if (!dice_canvas.getContext) return;
+  const ctx=dice_canvas.getContext('2d');
+
+  const w=dice_canvas.width;
+  const h=dice_canvas.height;
+  const r=Math.min(w,h)/8;
+  ctx.clearRect(0,0,w,dice_canvas.height);
+  switch (nr) {
+    case 1: drawCircle(ctx,w/2,h/2,r); break;
+    case 2: drawCircle(ctx,w/5,h/5,r); drawCircle(ctx,4*w/5,4*h/5,r); break;
+    case 3: drawCircle(ctx,w/5,h/5,r); drawCircle(ctx,w/2,h/2,r); drawCircle(ctx,4*w/5,4*h/5,r); break;
+    case 4: drawCircle(ctx,w/5,h/5,r); drawCircle(ctx,4*w/5,h/5,r); drawCircle(ctx,w/5,4*h/5,r); drawCircle(ctx,4*w/5,4*h/5,r); break;
+    case 5: drawCircle(ctx,w/5,h/5,r); drawCircle(ctx,4*w/5,h/5,r); drawCircle(ctx,w/2,h/2,r); drawCircle(ctx,w/5,4*h/5,r); drawCircle(ctx,4*w/5,4*h/5,r); break;
+    case 6: drawCircle(ctx,w/5,h/5,r); drawCircle(ctx,4*w/5,h/5,r); drawCircle(ctx,w/5,h/2,r); drawCircle(ctx,4*w/5,h/2,r); drawCircle(ctx,w/5,4*h/5,r); drawCircle(ctx,4*w/5,4*h/5,r); break;
+  }
+}
+
 function doStepLawOfLargeNumbers(distribution, values) {
   const rnd=generateRandomNumber(distribution,values);
   count++;
@@ -222,6 +250,11 @@ function doStepLawOfLargeNumbers(distribution, values) {
   chart2.data.datasets[1].data=histogram.map(v=>v/count);
   chart2.update();
 
+  if (values.dice) {
+    dice_canvas.style.display="";
+    drawDice(rnd);
+  }
+
   const mean=lastMeanValues[lastMeanValues.length-1];
   const info=[];
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber+"="+rnd.toLocaleString());
@@ -232,6 +265,20 @@ function doStepLawOfLargeNumbers(distribution, values) {
     if (distribution.mean!=0) {
       info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue+"="+((mean-distribution.mean)/distribution.mean*100).toLocaleString()+"%");
     }
+  }
+  if (values.dice) {
+    info.push("");
+    const infoTable=[];
+    infoTable.push("<table style='display: inline;' class='table'>");
+    infoTable.push("<thead>");
+    infoTable.push("<tr><th>"+language.distributions.infoDiagramNumberOfDots+"</th>"+histogram.filter((_,index)=>(index>0)).map((_,index)=>"<th style='width: 60px;'>"+(index+1)+"</th>").join("")+"<th>Summe</th></tr>");
+    infoTable.push("</thead>");
+    infoTable.push("<tbody>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramAbsoluteFrequency+"</th>"+histogram.filter((_,index)=>(index>0)).map(value=>"<td>"+value+"</td>").join("")+"<td>"+count+"</td></tr>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramRelativeFrequency+"</th>"+histogram.filter((_,index)=>(index>0)).map(value=>"<td>"+(Math.round(value/count*1000)/10).toLocaleString()+"%</td>").join("")+"<td>100%</td></tr>");
+    infoTable.push("</tbody>");
+    infoTable.push("</table>");
+    info.push(infoTable.join(""));
   }
   return info.join("<br>");
 }
@@ -299,7 +346,7 @@ function doStep(distribution, values, mode) {
       info=doStepLawOfLargeNumbers(distribution,values);
       break;
     case 1:
-    info=doStepCentralLimitTheorem(distribution,values);
+      info=doStepCentralLimitTheorem(distribution,values);
       break;
   }
 
@@ -355,12 +402,12 @@ function initCharts(distribution, values, mode, chart1data, chart1options, chart
   playPauseButton.onclick=()=>{
     doStartStop(distribution,values,mode);
   };
-
 }
 
 function initLawOfLargeNumbers(distribution, values) {
   /* Init language */
-  initGUILanguage(distribution,language.distributions.infoDiagramLawOfLargeNumbers,language.distributions.infoDiagramLawOfLargeNumbersInfo,language.distributions.infoDiagramLawOfLargeNumbersWikipedia,language.distributions.infoDiagramLawOfLargeNumbersHeadingMeanExpectedValue,language.distributions.infoDiagramLawOfLargeNumbersHeadingDensitySample);
+  const title=(values.dice)?(language.distributions.infoDiagramDiceRollSimulation+" - "+language.distributions.infoDiagramLawOfLargeNumbers):language.distributions.infoDiagramLawOfLargeNumbers;
+  initGUILanguage(distribution,title,language.distributions.infoDiagramLawOfLargeNumbersInfo,language.distributions.infoDiagramLawOfLargeNumbersWikipedia,language.distributions.infoDiagramLawOfLargeNumbersHeadingMeanExpectedValue,language.distributions.infoDiagramLawOfLargeNumbersHeadingDensitySample);
 
   /* Init chart 1 data */
   const chart1options=getDefaultChartOptions();
@@ -370,12 +417,12 @@ function initLawOfLargeNumbers(distribution, values) {
     const mean=distribution.mean;
     if (distribution.discrete) {
       const support=distribution.getDiscreteSupport(values);
-      chart1options.scales.y.min=Math.max(mean*0.5,support[0]);
-      chart1options.scales.y.max=Math.min(mean*1.5,support[1]);
+      chart1options.scales.y.min=Math.max(Math.min(mean-1,mean*0.5),support[0]);
+      chart1options.scales.y.max=Math.min(Math.max(mean+1,mean*1.5),support[1]);
     } else {
       const support=distribution.getDiagramSupport();
-      chart1options.scales.y.min=Math.max(mean*0.5,support[0]);
-      chart1options.scales.y.max=Math.min(mean*1.5,support[1]);
+      chart1options.scales.y.min=Math.max(Math.min(mean-1,mean*0.5),support[0]);
+      chart1options.scales.y.max=Math.min(Math.max(mean+1,mean*1.5),support[1]);
     }
     datasets.push({label: language.distributions.infoDiagramLawOfLargeNumbersDatasetExpectedValue, data: Array.from({length: 100},()=>mean), type: "line", pointRadius: 0, hitRadius: 25, borderColor: "green"});
   }
@@ -518,9 +565,23 @@ function initCentralLimitTheorem(distribution, values) {
  * Initializes the complete web app.
  */
 function initSim() {
-  let distribution, values, mode;
-  [distribution, values, mode]=getDistributionFromSearchString();
-  if (distribution==null) return;
+  let distribution, values;
+  let mode=-1;
+
+  /* Special modes */
+  const special=loadSearchStringParameters(["dice"]);
+  if (typeof(special.dice)!='undefined') {
+    mode=0;
+    distribution=getDistributionByClassName("DiscreteUniformDistribution");
+    values={a: 1, b: 6, dice: true};
+    distribution.setParmeterExtern(values);
+  }
+
+  /* Distribution depending default modes */
+  if (mode==-1) {
+    [distribution, values, mode]=getDistributionFromSearchString();
+    if (distribution==null) return;
+  }
 
   /* Select color mode */
   let selectedColorMode=localStorage.getItem('selectedColorMode');

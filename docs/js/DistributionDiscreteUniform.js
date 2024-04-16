@@ -107,4 +107,12 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     if (k<values.a || k>values.b) return 0;
     return 1/(values.b-values.a+1);
   }
+
+  _initButtons() {
+    super._initButtons();
+
+    /* Dice role simulation */
+    const button=this._addButton("bi-dice-6",language.distributions.infoDiagramDiceRollSimulation);
+    button.onclick=()=>this._openWindow(language.distributions.infoDiagramSimFile+"?dice=1");
+  }
 }
