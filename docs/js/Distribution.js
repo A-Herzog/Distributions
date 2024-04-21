@@ -321,14 +321,14 @@ class ProbabilityDistribution {
 
     /* Characteristics */
     row.appendChild(col=document.createElement("div"));
-    col.className="col-lg-6";
+    col.className="col-lg-8";
     card=this.#addCard(col,language.distributions.infoCharacteristics);
     this.#cardCharacteristics=card;
 
     /* Calculate values */
     let buttonUp, buttonDown;
     row.appendChild(col=document.createElement("div"));
-    col.className="col-lg-6";
+    col.className="col-lg-4";
     card=this.#addCard(col,language.distributions.infoCalcValues);
     [this.#calcInput, this.#calcError, buttonUp, buttonDown]=this.#addInputToPanel(card,"calc",this.#calcParameterShortName,language.distributions.infoCalcParameter,this.#calcParameterDefaultValue);
     this.#calcInput.onkeyup=()=>this.#fireCalcParameterUpdated();

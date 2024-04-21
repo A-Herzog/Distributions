@@ -399,6 +399,13 @@ lang.distributions.reciprocal.parameterInfoa="Untere Bereichsgrenze";
 lang.distributions.reciprocal.parameterInfob="Obere Bereichsgrenze";
 lang.distributions.reciprocal.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 
+lang.distributions.kumaraswamy={};
+lang.distributions.kumaraswamy.name="Kumaraswamy-Verteilung";
+lang.distributions.kumaraswamy.info="Die Kumaraswamy-Verteilung eignet sich, ähnlich wie die Beta-Verteilung, zur Modellierung von Prozessen, die nur Werte in einem endlichen Bereich annehmen können. Im Gegensatz zur Beta-Verteilung können jedoch Dichte und Verteilungsfunktion durch elementare Formeln ausgedrückt werden.";
+lang.distributions.kumaraswamy.wikipedia="https://en.wikipedia.org/wiki/Kumaraswamy_distribution"; /* Leider keine deutsche Seite vorhanden */
+lang.distributions.kumaraswamy.parameterInfoA="Form";
+lang.distributions.kumaraswamy.parameterInfoB="Form";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -794,6 +801,13 @@ lang.distributions.reciprocal.wikipedia="https://en.wikipedia.org/wiki/Reciproca
 lang.distributions.reciprocal.parameterInfoa="Lower bound";
 lang.distributions.reciprocal.parameterInfob="Upper bound";
 lang.distributions.reciprocal.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+
+lang.distributions.kumaraswamy={};
+lang.distributions.kumaraswamy.name="Kumaraswamy distribution";
+lang.distributions.kumaraswamy.info="Similar to the beta distribution, the Kumaraswamy distribution is suitable for modeling processes that can only have values in a finite range. In contrast to the beta distribution, however, the density and distribution function can be expressed using elementary formulas.";
+lang.distributions.kumaraswamy.wikipedia="https://en.wikipedia.org/wiki/Kumaraswamy_distribution";
+lang.distributions.kumaraswamy.parameterInfoA="Shape";
+lang.distributions.kumaraswamy.parameterInfoB="Shape";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
