@@ -17,7 +17,7 @@ limitations under the License.
 export {DiscreteProbabilityDistribution, ContinuousProbabilityDistribution, getDiscreteDefaultCDF, getContinousDefaultCDF};
 
 import {language} from "./Language.js";
-import {getInt, getFloat, formatNumber} from './NumberTools.js';
+import {getInt, getFloat, formatNumber, formatNumberWithTitle, formatPercent} from './NumberTools.js';
 import {format} from './StringTools.js';
 import {beginMathML, endMathML, defE, frac, variable, equals, minus, setR, defF, defP} from "./MathMLTools.js";
 import {isDesktopApp} from "./Main.js";
@@ -157,7 +157,7 @@ class ProbabilityDistribution {
     input.type="text";
     input.className="form-control";
     input.id=clsName+"-"+id;
-    input.value=defaultValue.toLocaleString();
+    input.value=formatNumber(defaultValue);
 
     const buttonDown=document.createElement("button");
     group.appendChild(buttonDown);
@@ -192,13 +192,13 @@ class ProbabilityDistribution {
       buttonUp.onclick=()=>{
         const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
         const newValue=(parameter.hasMaxValue)?Math.min(parameter.maxValue,current+1):(current+1);
-        input.value=newValue.toLocaleString();
+        input.value=formatNumber(newValue);
         this.#fireParameterUpdated();
       };
       buttonDown.onclick=()=>{
         const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
         const newValue=(parameter.hasMinValue)?Math.max(parameter.minValue,current-1):(current-1);
-        input.value=newValue.toLocaleString();
+        input.value=formatNumber(newValue);
         this.#fireParameterUpdated();
       };
     } else {
@@ -215,7 +215,7 @@ class ProbabilityDistribution {
         } else {
           newValue=current+step;
         }
-        input.value=newValue.toLocaleString();
+        input.value=formatNumber(newValue);
         this.#fireParameterUpdated();
       };
       buttonDown.onclick=()=>{
@@ -230,7 +230,7 @@ class ProbabilityDistribution {
         } else {
           newValue=current-step;
         }
-        input.value=newValue.toLocaleString();
+        input.value=formatNumber(newValue);
         this.#fireParameterUpdated();
       };
     }
@@ -338,13 +338,13 @@ class ProbabilityDistribution {
     buttonUp.onclick=()=>{
       const value=(this.#continuous)?getFloat(this.#calcInput):getInt(this.#calcInput);
       if (value==null) return;
-      this.#calcInput.value=(value+1).toLocaleString();
+      this.#calcInput.value=formatNumber(value+1);
       this.#fireCalcParameterUpdated();
     };
     buttonDown.onclick=()=>{
       const value=(this.#continuous)?getFloat(this.#calcInput):getInt(this.#calcInput);
       if (value==null) return;
-      this.#calcInput.value=(value-1).toLocaleString();
+      this.#calcInput.value=formatNumber(value-1);
       this.#fireCalcParameterUpdated();
     };
 
@@ -780,13 +780,13 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       scales: {
         x: {
           title: {display: true, text: "k"},
-          ticks: {callback: (value, index, ticks)=>(Math.round(this.#diagramXValues[index]*100)/100).toLocaleString()} /* for some unknown reasons value and index returning the same number, so we have to get the actual value from the original array */
+          ticks: {callback: (value, index, ticks)=>formatNumber(this.#diagramXValues[index])} /* for some unknown reasons value and index returning the same number, so we have to get the actual value from the original array */
         },
         y : {
           title: {display: true, text: language.distributions.infoDiagramProbability},
           min: 0,
           max: 1,
-          ticks: {callback: value=>(value*100).toLocaleString()+'%'}
+          ticks: {callback: value=>formatPercent(value)}
         }
       },
       plugins: {
@@ -808,6 +808,16 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
               modifierKey: "ctrl",
             },
             mode: 'xy',
+          }
+        },
+        tooltip: {
+          callbacks: {
+              label: function(context) {
+                  let label=context.dataset.label || '';
+                  if (label) label+=': ';
+                  if (context.parsed.y!==null) label+=formatNumber(context.parsed.y,5);
+                  return label;
+              }
           }
         }
       },
@@ -835,16 +845,16 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
 
     const lines=[];
     if (meanValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumber(meanValue)]);
+      lines.push([language.distributions.infoCharacteristicsE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
     }
     if (varianceValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumber(varianceValue)]);
-      lines.push([language.distributions.infoCharacteristicsStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumber(Math.sqrt(varianceValue))]);
+      lines.push([language.distributions.infoCharacteristicsVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
+      lines.push([language.distributions.infoCharacteristicsStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
     }
     if (meanValue!==null && varianceValue!==null && meanValue>0) {
       const scv=varianceValue/(meanValue**2);
-      lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumber(Math.sqrt(scv))]);
-      lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumber(scv)]);
+      lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
+      lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
     }
 
     const heading="<caption class='visually-hidden'>Characteristics</caption><tr class='visually-hidden'><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristic+"</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicSymbol+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicFormula+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicValue+"</th></tr>";
@@ -1021,17 +1031,17 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     /* P(X=k) */
     p=0;
     if (value>=support[0] && value<=support[1]) p=this.calcProbability(parameterValues,value);
-    lines.push([beginMathML+defP(X+equals+k,false)+endMathML,"&approx;",formatNumber(p)]);
+    lines.push([beginMathML+defP(X+equals+k,false)+endMathML,"&approx;",formatNumberWithTitle(p,5)]);
 
     /* P(X<=k) */
     p=0;
     for (let i=support[0];i<=Math.min(support[1],value);i++) p+=this.calcProbability(parameterValues,i);
-    lines.push([beginMathML+defP(X+"<mo>&le;</mo>"+k,false)+endMathML,"&approx;",formatNumber(p)]);
+    lines.push([beginMathML+defP(X+"<mo>&le;</mo>"+k,false)+endMathML,"&approx;",formatNumberWithTitle(p,5)]);
 
     /* P(X>=k) */
     p=0;
     for (let i=support[0];i<=Math.min(support[1],value-1);i++) p+=this.calcProbability(parameterValues,i);
-    lines.push([beginMathML+defP(X+"<mo>&ge;</mo>"+k,false)+endMathML,"&approx;",formatNumber(1-p)]);
+    lines.push([beginMathML+defP(X+"<mo>&ge;</mo>"+k,false)+endMathML,"&approx;",formatNumberWithTitle(1-p,5)]);
 
     this.calcValues.innerHTML="<table>"+lines.map(line=>"<tr><td class='pb-3'>"+line.join("</td><td class='pb-3'>")+"</td></tr>").join("\n")+"</table>";
   }
@@ -1094,7 +1104,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
       scales: {
         x: {
           title: {display: true, text: "x"},
-          ticks: {callback: (value, index, ticks)=>(Math.round(this.#diagramXValues[index]*100)/100).toLocaleString()} /* for some unknown reasons value and index returning the same number, so we have to get the actual value from the original array */
+          ticks: {callback: (value, index, ticks)=>formatNumber(this.#diagramXValues[index])} /* for some unknown reasons value and index returning the same number, so we have to get the actual value from the original array */
         },
         y : {
           title: {display: true, text: language.distributions.infoDiagramRate+" f(x)", color: "rgb(0,140,79)"},
@@ -1105,7 +1115,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
           title: {display: true, text: language.distributions.infoDiagramProbability+" F(x)", color: "rgb(140,28,0)"},
           min: 0,
           max: 1,
-          ticks: {callback: value=>(value*100).toLocaleString()+'%'}
+          ticks: {callback: value=>formatPercent(value)}
         }
       },
       plugins: {
@@ -1127,6 +1137,16 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
               modifierKey: "ctrl",
             },
             mode: 'xy',
+          }
+        },
+        tooltip: {
+          callbacks: {
+              label: function(context) {
+                  let label=context.dataset.label || '';
+                  if (label) label+=': ';
+                  if (context.parsed.y!==null) label+=formatNumber(context.parsed.y,5);
+                  return label;
+              }
           }
         }
       },
@@ -1156,16 +1176,16 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     const lines=[];
     if (infoLines!=null) infoLines.forEach(line=>lines.push(line));
     if (meanValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumber(meanValue)]);
+      lines.push([language.distributions.infoCharacteristicsE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
     }
     if (varianceValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumber(varianceValue)]);
-      lines.push([language.distributions.infoCharacteristicsStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumber(Math.sqrt(varianceValue))]);
+      lines.push([language.distributions.infoCharacteristicsVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
+      lines.push([language.distributions.infoCharacteristicsStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
     }
     if (meanValue!==null && varianceValue!==null && meanValue>0) {
       const scv=varianceValue/(meanValue**2);
-      lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumber(Math.sqrt(scv))]);
-      lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumber(scv)]);
+      lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
+      lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
     }
 
     const heading="<caption class='visually-hidden'>Characteristics</caption><tr class='visually-hidden'><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristic+"</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicSymbol+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicFormula+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicValue+"</th></tr>";
@@ -1337,13 +1357,13 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     [p,c]=this.calcProbability(parameterValues,value);
 
     /* f(x) */
-    lines.push([beginMathML+defF(f,x,false)+endMathML,"&approx;",formatNumber(p)]);
+    lines.push([beginMathML+defF(f,x,false)+endMathML,"&approx;",formatNumberWithTitle(p,5)]);
 
     /* P(X<=x)=F(x) */
-    lines.push([beginMathML+defP(X+"<mo>&le;</mo>"+x)+defF(F,x,false)+endMathML,"&approx;",formatNumber(c)]);
+    lines.push([beginMathML+defP(X+"<mo>&le;</mo>"+x)+defF(F,x,false)+endMathML,"&approx;",formatNumberWithTitle(c,5)]);
 
     /* P(X>k)=1-F(x) */
-    lines.push([beginMathML+defP(X+"<mo>&gt;</mo>"+x)+"<mn>1</mn>"+minus+defF(F,x,false)+endMathML,"&approx;",formatNumber(1-c)]);
+    lines.push([beginMathML+defP(X+"<mo>&gt;</mo>"+x)+"<mn>1</mn>"+minus+defF(F,x,false)+endMathML,"&approx;",formatNumberWithTitle(1-c,5)]);
 
     this.calcValues.innerHTML="<table>"+lines.map(line=>"<tr><td class='pb-3'>"+line.join("</td><td class='pb-3'>")+"</td></tr>").join("\n")+"</table>";
   }

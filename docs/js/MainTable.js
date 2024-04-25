@@ -19,7 +19,7 @@ export {initTable}
 import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {isDesktopApp} from './Main.js';
-import {getFloat, getPositiveInt} from "./NumberTools.js";
+import {getFloat, getPositiveInt, formatNumber} from "./NumberTools.js";
 
 /**
  * Fills in the language strings to the GUI elements.
@@ -136,7 +136,7 @@ function getDistributionFromSearchString() {
  */
 function buildTableElement(parent, cols, longTable=false) {
   const table=document.createElement("table");
-  table.className="table table-striped border"+(longTable?" table-sm":"");
+  table.className="table table-striped border mt-3"+(longTable?" table-sm":"");
 
   let tr, th;
 
@@ -170,9 +170,9 @@ function buildTableElement(parent, cols, longTable=false) {
 function addRow(tbody, x, f, F) {
   let tr, td;
 
-  const xStr=x.toLocaleString();
-  const fStr=f.toLocaleString(undefined,{minimumFractionDigits: 8});
-  const FStr=F.toLocaleString(undefined,{minimumFractionDigits: 8});
+  const xStr=formatNumber(x);
+  const fStr=formatNumber(f,8);
+  const FStr=formatNumber(F,8);
   tbody.appendChild(tr=document.createElement("tr"));
   tr.appendChild(td=document.createElement("td"));
   td.innerHTML=xStr;
@@ -193,7 +193,7 @@ function addSimpleRow(tbody, value, discrete) {
   let tr, td;
 
   let valueStr;
-  if (discrete) valueStr=value.toLocaleString(); else valueStr=value.toLocaleString(undefined,{minimumFractionDigits: 8});
+  if (discrete) valueStr=formatNumber(value); else valueStr=formatNumber(value,8);
   tbody.appendChild(tr=document.createElement("tr"));
   tr.appendChild(td=document.createElement("td"));
   td.innerHTML=valueStr;
@@ -330,7 +330,7 @@ function buildRandomNumbersInfoArea(parent, info, currentCount) {
     const a=document.createElement("a");
     li.appendChild(a);
     a.className="dropdown-item";
-    a.innerHTML=((option==currentCount)?"<b>":"")+option.toLocaleString()+((option==currentCount)?"</b>":"");
+    a.innerHTML=((option==currentCount)?"<b>":"")+formatNumber(option)+((option==currentCount)?"</b>":"");
     a.style.cursor="pointer";
     a.onclick=()=>randomNumbersReload(option);
   }
@@ -338,8 +338,8 @@ function buildRandomNumbersInfoArea(parent, info, currentCount) {
   /* Info text */
 
   const infoText=info.map(line=>{
-    const info=(line.length<3 || typeof(line[2])=='undefined' || line[2]==null || isNaN(line[2]))?"":(" <small class='text-secondary'>("+language.distributions.infoDiagramGenerateRandomNumbersByDistribution+": "+line[2].toLocaleString()+")</small>");
-    return line[0]+": <b>"+line[1].toLocaleString()+"</b>"+info;
+    const info=(line.length<3 || typeof(line[2])=='undefined' || line[2]==null || isNaN(line[2]))?"":(" <small class='text-secondary'>("+language.distributions.infoDiagramGenerateRandomNumbersByDistribution+": "+formatNumber(line[2])+")</small>");
+    return line[0]+": <b>"+formatNumber(line[1],5)+"</b>"+info;
   }).join("<br>");
 
   const infoTextDiv=document.createElement("div");

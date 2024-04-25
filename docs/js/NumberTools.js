@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export {getFloat, getPositiveFloat, getNotNegativeFloat, getInt, getPositiveInt, getNotNegativeInt, formatNumber}
+export {getFloat, getPositiveFloat, getNotNegativeFloat, getInt, getPositiveInt, getNotNegativeInt, formatNumber, formatNumberWithTitle, formatPercent}
 
 /**
  * Parses a string to a floating point number
@@ -116,10 +116,35 @@ function getNotNegativeInt(elementOrString) {
 }
 
 /**
- * Formats a number as a two digits local string.
- * @param {Number} num Number to be formatted
+ * Formats a number as a local string.
+ * @param {Number} number Number to be formatted
+ * @param {Number} digits Maximum number of decimal digits to use (if missing: use locale default value)
  * @returns Formatted number
  */
-function formatNumber(num) {
-  return (Math.round(num*1000)/1000).toLocaleString();
+function formatNumber(number, digits) {
+    if (typeof(digits)=='undefined') return number.toLocaleString();
+
+    let usedDigits=0;
+    let x=number%1;
+    while (x!=0 && usedDigits<digits) {
+      x*=10;
+      x=x%1;
+      usedDigits++;
+    }
+
+    return number.toLocaleString(undefined, { minimumFractionDigits: usedDigits });
+}
+
+function formatNumberWithTitle(number, digits) {
+  return "<span title='"+formatNumber(number,8)+"'>"+formatNumber(number,digits)+"</span>";
+}
+
+/**
+ * Formats a number as a local string percent value.
+ * @param {Number} number Number to be formatted
+ * @param {Number} digits Maximum number of decimal digits to use (if missing: use locale default value)
+ * @returns Formatted number
+ */
+function formatPercent(number, digits) {
+  return formatNumber(number*100,digits)+"%";
 }

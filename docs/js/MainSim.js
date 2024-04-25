@@ -19,7 +19,7 @@ export {initSim}
 import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {isDesktopApp} from './Main.js';
-import {getFloat, getInt} from "./NumberTools.js";
+import {getFloat, getInt, formatNumber, formatPercent} from "./NumberTools.js";
 
 /**
  * Fills in the language strings to the GUI elements.
@@ -144,6 +144,16 @@ function getDefaultChartOptions() {
           },
           mode: 'xy',
         }
+      },
+      tooltip: {
+        callbacks: {
+            label: function(context) {
+                let label=context.dataset.label || '';
+                if (label) label+=': ';
+                if (context.parsed.y!==null) label+=formatNumber(context.parsed.y,5);
+                return label;
+            }
+        }
       }
     },
     animation: {duration: 0}
@@ -220,6 +230,14 @@ function drawDice(nr) {
   }
 }
 
+function formatPercentFixed(number) {
+  return formatPercent(Math.round(number*1000)/1000);
+}
+
+function getPercentTD(value) {
+  return "<td title='"+formatPercent(value,5)+"'>"+formatPercentFixed(value)+"</td>";
+}
+
 function doStepLawOfLargeNumbers(distribution, values) {
   const rnd=generateRandomNumber(distribution,values);
   count++;
@@ -257,27 +275,59 @@ function doStepLawOfLargeNumbers(distribution, values) {
 
   const mean=lastMeanValues[lastMeanValues.length-1];
   const info=[];
-  info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber+"="+rnd.toLocaleString());
+  info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber+"="+(distribution.discrete?formatNumber(rnd):formatNumber(rnd,5)));
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoSampleValues+"="+count);
   if (distribution.mean!=null) {
-    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoExpectedValueOfDistribution+"="+distribution.mean.toLocaleString());
-    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues+"="+mean.toLocaleString());
+    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoExpectedValueOfDistribution+"="+formatNumber(distribution.mean));
+    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues+"="+formatNumber(mean,5));
     if (distribution.mean!=0) {
-      info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue+"="+((mean-distribution.mean)/distribution.mean*100).toLocaleString()+"%");
+      info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue+"="+formatPercent((mean-distribution.mean)/distribution.mean));
     }
   }
   if (values.dice) {
     info.push("");
     const infoTable=[];
-    infoTable.push("<table style='display: inline;' class='table'>");
+    infoTable.push("<div style='overflow-x: scroll;'>");
+    infoTable.push("<table class='table table-striped border table-sm'>");
     infoTable.push("<thead>");
-    infoTable.push("<tr><th>"+language.distributions.infoDiagramNumberOfDots+"</th>"+histogram.filter((_,index)=>(index>0)).map((_,index)=>"<th style='width: 60px;'>"+(index+1)+"</th>").join("")+"<th>Summe</th></tr>");
+    infoTable.push("<tr><th>"+language.distributions.infoDiagramNumberOfDots+"</th>"+histogram.filter((_,index)=>(index>0)).map((_,index)=>"<th style='width: 60px;'>"+(index+1)+"</th>").join("")+"<th>"+language.distributions.infoDiagramLawOfLargeNumbersInfoSum+"</th></tr>");
     infoTable.push("</thead>");
     infoTable.push("<tbody>");
     infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramAbsoluteFrequency+"</th>"+histogram.filter((_,index)=>(index>0)).map(value=>"<td>"+value+"</td>").join("")+"<td>"+count+"</td></tr>");
-    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramRelativeFrequency+"</th>"+histogram.filter((_,index)=>(index>0)).map(value=>"<td>"+(Math.round(value/count*1000)/10).toLocaleString()+"%</td>").join("")+"<td>100%</td></tr>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramRelativeFrequency+"</th>"+histogram.filter((_,index)=>(index>0)).map(value=>getPercentTD(value/count)).join("")+"<td>100%</td></tr>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramProbability+"</th>"+histogram.filter((_,index)=>(index>0)).map(_=>getPercentTD(1/6)).join("")+"<td>100%</td></tr>");
     infoTable.push("</tbody>");
     infoTable.push("</table>");
+    infoTable.push("</div>");
+    info.push(infoTable.join(""));
+  } else if (distribution.discrete) {
+    const MAX_HISTOGRAM_VALUE=15;
+    info.push("");
+    const infoTable=[];
+    infoTable.push("<div style='overflow-x: scroll;'>");
+    infoTable.push("<table class='table table-striped border table-sm'>");
+    infoTable.push("<thead>");
+    infoTable.push("<tr><th>"+language.distributions.infoCharacteristicValue+"</th>");
+    infoTable.push(histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map((_,index)=>"<th style='width: 60px;'>"+index+"</th>").join(""));
+    if (histogram.length>MAX_HISTOGRAM_VALUE) infoTable.push("<th style='width: 60px;'>&ge;"+(MAX_HISTOGRAM_VALUE+1)+"</th>");
+    infoTable.push("<th>"+language.distributions.infoDiagramLawOfLargeNumbersInfoSum+"</th></tr>");
+    infoTable.push("</thead>");
+    infoTable.push("<tbody>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramAbsoluteFrequency+"</th>");
+    infoTable.push(histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map(value=>"<td>"+value+"</td>").join(""));
+    if (histogram.length>MAX_HISTOGRAM_VALUE) infoTable.push("<td>"+histogram.filter((_,index)=>(index>MAX_HISTOGRAM_VALUE)).reduce((a,b)=>a+b)+"</td>");
+    infoTable.push("<td>"+count+"</td></tr>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramRelativeFrequency+"</th>");
+    infoTable.push(histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map(value=>getPercentTD(value/count)).join(""));
+    if (histogram.length>MAX_HISTOGRAM_VALUE) infoTable.push(getPercentTD(histogram.filter((_,index)=>(index>MAX_HISTOGRAM_VALUE)).reduce((a,b)=>a+b)/count));
+    infoTable.push("<td>100%</td></tr>");
+    infoTable.push("<tr><th scope='row'>"+language.distributions.infoDiagramProbability+"</th>");
+    infoTable.push(histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map((_,index)=>getPercentTD(distribution.calcProbability(values,index))).join(""));
+    if (histogram.length>MAX_HISTOGRAM_VALUE) infoTable.push(getPercentTD(1-histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map((_,index)=>distribution.calcProbability(values,index)).reduce((a,b)=>a+b)));
+    infoTable.push("<td>100%</td></tr>");
+    infoTable.push("</tbody>");
+    infoTable.push("</table>");
+    infoTable.push("</div>");
     info.push(infoTable.join(""));
   }
   return info.join("<br>");
@@ -326,15 +376,15 @@ function doStepCentralLimitTheorem(distribution, values) {
   }
 
   const info=[];
-  info.push(language.distributions.infoDiagramCentralLimitTheoremNewestParialSum+"="+rnd.toLocaleString());
+  info.push(language.distributions.infoDiagramCentralLimitTheoremNewestParialSum+"="+formatNumber(rnd,5));
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoSampleValues+"="+count);
   info.push(language.distributions.infoDiagramCentralLimitTheoremValuesPerPartialSum+"="+n);
   info.push(language.distributions.infoDiagramCentralLimitTheoremNumberOfPartialSums+"="+(count/n));
-  info.push(language.distributions.infoDiagramCentralLimitTheoremMeanOfSample+"="+(sum/count).toLocaleString());
+  info.push(language.distributions.infoDiagramCentralLimitTheoremMeanOfSample+"="+formatNumber(sum/count,5));
   const EX=(scaledSum/count*n);
   const EX2=(scaledSum2/count*n);
-  info.push(language.distributions.infoDiagramCentralLimitTheoremMeanOfPartialSums+"="+EX.toLocaleString());
-  info.push(language.distributions.infoDiagramCentralLimitTheoremVarianceOfPartialSums+"="+(EX2-EX**2).toLocaleString());
+  info.push(language.distributions.infoDiagramCentralLimitTheoremMeanOfPartialSums+"="+formatNumber(EX,5));
+  info.push(language.distributions.infoDiagramCentralLimitTheoremVarianceOfPartialSums+"="+formatNumber(EX2-EX**2,5));
 
   return info.join("<br>");
 }
@@ -434,7 +484,7 @@ function initLawOfLargeNumbers(distribution, values) {
 
   /* Init chart 2 data */
   const chart2options=getDefaultChartOptions();
-  chart2options.scales={x: {stacked: true, title: {display: true, text: "x"},}, y: {min: 0, title: {display: true, text: language.distributions.infoDiagramLawOfLargeNumbersScalePercentage}}};
+  chart2options.scales={x: {stacked: true, title: {display: true, text: "x"},}, y: {min: 0, title: {display: true, text: language.distributions.infoDiagramLawOfLargeNumbersScalePercentage}, ticks: {callback: value=>formatPercent(value)}}};
   const chart2data={};
 
   if (distribution.discrete) {
@@ -448,7 +498,9 @@ function initLawOfLargeNumbers(distribution, values) {
       histogram.push(0);
     }
     const maxPdf=pdf.reduce((a,b)=>Math.max(a,b));
-    chart2options.scales.y.max=maxPdf*1.5;
+    let maxY=maxPdf*1.25;
+    maxY=Math.ceil(maxY*20)/20;
+    chart2options.scales.y.max=maxY;
     chart2data.labels=labels;
     chart2data.datasets=[
       {label: language.distributions.infoDiagramLawOfLargeNumbersDatasetDiscreteDensity, data: pdf, type: "bar", hitRadius: 25, borderColor: "green", borderWidth: 2, backgroundColor: "rgba(0,127,0,0.25)"},
@@ -464,7 +516,7 @@ function initLawOfLargeNumbers(distribution, values) {
       const left=support[0]+(support[1]-support[0])*i/continuousHistogramSteps;
       const right=support[0]+(support[1]-support[0])*(i+1)/continuousHistogramSteps;
       const p=distribution.calcProbability(values,right);
-      labels.push(((left+right)/2).toLocaleString());
+      labels.push(formatNumber((left+right)/2));
       pdf.push(p[1]-lastCDF);
       histogram.push(0);
       lastCDF=p[1];
@@ -473,7 +525,7 @@ function initLawOfLargeNumbers(distribution, values) {
     chart2options.scales.y.max=maxPdf*1.5;
     chart2data.labels=labels;
         chart2data.datasets=[
-      {label: language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensity+" ("+language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensityHistogramBarWidth+":"+((support[1]-support[0])/continuousHistogramSteps).toLocaleString()+")", data: pdf, type: "bar", hitRadius: 25, borderColor: "green", borderWidth: 2, backgroundColor: "rgba(0,127,0,0.25)"},
+      {label: language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensity+" ("+language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensityHistogramBarWidth+":"+formatNumber((support[1]-support[0])/continuousHistogramSteps)+")", data: pdf, type: "bar", hitRadius: 25, borderColor: "green", borderWidth: 2, backgroundColor: "rgba(0,127,0,0.25)"},
       {label: language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousSample, data: histogram, type: "bar", hitRadius: 25, borderColor: "red", backgroundColor: "red", barThickness: 7}
     ];
   }
@@ -495,7 +547,7 @@ function initCentralLimitTheorem(distribution, values) {
 
   /* Init chart 1 data */
   const chart1options=getDefaultChartOptions();
-  chart1options.scales={x: {title: {display: true, text: "x"},}, y: {min: 0, title: {display: true, text: language.distributions.infoDiagramLawOfLargeNumbersScalePercentage}}};
+  chart1options.scales={x: {title: {display: true, text: "x"},}, y: {min: 0, title: {display: true, text: language.distributions.infoDiagramLawOfLargeNumbersScalePercentage}, ticks: {callback: value=>formatPercent(value)}}};
   const chart1data={};
 
   if (distribution.discrete) {
@@ -517,12 +569,12 @@ function initCentralLimitTheorem(distribution, values) {
     for (let i=0;i<continuousHistogramSteps;i++) {
       const left=support[0]+(support[1]-support[0])*i/continuousHistogramSteps;
       const right=support[0]+(support[1]-support[0])*(i+1)/continuousHistogramSteps;
-      labels.push(((left+right)/2).toLocaleString());
+      labels.push(formatNumber((left+right)/2));
       histogram.push(0);
     }
     chart1data.labels=labels;
     chart1data.datasets=[
-      {label: language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousSample+" ("+language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensityHistogramBarWidth+":"+((support[1]-support[0])/continuousHistogramSteps).toLocaleString()+")", data: histogram, type: "bar", hitRadius: 25, borderColor: "green", borderWidth: 2, backgroundColor: "rgba(0,127,0,0.25)"},
+      {label: language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousSample+" ("+language.distributions.infoDiagramLawOfLargeNumbersDatasetContinuousDensityHistogramBarWidth+":"+formatNumber((support[1]-support[0])/continuousHistogramSteps)+")", data: histogram, type: "bar", hitRadius: 25, borderColor: "green", borderWidth: 2, backgroundColor: "rgba(0,127,0,0.25)"},
     ];
   }
 
@@ -537,7 +589,7 @@ function initCentralLimitTheorem(distribution, values) {
   for (let i=0;i<=30;i++) {
     const x=(i/5)-3;
     const y=factor*Math.exp(-(x**2));
-    labels.push(x.toLocaleString());
+    labels.push(formatNumber(x));
     phi.push(y);
     histogram2.push(0);
   }
