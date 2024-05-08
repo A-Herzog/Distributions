@@ -39,7 +39,7 @@
 </head>
 
 <body>
-<div id="infoLoading">Loading...</div>
+<div id="infoLoading">Loading...<noscript><br><span style='color: red';>This webapp requires Javascript to be executed.</span></noscript></div>
 <div id="mainContent" style="display: none;">
 
 <!-- Navigation -->
@@ -56,7 +56,7 @@
   </span></button>
   <div class="dropdown" style="display: inline-block;">
     <button type="button" class="btn btn-outline-light bi-sun btn-sm dropdown-toggle" id="menuColorMode" data-bs-toggle="dropdown"></button>
-    <ul class="dropdown-menu dropdown-menu-end">
+    <ul class="dropdown-menu dropdown-menu-end" role="tablist">
       <li role="tab"><a class="dropdown-item" id="menuColorModeLight" href="?" onclick="localStorage.setItem('selectedColorMode','light')"></a></li>
       <li role="tab"><a class="dropdown-item" id="menuColorModeDark" href="?" onclick="localStorage.setItem('selectedColorMode','dark')"></a></li>
       <li role="tab"><a class="dropdown-item" id="menuColorModeSystemDefault" href="?" onclick="localStorage.removeItem('selectedColorMode')"></a></li>
