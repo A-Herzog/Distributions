@@ -21,8 +21,8 @@ export {selectLanguage};
  * @param {string} file Name of the language file to be used
  */
 function selectLanguageFile(file) {
-  if (window.location.href.endsWith(file)) return;
-  window.location.href='./'+file;
+  if (window.location.pathname.endsWith(file)) return;
+  window.location.pathname=document.location.pathname.substr(0,document.location.pathname.lastIndexOf("/")+1)+file;
 }
 
 /**

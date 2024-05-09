@@ -80,6 +80,7 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
   getDiscreteSupport(values) {
     return [0,Math.max(20,Math.round(values.lambda+Math.sqrt(values.lambda)*3))];
   }
+
   calcProbability(values, k) {
     const lambda=values.lambda;
     let frac=1;

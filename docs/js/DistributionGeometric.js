@@ -92,6 +92,7 @@ class GeometricDistribution extends DiscreteProbabilityDistribution {
     const sd=Math.sqrt((1-values.p)/(values.p**2));
     return [0,Math.max(20,Math.round(mean+3*sd))];
   }
+
   calcProbability(values, k) {
     return values.p*(1-values.p)**k;
   }

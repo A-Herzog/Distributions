@@ -108,7 +108,7 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
   }
 
   calcProbability(values, k) {
-    const result=mathBinom(values.R,k)*mathBinom(values.N-values.R,values.n-k)/this.#denumerator;
+    const result=Math.max(0,mathBinom(values.R,k)*mathBinom(values.N-values.R,values.n-k)/this.#denumerator);
     return result;
   }
 }

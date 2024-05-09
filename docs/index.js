@@ -25,8 +25,29 @@ document.documentElement.dataset.bsTheme=selectedColorMode;
 
 /* Init app */
 import {language} from "./js/Language.js";
-import {initApp, isDesktopApp} from './js/Main.js';
+import {initApp, isDesktopApp, selectDistribution} from './js/Main.js';
 initApp();
+
+/* Process permalink parameters */
+import {loadSearchStringParameters} from "./js/StringTools.js";
+import {getDistributionByClassName, getAllDistributionParameterIds, getDistributionsByName} from "./js/DistributionSetup.js";
+import {getFloat} from "./js/NumberTools.js";
+const validKeys=["distribution"];
+getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
+const data=loadSearchStringParameters(validKeys);
+if (typeof(data.distribution)=='string') {
+  const distribution=getDistributionByClassName(data.distribution+"Distribution");
+  if (distribution!=null) {
+    const values={};
+    for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
+    distribution.setParmeterExtern(values);
+    for (let group of distSelect.childNodes) for (let item of group.childNodes) if (item.label==distribution.name) {
+      item.selected=true;
+      const dist=getDistributionsByName(distSelect.value);
+      if (dist!=null) selectDistribution(dist,distributionArea);
+    }
+  }
+}
 
 if (isDesktopApp) {
   const footer=document.querySelector('footer');
@@ -37,7 +58,9 @@ if (isDesktopApp) {
     link.style.cursor="pointer";
     link.classList.add("link-primary");
   }
+  PermaLink.style.display="none";
 } else {
+  PermaLink.innerHTML=language.GUI.permaLink;
   const downloadA='<a id="downloadApp" target="_blank" href="https://github.com/A-Herzog/Distributions/releases/latest/download/Distributions.exe" style="display: none;"></a>';
   const downloadButton='<button class="btn btn-primary my-1 bi-windows" onclick="document.getElementById(\'downloadApp\').click();"> '+language.GUI.downloadButton+'</button>';
   downloadInfoArea.innerHTML="<p class='mt-3'>"+language.GUI.downloadLabel+"</p><p>"+downloadA+downloadButton+"</p>";

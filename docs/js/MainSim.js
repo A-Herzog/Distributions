@@ -20,6 +20,23 @@ import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {isDesktopApp} from './Main.js';
 import {getFloat, getInt, formatNumber, formatPercent} from "./NumberTools.js";
+import {loadSearchStringParameters} from "./StringTools.js";
+
+/**
+ * Generates and adds a permalink.
+ * @param {Object} parent Parent HTML node
+ */
+function addPermaLink(parent) {
+  if (isDesktopApp) return;
+  const permaLinkDiv=document.createElement("div");
+  permaLinkDiv.classList.add("mt-3");
+  permaLinkDiv.classList.add("small");
+  parent.appendChild(permaLinkDiv);
+  const permaLink=document.createElement("a");
+  permaLinkDiv.appendChild(permaLink);
+  permaLink.innerHTML=language.GUI.permaLink;
+  permaLink.href=document.location;
+}
 
 /**
  * Fills in the language strings to the GUI elements.
@@ -47,6 +64,7 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
   const info=document.createElement("div");
   info.innerHTML=language.GUI.selectDistribution+": <b>"+distribution.nameWithParameters+"</b>";
   infoArea.appendChild(info);
+  addPermaLink(infoArea);
   infoAreaMath.innerHTML=infoText+"<br><a href=\""+infoWikipedia+"\" target=\"_blank\">"+language.distributions.infoPropertiesWikipediaLink+"</a>";
 
   /* Charts */
@@ -61,22 +79,6 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
   resetButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlReset;
   stepButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlStep;
   playPauseButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlStart;
-}
-
-/**
- * Loads data from the url search string into an object
- * @param {Array} validKeys List of the search string parameters to be loaded
- * @returns Object containing the names of the parameters and the values from the url search string as values
- */
-function loadSearchStringParameters(validKeys) {
-  const search=window.location.search;
-  if (!search.startsWith("?")) return {};
-  const data={};
-  for (let record of search.substring(1).split("&")) {
-    const arr=record.split("=");
-    if (arr.length==2 && validKeys.indexOf(arr[0])>=0) data[arr[0]]=arr[1];
-  }
-  return data;
 }
 
 /**

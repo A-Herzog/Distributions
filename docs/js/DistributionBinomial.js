@@ -86,7 +86,8 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
   getDiscreteSupport(values) {
     return [0,values.n];
   }
+
   calcProbability(values, k) {
-    return mathBinom(values.n,k)*values.p**k*(1-values.p)**(values.n-k);
+    return Math.max(0,mathBinom(values.n,k)*values.p**k*(1-values.p)**(values.n-k));
   }
 }

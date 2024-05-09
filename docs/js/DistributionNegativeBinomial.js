@@ -84,6 +84,7 @@ class NegativeBinomialDistribution extends DiscreteProbabilityDistribution {
     const sd=Math.sqrt((values.r*(1-values.p))/(values.p**2));
     return [0,Math.max(50,Math.round(mean+3*sd))];
   }
+
   calcProbability(values, k) {
     return mathBinom(k+values.r-1,k)*values.p**values.r*(1-values.p)**k;
   }

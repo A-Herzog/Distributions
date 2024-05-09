@@ -63,7 +63,7 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
     return pdf;
   }
 
-    #getCDFText() {
+  #getCDFText() {
     const F=variable("F");
     const x=variable("x");
     const alpha=variable("&alpha;");

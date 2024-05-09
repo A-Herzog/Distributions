@@ -103,6 +103,7 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
   getDiscreteSupport(values) {
     return [values.a,values.b];
   }
+
   calcProbability(values, k) {
     if (k<values.a || k>values.b) return 0;
     return 1/(values.b-values.a+1);

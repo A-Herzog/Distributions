@@ -406,6 +406,24 @@ class ProbabilityDistribution {
 
     this._calcDistribution(values);
     this.#fireCalcParameterUpdated();
+    this.updatePermaLink();
+  }
+
+  /**
+   * Updates the permalink outside the distribution panel area
+   */
+  updatePermaLink() {
+    if (typeof(PermaLink)=='undefined') return;
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+    const params=[];
+    for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+    const url=document.location.protocol+"//"+document.location.host+document.location.pathname+"?distribution="+distShortName+"&"+params.join("&");
+
+    PermaLink.href=url;
+    menuColorModeLight.href=url;
+    menuColorModeDark.href=url;
+    menuColorModeSystemDefault.href=url;
   }
 
   /**

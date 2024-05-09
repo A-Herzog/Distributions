@@ -20,6 +20,7 @@ import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {isDesktopApp} from './Main.js';
 import {getFloat, getPositiveInt, formatNumber} from "./NumberTools.js";
+import {loadSearchStringParameters} from "./StringTools.js";
 
 /**
  * Fills in the language strings to the GUI elements.
@@ -84,22 +85,6 @@ function saveTable() {
     element.click();
     document.body.removeChild(element);
   }
-}
-
-/**
- * Loads data from the url search string into an object
- * @param {Array} validKeys List of the search string parameters to be loaded
- * @returns Object containing the names of the parameters and the values from the url search string as values
- */
-function loadSearchStringParameters(validKeys) {
-  const search=window.location.search;
-  if (!search.startsWith("?")) return {};
-  const data={};
-  for (let record of search.substring(1).split("&")) {
-    const arr=record.split("=");
-    if (arr.length==2 && validKeys.indexOf(arr[0])>=0) data[arr[0]]=arr[1];
-  }
-  return data;
 }
 
 /**
@@ -278,6 +263,22 @@ function rangeChanged(distribution, values, parent) {
 }
 
 /**
+ * Generates and adds a permalink.
+ * @param {Object} parent Parent HTML node
+ */
+function addPermaLink(parent) {
+  if (isDesktopApp) return;
+  const permaLinkDiv=document.createElement("div");
+  permaLinkDiv.classList.add("mt-3");
+  permaLinkDiv.classList.add("small");
+  parent.appendChild(permaLinkDiv);
+  const permaLink=document.createElement("a");
+  permaLinkDiv.appendChild(permaLink);
+  permaLink.innerHTML=language.GUI.permaLink;
+  permaLink.href=document.location;
+}
+
+/**
  * Generates the info / setup area for the pseudo-random numbers viewer
  * @param {Object} parent Parent html element
  * @param {Array} info Info lines to be output
@@ -345,6 +346,8 @@ function buildRandomNumbersInfoArea(parent, info, currentCount) {
   const infoTextDiv=document.createElement("div");
   infoTextDiv.innerHTML=infoText;
   parent.appendChild(infoTextDiv);
+
+  addPermaLink(parent);
 }
 
 /**
@@ -488,6 +491,7 @@ function initTable() {
     const info=document.createElement("div");
     info.innerHTML=language.GUI.selectDistribution+": <b>"+distribution.nameWithParameters+"</b>";
     infoArea.appendChild(info);
+    addPermaLink(infoArea);
     if (distribution.discrete) {
       initDiscreteTable(distribution,values,tableArea);
     } else {

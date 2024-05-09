@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export {isDesktopApp, initApp};
+export {isDesktopApp, initApp, selectDistribution};
 
 import {language} from "./Language.js";
 import {listDistributions, getDistributionsByName} from "./DistributionSetup.js";
@@ -39,7 +39,9 @@ function initGUILanguage() {
   languageButton.querySelector('.menuButtonTitleLong').innerHTML=language.GUI.switchLanguage;
   languageButton.onclick=()=>{
     localStorage.setItem('selectedLanguage',language.GUI.switchLanguageMode);
-    document.location.href=language.GUI.switchLanguageFile;
+    let url=PermaLink.href;
+    url=url.substr(url.indexOf("?"));
+    document.location.href=language.GUI.switchLanguageFile+url;
   }
 
   menuColorMode.title=language.GUI.tabColorMode;
@@ -103,6 +105,7 @@ function initDistributionsSelector(distSelect, distributionArea) {
 function selectDistribution(distribution, area) {
   area.innerHTML="";
   area.appendChild(distribution.panel);
+  distribution.updatePermaLink();
 }
 
 /**

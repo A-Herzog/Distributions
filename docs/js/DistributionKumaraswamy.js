@@ -59,7 +59,7 @@ class KumaraswamyDistribution extends ContinuousProbabilityDistribution {
     return pdf;
   }
 
-    #getCDFText() {
+  #getCDFText() {
     const F=variable("F");
     const x=variable("x");
     const a=variable("a");

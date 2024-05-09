@@ -74,7 +74,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     return pdf;
   }
 
-    #getCDFText() {
+  #getCDFText() {
     const F=variable("F");
     const x="<msub>"+variable("x")+"<mi mathvariant='normal'>scaled</mi></msub>";
     const alpha=variable("&alpha;");

@@ -110,7 +110,7 @@ class NegativeHypergeometricDistribution extends DiscreteProbabilityDistribution
   calcProbability(values, k) {
     if (k<values.n) return 0;
     if (k>values.N) return 0;
-    const result=mathBinom(k-1,values.n-1)*mathBinom(values.N-k,values.R-values.n)/this.#denumerator;
+    const result=Math.max(0,mathBinom(k-1,values.n-1)*mathBinom(values.N-k,values.R-values.n)/this.#denumerator);
     return result;
   }
 }

@@ -41,6 +41,7 @@ lang.GUI.tabColorMode="Farbmodus";
 lang.GUI.tabColorModeLight="Hell";
 lang.GUI.tabColorModeDark="Dunkel";
 lang.GUI.tabColorModeSystemDefault="Systemvorgabe";
+lang.GUI.permaLink="Permalink zu dieser Seite mit diesen Einstellungen";
 lang.GUI.downloadLabel="Diese Webapp steht auch als offline-nutzbare Windows-Anwendung zur Verfügung:";
 lang.GUI.downloadButton="Windows-Anwendung (exe)";
 
@@ -445,6 +446,7 @@ lang.GUI.tabColorMode="Color mode";
 lang.GUI.tabColorModeLight="Light";
 lang.GUI.tabColorModeDark="Dark";
 lang.GUI.tabColorModeSystemDefault="System default";
+lang.GUI.permaLink="Permalink to this page with these settings";
 lang.GUI.downloadLabel="This webapp is also available as an offline usable Windows application:";
 lang.GUI.downloadButton="Windows application (exe)";
 

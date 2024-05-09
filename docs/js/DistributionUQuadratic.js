@@ -82,7 +82,7 @@ class UQuadraticDistribution extends ContinuousProbabilityDistribution {
     return cdf;
   }
 
-    _checkParameters(values) {
+  _checkParameters(values) {
     if (values.a>values.b) {
       this._setErrorMarker("b",language.distributions.uQuadratic.parameterInfobError);
       this._clearAllOutput();

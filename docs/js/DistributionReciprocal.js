@@ -76,7 +76,7 @@ class ReciprocalDistribution extends ContinuousProbabilityDistribution {
     return cdf;
   }
 
-    _checkParameters(values) {
+  _checkParameters(values) {
     if (values.a>values.b) {
       this._setErrorMarker("b",language.distributions.reciprocal.parameterInfobError);
       this._clearAllOutput();

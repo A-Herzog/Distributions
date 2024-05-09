@@ -62,7 +62,7 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
     return pdf;
   }
 
-    #getCDFText() {
+  #getCDFText() {
     const F=variable("F");
     const x=variable("x");
     const k=variable("k");
