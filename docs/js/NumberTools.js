@@ -135,6 +135,13 @@ function formatNumber(number, digits) {
     return number.toLocaleString(undefined, { minimumFractionDigits: usedDigits });
 }
 
+/**
+ * Formats a number as a local string and returns a string containing a HTML span
+ * containing the number and a title attribute with more digits.
+ * @param {Number} number Number to be formatted
+ * @param {Number} digits Maximum number of decimal digits to use (if missing: use locale default value)
+ * @returns Formatted number
+ */
 function formatNumberWithTitle(number, digits) {
   return "<span title='"+formatNumber(number,8)+"'>"+formatNumber(number,digits)+"</span>";
 }

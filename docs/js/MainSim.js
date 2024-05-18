@@ -214,6 +214,11 @@ function drawCircle(ctx, x, y, radius) {
   ctx.stroke();
 }
 
+/**
+ * Draws a dice to the dice canvas element
+ * @param {Number} nr Dice role value (number from 1 to 6)
+ * @see doStepLawOfLargeNumbers
+ */
 function drawDice(nr) {
   if (!dice_canvas.getContext) return;
   const ctx=dice_canvas.getContext('2d');
@@ -232,14 +237,29 @@ function drawDice(nr) {
   }
 }
 
+/**
+ * Formats a number as a percent value with one digit.
+ * @param {Number} number Number to be formatted as percent
+ * @returns Number as string
+ */
 function formatPercentFixed(number) {
   return formatPercent(Math.round(number*1000)/1000);
 }
 
+/**
+ * Formats a number a a percent value and outputs it as a HTML table cell.
+ * @param {Number} value Number to be formatted as percent
+ * @returns Number as string in a table cell
+ */
 function getPercentTD(value) {
   return "<td title='"+formatPercent(value,5)+"'>"+formatPercentFixed(value)+"</td>";
 }
 
+/**
+ * Does a law of large numbers simulation step.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ */
 function doStepLawOfLargeNumbers(distribution, values) {
   const rnd=generateRandomNumber(distribution,values);
   count++;
@@ -335,6 +355,11 @@ function doStepLawOfLargeNumbers(distribution, values) {
   return info.join("<br>");
 }
 
+/**
+ * Does a central limit theorem simulation step.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ */
 function doStepCentralLimitTheorem(distribution, values) {
   const support=(distribution.discrete)?distribution.getDiscreteSupport(values):distribution.getDiagramSupport(values);
 
@@ -391,6 +416,12 @@ function doStepCentralLimitTheorem(distribution, values) {
   return info.join("<br>");
 }
 
+/**
+ * Does a simulation step.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ * @param {Number} mode Simulation mode (0: law of large numbers, 1: central limit theorem)
+ */
 function doStep(distribution, values, mode) {
   let info;
   switch (mode) {
@@ -405,6 +436,12 @@ function doStep(distribution, values, mode) {
   infoLine.innerHTML=info;
 }
 
+/**
+ * Sets up a timeout for the next simulation step.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ * @param {Number} mode Simulation mode (0: law of large numbers, 1: central limit theorem)
+ */
 function initStepTimeout(distribution, values, mode) {
   const delay=(mode==0)?75:10;
   runTimeout=setTimeout(()=>{
@@ -413,6 +450,12 @@ function initStepTimeout(distribution, values, mode) {
   },delay);
 }
 
+/**
+ * Starts or stops the simulation.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ * @param {Number} mode Simulation mode (0: law of large numbers, 1: central limit theorem)
+ */
 function doStartStop(distribution, values, mode) {
   if (running) {
     /* Stop */
@@ -435,6 +478,17 @@ function doStartStop(distribution, values, mode) {
   running=!running;
 }
 
+/**
+ * Initializes the charts for the simulation.
+ * @param {Object} distribution Distribution to be used for simulation
+ * @param {Object} values Distribution parameters
+ * @param {Number} mode Simulation mode (0: law of large numbers, 1: central limit theorem)
+ * @param {Object} chart1data Datasets for left chart
+ * @param {Object} chart1options Options for left chart
+ * @param {Object} chart2data Datasets for right chart
+ * @param {Object} chart2options Options for right chart
+ * @param {Function} resetCallback Function which is called when the user clicks the reset data button
+ */
 function initCharts(distribution, values, mode, chart1data, chart1options, chart2data, chart2options, resetCallback)  {
   /* Init charts */
   chart1=new Chart(chart1canvas,{data: chart1data, options: chart1options});
@@ -456,6 +510,11 @@ function initCharts(distribution, values, mode, chart1data, chart1options, chart
   };
 }
 
+/**
+ * Initializes law of large numbers simulation.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ */
 function initLawOfLargeNumbers(distribution, values) {
   /* Init language */
   const title=(values.dice)?(language.distributions.infoDiagramDiceRollSimulation+" - "+language.distributions.infoDiagramLawOfLargeNumbers):language.distributions.infoDiagramLawOfLargeNumbers;
@@ -543,6 +602,11 @@ function initLawOfLargeNumbers(distribution, values) {
   });
 }
 
+/**
+ * Initializes central limit theorem simulation.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ */
 function initCentralLimitTheorem(distribution, values) {
   /* Init language */
   initGUILanguage(distribution,language.distributions.infoDiagramCentralLimitTheorem,language.distributions.infoDiagramCentralLimitTheoremInfo,language.distributions.infoDiagramCentralLimitTheoremWikipedia,language.distributions.infoDiagramCentralLimitTheoremHeadingSample,language.distributions.infoDiagramCentralLimitTheoremHeadingStandardNormalDistribution);

@@ -72,6 +72,11 @@ function initGUILanguage() {
   infoSimulators.innerHTML=language.GUI.simulators;
 }
 
+/**
+ * Initializes the distribution selector dropdown list
+ * @param {Object} distSelect HTML select element
+ * @param {Object} distributionArea HTML area for showing the data for the selected distribution
+ */
 function initDistributionsSelector(distSelect, distributionArea) {
   let optgroup;
   let first=true;
@@ -102,6 +107,11 @@ function initDistributionsSelector(distSelect, distributionArea) {
   selectDistribution(getDistributionsByName(distSelect.value),distributionArea);
 }
 
+/**
+ * Shows the data for the selected distribution
+ * @param {Object} distribution Selected distribution
+ * @param {Object} area HTML area for showing the data for the selected distribution
+ */
 function selectDistribution(distribution, area) {
   area.innerHTML="";
   area.appendChild(distribution.panel);
