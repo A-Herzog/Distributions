@@ -81,9 +81,13 @@ function initDistributionsSelector(distSelect, distributionArea) {
   let optgroup;
   let first=true;
 
+  let countDiscrete=0;
+  let countContinuous=0;
+
   distSelect.appendChild(optgroup=document.createElement("optgroup"));
   optgroup.label=language.distributions.typeDiscreteFull;
   for (let name of listDistributions.filter(dist=>dist.discrete).map(dist=>dist.name).sort()) {
+    countDiscrete++;
     const option=document.createElement("option");
     option.innerHTML=name;
     if (first) {option.selected="selected"; first=false;}
@@ -93,11 +97,14 @@ function initDistributionsSelector(distSelect, distributionArea) {
   distSelect.appendChild(optgroup=document.createElement("optgroup"));
   optgroup.label=language.distributions.typeContinuousFull;
   for (let name of listDistributions.filter(dist=>!dist.discrete).map(dist=>dist.name).sort()) {
+    countContinuous++;
     const option=document.createElement("option");
     option.innerHTML=name;
     if (first) {option.selected="selected"; first=false;}
     optgroup.appendChild(option);
   }
+
+  distSelect.title=countDiscrete+" "+language.distributions.countDiscrete+" + "+countContinuous+" "+language.distributions.countContinuous+" = "+(countDiscrete+countContinuous)+" "+language.distributions.countSum;
 
   distSelect.onchange=()=>{
     const dist=getDistributionsByName(distSelect.value);
