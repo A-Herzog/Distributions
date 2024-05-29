@@ -411,6 +411,11 @@ lang.distributions.kumaraswamy.wikipedia="https://en.wikipedia.org/wiki/Kumarasw
 lang.distributions.kumaraswamy.parameterInfoA="Form";
 lang.distributions.kumaraswamy.parameterInfoB="Form";
 
+lang.distributions.sine={}
+lang.distributions.sine.name="Sinus-Verteilung";
+lang.distributions.sine.info="Die Sinus-Verteilung nutzt den skalierten ersten Bogen der Sinusfunktion Dichte.";
+lang.distributions.sine.wikipedia=null;
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -818,6 +823,11 @@ lang.distributions.kumaraswamy.info="Similar to the beta distribution, the Kumar
 lang.distributions.kumaraswamy.wikipedia="https://en.wikipedia.org/wiki/Kumaraswamy_distribution";
 lang.distributions.kumaraswamy.parameterInfoA="Shape";
 lang.distributions.kumaraswamy.parameterInfoB="Shape";
+
+lang.distributions.sine={}
+lang.distributions.sine.name="Sine distribution";
+lang.distributions.sine.info="The sine distribution uses the scaled first arc of the sine function.";
+lang.distributions.sine.wikipedia=null;
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
