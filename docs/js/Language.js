@@ -416,6 +416,11 @@ lang.distributions.sine.name="Sinus-Verteilung";
 lang.distributions.sine.info="Die Sinus-Verteilung nutzt den skalierten ersten Bogen der Sinusfunktion Dichte.";
 lang.distributions.sine.wikipedia=null;
 
+lang.distributions.arcsine={}
+lang.distributions.arcsine.name="Arcus Sinus-Verteilung";
+lang.distributions.arcsine.info="";
+lang.distributions.arcsine.wikipedia=null;
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -828,6 +833,11 @@ lang.distributions.sine={}
 lang.distributions.sine.name="Sine distribution";
 lang.distributions.sine.info="The sine distribution uses the scaled first arc of the sine function.";
 lang.distributions.sine.wikipedia=null;
+
+lang.distributions.arcsine={}
+lang.distributions.arcsine.name="Arcsine distribution";
+lang.distributions.arcsine.info="";
+lang.distributions.arcsine.wikipedia=null;
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
