@@ -18,7 +18,7 @@ export {SineDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, minus} from './MathMLTools.js';
+import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, plus, minus} from './MathMLTools.js';
 
 
 
@@ -26,34 +26,37 @@ import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, minus} f
  * Sine distribution
  */
 class SineDistribution extends ContinuousProbabilityDistribution {
-  #pdfFactor;
-
   constructor() {
     super(language.distributions.sine.name);
 
-    this.support="[0;1]";
+    this.support=setRHTML;
     this.infoText=language.distributions.sine.info;
     this.wikipediaURL=language.distributions.sine.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._setCalcParameter("x",0.5);
+    this._addContinuousParameter("a","a",language.distributions.uniform.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
+    this._addContinuousParameter("b","b",language.distributions.uniform.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
+
+    this._setCalcParameter("x",7.5);
   }
 
   #getPDFText() {
     const f=variable("f");
     const x=variable("x");
     const pi=variable("&pi;");
+    const a=variable("a");
+    const b=variable("b");
 
     let pdf="";
     pdf+=beginMathML;
     pdf+=defF(f,x);
     pdf+=frac(pi,"<mn>2</mn>");
-    pdf+=defF("<mi>sin</mi>",pi+x,false);
+    pdf+=defF("<mi>sin</mi>",pi+frac(x+minus+a,b+minus+a),false);
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
-    pdf+=x+isin+"<ms>[</ms><mn>0</mn>;<mn>1</mn><ms>]</ms>";
+    pdf+=x+isin+"<ms>[</ms>"+a+";"+b+"<ms>]</ms>";
     pdf+=endMathML;
     return pdf;
   }
@@ -62,26 +65,40 @@ class SineDistribution extends ContinuousProbabilityDistribution {
     const F=variable("F");
     const x=variable("x");
     const pi=variable("&pi;");
+    const a=variable("a");
+    const b=variable("b");
 
     let cdf="";
     cdf+=beginMathML;
     cdf+=defF(F,x);
     cdf+=frac("<mn>1</mn>","<mn>2</mn>");
-    cdf+="<mo>(</mo><mn>1</mn>"+minus+defF("<mi>cos</mi>",pi+x,false)+"<mo>)</mo>";
+    cdf+="<mo>(</mo><mn>1</mn>"+minus+defF("<mi>cos</mi>",pi+frac(x+minus+a,b+minus+a),false)+"<mo>)</mo>";
     cdf+=endMathML;
     cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
-    cdf+=x+isin+"<ms>[</ms><mn>0</mn>;<mn>1</mn><ms>]</ms>";
+    cdf+=x+isin+"<ms>[</ms>"+a+";"+b+"<ms>]</ms>";
     cdf+=endMathML;
     return cdf;
   }
 
+  _checkParameters(values) {
+    if (values.a>values.b) {
+      this._setErrorMarker("b",language.distributions.uniform.parameterInfobError);
+      this._clearAllOutput();
+      return false;
+    }
+
+    return true;
+  }
+
   #getPDF(values, x) {
+    x=(x-values.a)/(values.b-values.a);
     if (x<=0 || x>=1) return 0;
     return Math.PI/2*Math.sin(Math.PI*x);
   }
 
   #getCDF(values, x) {
+    x=(x-values.a)/(values.b-values.a);
     if (x<=0) return 0;
     if (x>=1) return 1;
     return 0.5*(1-Math.cos(Math.PI*x));
@@ -91,20 +108,22 @@ class SineDistribution extends ContinuousProbabilityDistribution {
     /* Characteristics */
 
     const pi=variable("&pi;");
+    const a=variable("a");
+    const b=variable("b");
 
-    const meanFormula=beginMathML+frac("<mn>1</mn>","<mn>2</mn>")+endMathML;
-    const varianceFormula=beginMathML+frac("<mn>1</mn>","<mn>4</mn>")+minus+frac("<mn>2</mn>","<msup>"+pi+"<mn>2</mn></msup>")+endMathML;
+    const meanFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
+    const varianceFormula=beginMathML+"<mo>(</mo>"+frac("<mn>1</mn>","<mn>4</mn>")+minus+frac("<mn>2</mn>","<msup>"+pi+"<mn>2</mn></msup>")+"<mo>)</mo><msup><mrow><mo>(</mo>"+b+minus+a+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML; // XXX:
 
-    const meanValue=1/2;
-    const varianceValue=0.25-2/(Math.PI**2);
+    const meanValue=(values.a+values.b)/2;
+    const varianceValue=(0.25-2/(Math.PI**2))*(values.b-values.a)**2;
 
     this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
 
     /* Diagram */
 
     const that=this;
-    const minX=0;
-    const maxX=1.5;
+    const minX=Math.min(0,values.a-3);
+    const maxX=Math.max(20,values.b+3);
     this._setContinuousDiagram(minX,maxX,x=>that.#getPDF(values,x),x=>that.#getCDF(values,x));
   }
 
@@ -115,6 +134,7 @@ class SineDistribution extends ContinuousProbabilityDistribution {
   getRandomNumber(values) {
     /* p=0.5*(1-cos(pi*x)) => arccos(1-2p)/pi=x */
     const u=Math.random();
-    return Math.acos(1-2*u)/Math.PI;
+    const x=Math.acos(1-2*u)/Math.PI;
+    return x*(values.b-values.a)+values.a;
   }
 }
