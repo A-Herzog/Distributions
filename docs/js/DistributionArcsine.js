@@ -18,7 +18,7 @@ export {ArcsineDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, minus} from './MathMLTools.js';
+import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
 
 
 
@@ -26,36 +26,36 @@ import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, minus} f
  * Arcsine distribution
  */
 class ArcsineDistribution extends ContinuousProbabilityDistribution {
-  #pdfFactor;
-
   constructor() {
     super(language.distributions.arcsine.name);
 
-    this.support="(0;1)";
+    this.support=setRHTML;
     this.infoText=language.distributions.arcsine.info;
     this.wikipediaURL=language.distributions.arcsine.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._setCalcParameter("x",0.5);
+    this._addContinuousParameter("a","a",language.distributions.uniform.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
+    this._addContinuousParameter("b","b",language.distributions.uniform.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
+
+    this._setCalcParameter("x",7.5);
   }
 
   #getPDFText() {
     const f=variable("f");
     const x=variable("x");
     const pi=variable("&pi;");
+    const a=variable("a");
+    const b=variable("b");
 
     let pdf="";
     pdf+=beginMathML;
     pdf+=defF(f,x);
-    /*
-    pdf+=frac(pi,"<mn>2</mn>");
-    pdf+=defF("<mi>sin</mi>",pi+x,false);
-    */
+    pdf+=frac("<mn>1</mn>",pi+"<msqrt>"+frac(x+minus+a,b+minus+a)+mul+frac("<mo>(</mo><mn>1</mn>"+minus+x+"<mo>)</mo>"+minus+a,b+minus+a)+"</msqrt>")
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
-    pdf+=x+isin+"<ms>(</ms><mn>0</mn>;<mn>1</mn><ms>)</ms>";
+    pdf+=x+isin+"<ms>(</ms>"+a+";"+b+"<ms>)</ms>";
     pdf+=endMathML;
     return pdf;
   }
@@ -64,28 +64,40 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
     const F=variable("F");
     const x=variable("x");
     const pi=variable("&pi;");
+    const arcsin=variable("arcsin");
+    const a=variable("a");
+    const b=variable("b");
 
     let cdf="";
     cdf+=beginMathML;
     cdf+=defF(F,x);
-    /*
-    cdf+=frac("<mn>1</mn>","<mn>2</mn>");
-    cdf+="<mo>(</mo><mn>1</mn>"+minus+defF("<mi>cos</mi>",pi+x,false)+"<mo>)</mo>";
-    */
+    cdf+=frac("<mn>2</mn>",pi+mul+arcsin+"<mo>(</mo><msqrt>"+frac(x+minus+a,b+minus+a)+"</msqrt><mo>)</mo>");
     cdf+=endMathML;
     cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
-    cdf+=x+isin+"<ms>(</ms><mn>0</mn>;<mn>1</mn><ms>)</ms>";
+    cdf+=x+isin+"<ms>(</ms>"+a+";"+b+"<ms>)</ms>";
     cdf+=endMathML;
     return cdf;
   }
 
+  _checkParameters(values) {
+    if (values.a>values.b) {
+      this._setErrorMarker("b",language.distributions.uniform.parameterInfobError);
+      this._clearAllOutput();
+      return false;
+    }
+
+    return true;
+  }
+
   #getPDF(values, x) {
+    x=(x-values.a)/(values.b-values.a);
     if (x<=0 || x>=1) return 0;
      return 1/(Math.PI*Math.sqrt(x*(1-x)));
   }
 
   #getCDF(values, x) {
+    x=(x-values.a)/(values.b-values.a);
     if (x<=0) return 0;
     if (x>=1) return 1;
     return 2/Math.PI*Math.asin(Math.sqrt(x));
@@ -94,21 +106,22 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
   _calcDistribution(values) {
     /* Characteristics */
 
-    const pi=variable("&pi;");
+    const a=variable("a");
+    const b=variable("b");
 
-    const meanFormula=beginMathML+frac("<mn>1</mn>","<mn>2</mn>")+endMathML;
-    const varianceFormula=beginMathML+frac("<mn>1</mn>","<mn>8</mn>")+endMathML;
+    const meanFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
+    const varianceFormula=beginMathML+frac("<mn>1</mn>","<mn>8</mn>")+"<msup><mrow><mo>(</mo>"+b+minus+a+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML;
 
-    const meanValue=1/2;
-    const varianceValue=1/8;
+    const meanValue=(values.a+values.b)/2;
+    const varianceValue=1/8*(values.b-values.a)**2;
 
     this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
 
     /* Diagram */
 
     const that=this;
-    const minX=0;
-    const maxX=2;
+    const minX=Math.min(0,values.a-3);
+    const maxX=Math.max(20,values.b+3);
     this._setContinuousDiagram(minX,maxX,x=>that.#getPDF(values,x),x=>that.#getCDF(values,x));
   }
 
@@ -119,6 +132,7 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
   getRandomNumber(values) {
     /* p=2/pi*arcsin(sqrt(x)) => (sin(pi*p/2))^2=x */
     const u=Math.random();
-    return (Math.sin(Math.PI*u/2))**2;
+    const x=(Math.sin(Math.PI*u/2))**2;
+    return x*(values.b-values.a)+values.a;
   }
 }
