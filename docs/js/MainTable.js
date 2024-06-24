@@ -115,11 +115,11 @@ function getDistributionFromSearchString() {
 /**
  * Generated a html table element
  * @param {Object} parent Parent html element
- * @param {Array} cols List of the column titles for the table (entries can be strings or arrays; in case of an array the first entry of the array is used as title)
+ * @param {Array} cols List of the column titles for the table (entries can be strings or arrays; in case of an array the first entry of the array is used as display title and the second as export title)
  * @param {Boolean} longTable Add "table-sm" to css class list?
  * @returns Array of already to parent added html table element und tbody element
  */
-function buildTableElement(parent, cols, longTable=false) {
+function buildTableElement(parent, cols, longTable=false, exportTitle=true) {
   const table=document.createElement("table");
   table.className="table table-striped border mt-3"+(longTable?" table-sm":"");
 
@@ -135,7 +135,11 @@ function buildTableElement(parent, cols, longTable=false) {
     if (typeof(cell)=='string') th.innerHTML=cell; else th.innerHTML=cell[0];
   }
 
-  clipboardData=cols.map(cell=>(typeof(cell)=='string')?cell:cell[1]).join("\t")+"\n";
+  if (exportTitle) {
+    clipboardData=cols.map(cell=>(typeof(cell)=='string')?cell:cell[1]).join("\t")+"\n";
+  } else {
+    clipboardData="";
+  }
 
   const tbody=document.createElement("tbody");
   table.appendChild(tbody);
@@ -382,7 +386,7 @@ function generateDiscreteRandomNumbers(distribution, values, count, infoArea, ta
   }
 
   let table, tbody;
-  [table, tbody]=buildTableElement(null,[language.distributions.infoDiagramGenerateRandomNumbersTitle],true);
+  [table, tbody]=buildTableElement(null,[language.distributions.infoDiagramGenerateRandomNumbersTitle],true,false);
 
   let min=Number.MAX_VALUE;
   let max=-Number.MAX_VALUE;
@@ -424,7 +428,7 @@ function generateDiscreteRandomNumbers(distribution, values, count, infoArea, ta
  */
 function generateContinuousRandomNumbers(distribution, values, count, infoArea, tableArea) {
   let table, tbody;
-  [table, tbody]=buildTableElement(null,[language.distributions.infoDiagramGenerateRandomNumbersTitle],true);
+  [table, tbody]=buildTableElement(null,[language.distributions.infoDiagramGenerateRandomNumbersTitle],true,false);
 
   let min=Number.MAX_VALUE;
   let max=-Number.MAX_VALUE;

@@ -133,4 +133,9 @@ class NormalDistribution extends ContinuousProbabilityDistribution {
   getRandomNumber(values) {
     return gaussianRandomPolar(values.mu,values.sigma);
   }
+
+  fitParameters(data) {
+    if (data.std<=0) return null;
+    return {mu: data.mean, sigma: data.std};
+  }
 }

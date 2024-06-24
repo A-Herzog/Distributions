@@ -154,4 +154,8 @@ class UQuadraticDistribution extends ContinuousProbabilityDistribution {
     const w=(Math.abs(v))**(1/3);
     return ((v<0)?(-w):w)+beta;
   }
+
+  fitParameters(data) {
+    return {a: data.min, b: data.max};
+  }
 }

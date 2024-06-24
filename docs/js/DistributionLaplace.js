@@ -121,4 +121,9 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     const u=Math.random();
     return values.mu-values.sigma*Math.sign(u-0.5)*Math.log(1-2*Math.abs(u-0.5));
   }
+
+  fitParameters(data) {
+    if (data.std<=0) return null;
+    return {mu: data.mean, sigma: data.std/Math.sqrt(2)};
+  }
 }

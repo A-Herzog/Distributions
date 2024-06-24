@@ -131,4 +131,8 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    return {mu: data.mean};
+  }
 }

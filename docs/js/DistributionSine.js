@@ -18,7 +18,7 @@ export {SineDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, plus, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, setRHTML, isin, variable, frac, defF, plus, minus} from './MathMLTools.js';
 
 
 
@@ -112,7 +112,7 @@ class SineDistribution extends ContinuousProbabilityDistribution {
     const b=variable("b");
 
     const meanFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
-    const varianceFormula=beginMathML+"<mo>(</mo>"+frac("<mn>1</mn>","<mn>4</mn>")+minus+frac("<mn>2</mn>","<msup>"+pi+"<mn>2</mn></msup>")+"<mo>)</mo><msup><mrow><mo>(</mo>"+b+minus+a+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML; // XXX:
+    const varianceFormula=beginMathML+"<mo>(</mo>"+frac("<mn>1</mn>","<mn>4</mn>")+minus+frac("<mn>2</mn>","<msup>"+pi+"<mn>2</mn></msup>")+"<mo>)</mo><msup><mrow><mo>(</mo>"+b+minus+a+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML;
 
     const meanValue=(values.a+values.b)/2;
     const varianceValue=(0.25-2/(Math.PI**2))*(values.b-values.a)**2;
@@ -136,5 +136,9 @@ class SineDistribution extends ContinuousProbabilityDistribution {
     const u=Math.random();
     const x=Math.acos(1-2*u)/Math.PI;
     return x*(values.b-values.a)+values.a;
+  }
+
+  fitParameters(data) {
+    return {a: data.min, b: data.max};
   }
 }

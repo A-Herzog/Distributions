@@ -18,7 +18,7 @@ export {ArcsineDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML,  setRHTML, isin,  variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
+import {beginMathML, endMathML, setRHTML, isin,  variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
 
 
 
@@ -134,5 +134,9 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
     const u=Math.random();
     const x=(Math.sin(Math.PI*u/2))**2;
     return x*(values.b-values.a)+values.a;
+  }
+
+  fitParameters(data) {
+    return {a: data.min, b: data.max};
   }
 }

@@ -44,6 +44,7 @@ lang.GUI.tabColorModeSystemDefault="Systemvorgabe";
 lang.GUI.permaLink="Permalink zu dieser Seite mit diesen Einstellungen";
 lang.GUI.downloadLabel="Diese Webapp steht auch als offline-nutzbare Windows-Anwendung zur Verfügung:";
 lang.GUI.downloadButton="Windows-Anwendung (exe)";
+lang.GUI.toolsLabel="Weitere Hilfsmittel:";
 
 lang.distributions={};
 lang.distributions.typeDiscrete="diskret";
@@ -176,6 +177,22 @@ lang.distributions.parameterErrorFloatMinMaxExclusiveInclusive="Es muss eine Zah
 lang.distributions.parameterErrorFloatMinMaxExclusiveExclusive="Es muss eine Zahl im Bereich von {0} bis {1} (jeweils exklusive der Grenzen) angegeben werden.";
 lang.distributions.parameterValueDown="Wert verringern";
 lang.distributions.parameterValueUp="Wert vergrößern";
+
+lang.fitter={};
+lang.fitter.title="Verteilungsanpassung";
+lang.fitter.inputValues="Eingabewerte";
+lang.fitter.inputValuesLoadInfo="Eine Datei zum Laden des Inhalts hierhin ziehen und ablegen.";
+lang.fitter.inputValuesLoadError="Die Datei enthielt keine Zahlenwerte, die verarbeitet werden könnten.";
+lang.fitter.loadedValues="Geladene Werte";
+lang.fitter.loadedValuesCount="Anzahl an Werten";
+lang.fitter.loadedValuesMinimum="Minimum";
+lang.fitter.loadedValuesMaximum="Maximum";
+lang.fitter.loadedValuesMean="Mittelwert";
+lang.fitter.loadedValuesStandardDeviation="Standardabweichung";
+lang.fitter.outputHeader="Ergebnisse der Verteilungsanpassung";
+lang.fitter.histogram="Histogramm";
+lang.fitter.fittedDistribution="Angepasste Verteilung";
+lang.fitter.openInEditor="Verteilung in Editor laden";
 
 lang.distributions.hypergeometric={};
 lang.distributions.hypergeometric.name="Hypergeometrische Verteilung";
@@ -462,6 +479,7 @@ lang.GUI.tabColorModeSystemDefault="System default";
 lang.GUI.permaLink="Permalink to this page with these settings";
 lang.GUI.downloadLabel="This webapp is also available as an offline usable Windows application:";
 lang.GUI.downloadButton="Windows application (exe)";
+lang.GUI.toolsLabel="More tools:";
 
 lang.distributions={};
 lang.distributions.typeDiscrete="discrete";
@@ -594,6 +612,22 @@ lang.distributions.parameterErrorFloatMinMaxExclusiveInclusive="A number in the 
 lang.distributions.parameterErrorFloatMinMaxExclusiveExclusive="A number in the range from {0} to {1} (excluding the limits in each case) has to be specified.";
 lang.distributions.parameterValueDown="Decrease value";
 lang.distributions.parameterValueUp="Increase value";
+
+lang.fitter={};
+lang.fitter.title="Distribution fitter";
+lang.fitter.inputValues="Input values";
+lang.fitter.inputValuesLoadInfo="Drop a file containing values here to load the data.";
+lang.fitter.inputValuesLoadError="The file did not contain any numbers.";
+lang.fitter.loadedValues="Loaded values";
+lang.fitter.loadedValuesCount="Number of values";
+lang.fitter.loadedValuesMinimum="Minimum";
+lang.fitter.loadedValuesMaximum="Maximum";
+lang.fitter.loadedValuesMean="Mean";
+lang.fitter.loadedValuesStandardDeviation="Standard deviation";
+lang.fitter.outputHeader="Distribution fitting results";
+lang.fitter.histogram="Histogram";
+lang.fitter.fittedDistribution="Fitted distribution";
+lang.fitter.openInEditor="Open in distribution editor";
 
 lang.distributions.hypergeometric={};
 lang.distributions.hypergeometric.name="Hypergeometric distribution";

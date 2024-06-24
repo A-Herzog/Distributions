@@ -18,7 +18,7 @@ export {LogNormalDistribution};
 
 import {ContinuousProbabilityDistribution, getContinousDefaultCDF} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, setRHTML, isin, setRPlus, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setRPlus, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
 import {formatNumber} from './NumberTools.js';
 
 
@@ -146,5 +146,10 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
 			this.#randomAvailable=false;
 			return this.#nextRandom;
 		}
+  }
+
+  fitParameters(data) {
+    if (data.mean<=0 || data.std<=0) return null;
+    return {mean: data.mean, std: data.std};
   }
 }

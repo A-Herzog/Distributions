@@ -146,4 +146,9 @@ class IrwinHallDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.mean<0.25) return null;
+    return {n: Math.round(data.mean*2)};
+  }
 }

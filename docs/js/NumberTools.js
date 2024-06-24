@@ -122,17 +122,22 @@ function getNotNegativeInt(elementOrString) {
  * @returns Formatted number
  */
 function formatNumber(number, digits) {
-    if (typeof(digits)=='undefined') return number.toLocaleString();
+  if (typeof(digits)=='undefined') return number.toLocaleString();
 
-    let usedDigits=0;
-    let x=number%1;
-    while (x!=0 && usedDigits<digits) {
-      x*=10;
-      x=x%1;
-      usedDigits++;
-    }
+  let usedDigits=0;
+  let x=number%1;
+  while (x!=0 && usedDigits<digits) {
+    x*=10;
+    x=x%1;
+    usedDigits++;
+  }
 
-    return number.toLocaleString(undefined, { minimumFractionDigits: usedDigits });
+  let str=number.toLocaleString(undefined, {minimumFractionDigits: usedDigits});
+  if (str.indexOf(".")>=0 || str.indexOf(",")>=0) {
+    while (str[str.length-1]=='0') str=str.substring(0,str.length-1);
+    if (str[str.length-1]=='.' || str[str.length-1]==',') str=str.substring(0,str.length-1);
+  }
+  return str;
 }
 
 /**

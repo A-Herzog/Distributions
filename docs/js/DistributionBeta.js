@@ -143,4 +143,20 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.std<=0) return null;
+		if (data.min>=data.max) return null;
+		if (data.mean<data.min || data.mean>data.max) return null;
+
+		const mean2=(data.mean-data.min)/(data.max-data.min);
+		const std2=data.std/(data.max-data.min);
+		if (mean2<=0) return null;
+
+		const v=std2**2;
+		const alpha=mean2*mean2/v-mean2*mean2*mean2/v-mean2;
+		const beta=alpha*(1/mean2-1);
+
+		return {a: data.min, b: data.max, alpha: alpha, beta: beta};
+  }
 }

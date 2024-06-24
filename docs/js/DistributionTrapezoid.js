@@ -245,4 +245,47 @@ class TrapezoidDistribution extends ContinuousProbabilityDistribution {
 		const relativePosition=(u-this.#pdfB)/(this.#pdfC-this.#pdfB);
 		return values.b+(values.c-values.b)*relativePosition;
   }
+
+  #calcVariance(values) {
+    if (values.d>values.a) {
+      let part1, part2;
+      if (values.c==values.d) part1=3*values.c**2; else part1=(values.d**3-values.c**3)/(values.d-values.c);
+      if (values.a==values.b) part2=3*values.a**2; else part2=(values.b**3-values.a**3)/(values.b-values.a);
+      const meanValue=1.0/3.0/(values.c+values.d-values.a-values.b)*(part1-part2);
+      if (values.c==values.d) part1=4*values.c**3; else part1=(values.d**4-values.c**4)/(values.d-values.c);
+      if (values.a==values.b) part2=4*values.a**3; else part2=(values.b**4-values.a**4)/(values.b-values.a);
+      return 1.0/6.0/(values.c+values.d-values.a-values.b)*(part1-part2)-meanValue**2;
+    } else {
+      return 0;
+    }
+  }
+
+  fitParameters(data) {
+    if (data.std<=0) return null;
+
+		const a=data.min;
+		const d=data.max;
+
+		/* Standard deviation is at least as big as at the triangular distribution */
+		let sd=Math.max(data.std,(d-a)/Math.sqrt(24.0));
+
+		/* Standard deviation is maximum as big as at the uniform distribution */
+		sd=Math.min(sd,(d-a)/Math.sqrt(12.0));
+
+		let fMin=0;
+		let fMax=(d-a)/2;
+
+		while ((fMax-fMin)>(d-a)/1000) {
+			const fMiddle=(fMax+fMin)/2;
+      const sdMiddle=Math.sqrt(this.#calcVariance({a: a, b: a+fMiddle, c: d-fMiddle, d: d}));
+			if (sdMiddle>sd) {
+				fMin=fMiddle;
+			} else {
+				fMax=fMiddle;
+			}
+		}
+
+		const f=(fMax+fMin)/2;
+    return {a: a, b: a+f, c: d-f, d: d};
+  }
 }

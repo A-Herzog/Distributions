@@ -183,7 +183,7 @@ class ProbabilityDistribution {
     [input, error, buttonUp, buttonDown]=this.#addInputToPanel(parent,parameter.id,parameter.shortName,parameter.fullName,parameter.defaultValue);
 
     input.onkeyup=()=>this.#fireParameterUpdated();
-    input.change=()=>this.#fireParameterUpdated();
+    input.onchange=()=>this.#fireParameterUpdated();
 
     parameter.inputElement=input;
     parameter.errorElement=error;
@@ -410,6 +410,15 @@ class ProbabilityDistribution {
   }
 
   /**
+   * Updates the distribution parameters.<br>
+   * (Is only needed if calcProbability is call outside the GUI context.)
+   */
+  setParameters(values) {
+    this._currentParameterValues=values;
+    this._calcDistribution(values);
+  }
+
+  /**
    * Updates the permalink outside the distribution panel area
    */
   updatePermaLink() {
@@ -436,7 +445,7 @@ class ProbabilityDistribution {
     for (let parameter of this.#parameters) {
       const newValue=parameterValues[parameter.id];
       if (typeof(newValue)=='undefined') continue;
-      parameter.inputElement.value=newValue;
+      parameter.inputElement.value=formatNumber(newValue,14);
     }
 
     this.#fireParameterUpdated();
@@ -558,7 +567,7 @@ class ProbabilityDistribution {
    * @param {String}  Text to be displayed in the characteristics box
    */
   set characteristics(characteristics) {
-    this.#cardCharacteristics.innerHTML=characteristics;
+    if (this.#cardCharacteristics) this.#cardCharacteristics.innerHTML=characteristics;
   }
 
   /**
@@ -582,12 +591,14 @@ class ProbabilityDistribution {
    */
   _drawChart(setup) {
     if (this.#chart!=null) {this.#chart.destroy(); this.#chart=null;}
-    if (setup==null) {
-      this.#canvas.innerHTML="";
-      this.#canvasInfo.style.display="none";
-    } else {
-      this.#chart=new Chart(this.#canvas,setup);
-      this.#canvasInfo.style.display="block";
+    if (this.#canvas) {
+      if (setup==null) {
+        this.#canvas.innerHTML="";
+        this.#canvasInfo.style.display="none";
+      } else {
+        this.#chart=new Chart(this.#canvas,setup);
+        this.#canvasInfo.style.display="block";
+      }
     }
   }
 
@@ -774,6 +785,15 @@ class ProbabilityDistribution {
     button.innerHTML=" "+title;
     return button;
   }
+
+  /**
+   * Returns distribution parameters to fit the input values.
+   * @param {Object} data Fitting input values
+   * @returns Distribution parameters object or null if no fit could be calculated for the given input values
+   */
+  fitParameters(data) {
+    return null;
+  }
 }
 
 
@@ -920,7 +940,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     });
 
     /* Init table and random numbers buttons on first call */
-    if (this.canvasInfo.children.length==0) this._initButtons();
+    if (this.canvasInfo && this.canvasInfo.children.length==0) this._initButtons();
   }
 
   /**
@@ -1218,6 +1238,8 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    * @param {Function} cdfCallback  Callback for getting an individual cdf value
    */
   _setContinuousDiagram(minX, maxX, pdfCallback, cdfCallback) {
+    if (!this.canvasInfo) return;
+
     this.#diagramMinX=minX;
     this.#diagramMaxX=maxX;
 
@@ -1432,7 +1454,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     return this.#variance;
   }
 
-    /**
+  /**
    * Gets the support used by the diagram.
    * @returns 2 element array containing the minimum and the maximum x value in the diagram
    */

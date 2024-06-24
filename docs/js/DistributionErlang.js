@@ -124,4 +124,13 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.mean<=0 || data.std<=0) return null;
+   /* E=n*l, Var=n*l² => Var=E*l => l=Var/E */
+   const lambda=data.std**2/data.mean;
+   const n=Math.max(1,Math.round(data.mean/lambda));
+   if (n==1) return null; /* This would be equivalent to exponential distribution */
+    return {n: n, lambda: lambda};
+  }
 }

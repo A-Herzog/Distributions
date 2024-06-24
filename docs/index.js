@@ -49,6 +49,8 @@ if (typeof(data.distribution)=='string') {
   }
 }
 
+/* More tools & download buttons */
+let bottomInfo="<p class='mt-3'>"+language.GUI.toolsLabel+"</p><p><button id=\"openFitterButton\" class=\"btn btn-primary my-1 bi-fingerprint\"> "+language.fitter.title+"</button></p>";
 if (isDesktopApp) {
   const footer=document.querySelector('footer');
   for (let link of footer.querySelectorAll("a")) if (link.href!='') {
@@ -63,5 +65,10 @@ if (isDesktopApp) {
   PermaLink.innerHTML=language.GUI.permaLink;
   const downloadA='<a id="downloadApp" target="_blank" href="https://github.com/A-Herzog/Distributions/releases/latest/download/Distributions.exe" style="display: none;"></a>';
   const downloadButton='<button class="btn btn-primary my-1 bi-windows" onclick="document.getElementById(\'downloadApp\').click();"> '+language.GUI.downloadButton+'</button>';
-  downloadInfoArea.innerHTML="<p class='mt-3'>"+language.GUI.downloadLabel+"</p><p>"+downloadA+downloadButton+"</p>";
+  bottomInfo+="<p class='mt-3'>"+language.GUI.downloadLabel+"</p><p>"+downloadA+downloadButton+"</p>";
 }
+bottomInfoArea.innerHTML=bottomInfo;
+openFitterButton.onclick=()=>{
+  const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
+  window.open(file,"_blank");
+};

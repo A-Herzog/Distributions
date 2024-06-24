@@ -115,4 +115,9 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.mean<0.5) return null;
+    return {k: Math.round(data.mean)};
+  }
 }

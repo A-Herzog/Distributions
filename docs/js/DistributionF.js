@@ -119,4 +119,12 @@ class FDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.mean<=1) return null;
+		const n=Math.round(2*data.mean/(data.mean-1));
+		const m=Math.round(2*n*n*(n-2)/(data.std*data.std*(n-2)*(n-2)*(n-4)-2*n*n));
+    if (m<1 || n<3) return null;
+    return {m: m, n: n};
+  }
 }

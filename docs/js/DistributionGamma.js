@@ -121,4 +121,12 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.mean<=0 || data.std<=0) return null;
+   /* E=a*b, Var=a*b² => Var=E*b => b=Var/E */
+   const beta=data.std**2/data.mean;
+   const alpha=data.mean/beta;
+    return {alpha: alpha, beta: beta};
+  }
 }

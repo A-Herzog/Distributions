@@ -102,4 +102,9 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     /* F=1-exp(-lambda*x) <=> x=-log(1-F)/lambda */
     return -Math.log(1-u)/values.lambda;
   }
+
+  fitParameters(data) {
+    if (data.mean<=0) return null;
+    return {lambda: 1/data.mean};
+  }
 }

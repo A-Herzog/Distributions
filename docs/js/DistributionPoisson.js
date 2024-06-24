@@ -87,4 +87,9 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
     for (let i=1;i<=k;i++) frac*=lambda/i;
     return frac*this.#expMinusLambda;
   }
+
+  fitParameters(data) {
+    if (data.mean<=0) return null;
+    return {lambda: data.mean};
+  }
 }

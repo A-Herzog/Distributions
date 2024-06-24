@@ -136,4 +136,8 @@ class ReciprocalDistribution extends ContinuousProbabilityDistribution {
     */
     return values.a*Math.exp(u*Math.log(values.b/values.a));
   }
+
+  fitParameters(data) {
+    return {a: data.min, b: data.max};
+  }
 }

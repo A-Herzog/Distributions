@@ -129,4 +129,8 @@ class UniformDistribution extends ContinuousProbabilityDistribution {
     const u=Math.random();
     return values.a+(values.b-values.a)*u;
   }
+
+  fitParameters(data) {
+    return {a: data.min, b: data.max};
+  }
 }
