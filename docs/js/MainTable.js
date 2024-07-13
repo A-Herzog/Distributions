@@ -18,6 +18,7 @@ export {initTable}
 
 import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
+import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {isDesktopApp} from './Main.js';
 import {getFloat, getPositiveInt, formatNumber} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
@@ -55,6 +56,7 @@ function initGUILanguage(distName, mainTitle) {
 }
 
 let clipboardData="";
+let randomNumbers=[];
 
 /**
  * Copies the table content to clipboard.
@@ -183,9 +185,14 @@ function addSimpleRow(tbody, value, discrete) {
 
   let valueStr;
   if (discrete) valueStr=formatNumber(value); else valueStr=formatNumber(value,8);
-  tbody.appendChild(tr=document.createElement("tr"));
-  tr.appendChild(td=document.createElement("td"));
-  td.innerHTML=valueStr;
+  td=document.createElement("td");
+  td.innerText=valueStr;
+
+  tr=document.createElement("tr")
+  tr.appendChild(td);
+
+  tbody.appendChild(tr);
+
   clipboardData+=valueStr+"\n";
 }
 
@@ -283,12 +290,167 @@ function addPermaLink(parent) {
 }
 
 /**
+ * Generates and adds a histogram.
+ * @param {Distribution} distribution Probability distribution for which pseudo-random numbers are to be generated
+ * @param {Object} distributionValues Parameters of the probability distribution
+ * @param {Object} parent Parent HTML node
+ */
+function addHistogram(distribution, distributionValues, parent) {
+  /* Calculate chart data */
+  const x1=Math.floor(randomNumbers.reduce((a,b)=>Math.min(a,b)));
+  const x2=randomNumbers.reduce((a,b)=>Math.max(a,b));
+
+  let barData;
+  let lineData;
+
+  if (distribution instanceof ContinuousProbabilityDistribution) {
+    /* Prepare histogram object */
+    const step=(x2-x1<=100)?1:((x2-x1)/100);
+    const histogram=[];
+    let i=0;
+    while (true) {
+      const x=x1+step*i;
+      if (x>x2) break;
+      histogram.push({x1: x, x2: x+step, n: 0});
+      i++;
+    }
+
+    /* Calculate histogram */
+    for (let value of randomNumbers) {
+      const index=Math.floor((value-x1)/step);
+      histogram[index].n++;
+    }
+
+    /* Calculate probabilities */
+    const count=randomNumbers.length;
+    for (let i=0;i<histogram.length;i++) histogram[i].p=histogram[i].n/count;
+
+    barData=histogram.map(function (record){return {x: (record.x1+record.x2)/2, y: record.p};});
+    lineData=histogram.map(function (record){
+      const p1=distribution.calcProbability(distributionValues,record.x1);
+      const p2=distribution.calcProbability(distributionValues,record.x2);
+      return {
+        x: (record.x1+record.x2)/2,
+        y: p2[1]-p1[1]
+      };
+    });
+  } else {
+    /* Prepare histogram object */
+    const histogram=[];
+    for (let i=x1;i<=x2;i++) histogram.push({x: i, n: 0});
+
+    /* Calculate histogram */
+    for (let value of randomNumbers) {
+      const index=value-x1;
+      histogram[index].n++;
+    }
+
+    /* Calculate probabilities */
+    const count=randomNumbers.length;
+    for (let i=0;i<histogram.length;i++) histogram[i].p=histogram[i].n/count;
+
+    barData=histogram.map(function (record){return {x: record.x, y: record.p};});
+    lineData=histogram.map(function (record){return {x: record.x, y: distribution.calcProbability(distributionValues,record.x)};});
+  }
+
+  /* Generate chart */
+  const canvas=document.createElement("canvas");
+  parent.appendChild(canvas);
+  canvas.style.backgroundColor=(document.documentElement.dataset.bsTheme=='dark')?"#333":"white";
+  canvas.style.border="1px solid lightgray";
+  canvas.style.margin="10px 0px";
+  canvas.style.padding="20px";
+  canvas.style.borderRadius="2px";
+
+  const chart=new Chart(canvas,{
+  data: {
+      labels: barData.map(p=>p.x.toLocaleString()),
+      datasets: [{
+        type: "bar",
+        label: language.fitter.histogram,
+        data: barData,
+        borderWidth: 2,
+        hitRadius: 25,
+        borderColor: 'rgb(0,140,79)',
+        backgroundColor: 'rgba(0,140,79,0.25)',
+        yAxisID: 'y'
+      },
+      {
+        type: "line",
+        label: (distribution instanceof ContinuousProbabilityDistribution)?language.distributions.infoDiagramPDFContinuous:language.distributions.infoDiagramPDFDiscrete,
+        data: lineData,
+        borderWidth: 2,
+        hitRadius: 25,
+        borderColor: 'rgb(140,28,0)',
+        pointRadius: 0,
+        yAxisID: 'y2'
+      }
+    ]
+    },
+    options: {
+      scales: {
+        y : {
+          title: {display: true, text: language.distributions.infoDiagramProbability+" "+language.fitter.histogram, color: "rgb(0,140,79)"},
+          min: 0
+        },
+        y2 : {
+          position: 'right',
+          title: {display: true, text: language.distributions.infoDiagramRate+" f(x)", color: "rgb(140,28,0)"},
+          min: 0
+        }
+      },
+      plugins: {
+        legend: {
+          display: true,
+          position: 'bottom'
+        },
+        zoom: {
+          zoom: {
+            wheel: {
+              enabled: true,
+              modifierKey: "ctrl",
+            },
+            pinch: {
+              enabled: true
+            },
+            drag: {
+              enabled: true,
+              modifierKey: "ctrl",
+            },
+            mode: 'xy',
+          }
+        }
+      },
+      animation: {duration: 0}
+    }
+  });
+
+  /* Zoom info and unzoom button */
+  let info, button;
+
+  parent.appendChild(info=document.createElement("div"));
+  info.className="mt-3";
+  info.innerHTML=language.distributions.infoDiagramZoomInfo;
+
+  parent.appendChild(info=document.createElement("div"));
+  info.className="mt-3";
+
+  info.appendChild(button=document.createElement("button"));
+  button.type="button";
+  button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
+  button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
+  button.onclick=()=>chart.resetZoom();
+}
+
+/**
  * Generates the info / setup area for the pseudo-random numbers viewer
+ * @param {Distribution} distribution Probability distribution for which pseudo-random numbers are to be generated
+ * @param {Object} values Parameters of the probability distribution
  * @param {Object} parent Parent html element
  * @param {Array} info Info lines to be output
  * @param {Number} currentCount Current number of generated pseudo-random numbers
  */
-function buildRandomNumbersInfoArea(parent, info, currentCount) {
+function buildRandomNumbersInfoArea(distribution, values, parent, info, currentCount) {
   let span;
 
   /* Reload button */
@@ -351,7 +513,13 @@ function buildRandomNumbersInfoArea(parent, info, currentCount) {
   infoTextDiv.innerHTML=infoText;
   parent.appendChild(infoTextDiv);
 
+  /* Permalink */
+
   addPermaLink(parent);
+
+  /* Histogram */
+
+  addHistogram(distribution,values,parent);
 }
 
 /**
@@ -399,6 +567,7 @@ function generateDiscreteRandomNumbers(distribution, values, count, infoArea, ta
     for (let i=0;i<len;i++) if (cdf[i]>=u) {m=i+cdfDelta; break;}
     if (m<min) min=m;
     if (m>max) max=m;
+    randomNumbers.push(m);
     addSimpleRow(tbody,m,true);
     sum+=m;
     sum2+=m**2;
@@ -413,7 +582,8 @@ function generateDiscreteRandomNumbers(distribution, values, count, infoArea, ta
   info.push([language.distributions.infoDiagramGenerateRandomNumbersStd,Math.sqrt(sum2/(count-1)-(sum**2)/count/(count-1)),distStd]);
   info.push([language.distributions.infoDiagramGenerateRandomNumbersMin,min]);
   info.push([language.distributions.infoDiagramGenerateRandomNumbersMax,max]);
-  buildRandomNumbersInfoArea(infoArea,info,count);
+  infoArea.innerHTML="";
+  buildRandomNumbersInfoArea(distribution,values,infoArea,info,count);
 
   tableArea.appendChild(table);
 }
@@ -438,6 +608,7 @@ function generateContinuousRandomNumbers(distribution, values, count, infoArea, 
     const rnd=distribution.getRandomNumber(values);
     if (rnd<min) min=rnd;
     if (rnd>max) max=rnd;
+    randomNumbers.push(rnd);
     addSimpleRow(tbody,rnd,true);
     sum+=rnd;
     sum2+=rnd**2;
@@ -452,10 +623,13 @@ function generateContinuousRandomNumbers(distribution, values, count, infoArea, 
   info.push([language.distributions.infoDiagramGenerateRandomNumbersStd,Math.sqrt(sum2/(count-1)-(sum**2)/count/(count-1)),distStd]);
   info.push([language.distributions.infoDiagramGenerateRandomNumbersMin,min]);
   info.push([language.distributions.infoDiagramGenerateRandomNumbersMax,max]);
-  buildRandomNumbersInfoArea(infoArea,info,count);
+  infoArea.innerHTML="";
+  buildRandomNumbersInfoArea(distribution,values,infoArea,info,count);
 
   tableArea.appendChild(table);
 }
+
+let whenReadyCallback=null;
 
 /**
  * Prepares the layout switcher which will remove the "loading..." text
@@ -465,6 +639,7 @@ function startTable() {
   document.addEventListener('readystatechange',event=>{if (event.target.readyState=="complete") {
     mainContent.style.display="";
     infoLoading.style.display="none";
+    if (whenReadyCallback!=null) setTimeout(whenReadyCallback,100);
   }});
 }
 
@@ -484,11 +659,18 @@ function initTable() {
   if (rndMode) {
     /* Generate random numbers */
     initGUILanguage(distribution.name,language.distributions.infoDiagramGenerateRandomNumbersTitle);
-    if (distribution.discrete) {
-      generateDiscreteRandomNumbers(distribution,values,rndCount,infoArea,tableArea);
-    } else {
-      generateContinuousRandomNumbers(distribution,values,rndCount,infoArea,tableArea);
-    }
+    infoArea.innerHTML=language.distributions.infoDiagramGenerateRandomNumbersWorking;
+    copyButton.style.display="none";
+    saveButton.style.display="none";
+    whenReadyCallback=()=>{
+      if (distribution.discrete) {
+        generateDiscreteRandomNumbers(distribution,values,rndCount,infoArea,tableArea);
+      } else {
+        generateContinuousRandomNumbers(distribution,values,rndCount,infoArea,tableArea);
+      }
+      copyButton.style.display="";
+      saveButton.style.display="";
+    };
   } else {
     /* Show PDF and CDF table */
     initGUILanguage(distribution.name,language.distributions.infoDiagramTable);
