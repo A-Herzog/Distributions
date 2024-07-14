@@ -18,7 +18,7 @@ export {beginMathML, endMathML, variable, plus, minus, mul, equals, isin, setN, 
 
 import {language} from './Language.js';
 
-const beginMathML="<math style='font-size: 120%'><mrow>";
+const beginMathML="<math style='font-size: 107%; font-family: sans-serif;'><mrow>";
 const endMathML="</mrow></math>";
 
 /**
