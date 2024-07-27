@@ -49,6 +49,7 @@ import {ReciprocalDistribution} from './DistributionReciprocal.js';
 import {KumaraswamyDistribution} from './DistributionKumaraswamy.js';
 import {SineDistribution} from './DistributionSine.js';
 import {ArcsineDistribution} from './DistributionArcsine.js';
+import {GumbelDistribution} from './DistributionGumbel.js';
 
 
 /**
@@ -90,6 +91,7 @@ listDistributions.push(new ReciprocalDistribution());
 listDistributions.push(new KumaraswamyDistribution());
 listDistributions.push(new SineDistribution());
 listDistributions.push(new ArcsineDistribution());
+listDistributions.push(new GumbelDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

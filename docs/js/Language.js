@@ -439,6 +439,13 @@ lang.distributions.arcsine.name="Arcus Sinus-Verteilung";
 lang.distributions.arcsine.info="";
 lang.distributions.arcsine.wikipedia=null;
 
+lang.distributions.gumbel={};
+lang.distributions.gumbel.name="Gumbel-Verteilung";
+lang.distributions.gumbel.info="Die Gumbel-Verteilung wird auch als doppelte Exponentialverteilung bezeichnet.";
+lang.distributions.gumbel.wikipedia="https://de.wikipedia.org/wiki/Gumbel-Verteilung";
+lang.distributions.gumbel.parameterInfoMean="Erwartungswert";
+lang.distributions.gumbel.parameterInfoStd="Standardabweichung";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -874,6 +881,13 @@ lang.distributions.arcsine={}
 lang.distributions.arcsine.name="Arcsine distribution";
 lang.distributions.arcsine.info="";
 lang.distributions.arcsine.wikipedia=null;
+
+lang.distributions.gumbel={};
+lang.distributions.gumbel.name="Gumbel distribution";
+lang.distributions.gumbel.info="The Gumbel distribution is also known as double exponential distribution.";
+lang.distributions.gumbel.wikipedia="https://en.wikipedia.org/wiki/Gumbel_distribution";
+lang.distributions.gumbel.parameterInfoMean="Expected value";
+lang.distributions.gumbel.parameterInfoStd="Standard deviation";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

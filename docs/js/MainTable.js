@@ -606,6 +606,10 @@ function generateContinuousRandomNumbers(distribution, values, count, infoArea, 
   let sum2=0;
   for (let i=0;i<count;i++) {
     const rnd=distribution.getRandomNumber(values);
+    if (isNaN(rnd)) {
+      console.log("NaN error "+values);
+      continue;
+    }
     if (rnd<min) min=rnd;
     if (rnd>max) max=rnd;
     randomNumbers.push(rnd);

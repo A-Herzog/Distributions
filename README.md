@@ -4,7 +4,7 @@ Distributions is a web service for showing graphs of different probability distr
 
 ## Usage
 
-To use simulator just go to
+To use distributions just go to
 
 **[a-herzog.github.io/Distributions](https://a-herzog.github.io/Distributions/)**
 

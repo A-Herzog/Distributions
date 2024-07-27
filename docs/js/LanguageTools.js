@@ -22,7 +22,7 @@ export {selectLanguage};
  */
 function selectLanguageFile(file) {
   if (window.location.pathname.endsWith(file)) return;
-  window.location.pathname=document.location.pathname.substr(0,document.location.pathname.lastIndexOf("/")+1)+file;
+  window.location.pathname=document.location.pathname.substring(0,document.location.pathname.lastIndexOf("/")+1)+file;
 }
 
 /**
