@@ -19,15 +19,18 @@ export {selectLanguage};
 /**
  * Switches to a specific language dependent file, if this file is not already to current location
  * @param {string} file Name of the language file to be used
+ * @return Returns true if the language has to be changed / a new file has to be loaded.
  */
 function selectLanguageFile(file) {
-  if (window.location.pathname.endsWith(file)) return;
+  if (window.location.pathname.endsWith(file)) return false;
   window.location.pathname=document.location.pathname.substring(0,document.location.pathname.lastIndexOf("/")+1)+file;
+  return true;
 }
 
 /**
  * Initializes the language system.
  * @param {array} languages Array of language objects; each object has to have the properties "name" and "file". One fallback "default" named object has to be in the array.
+ * @return Returns true if the language has to be changed / a new file has to be loaded.
  */
 function selectLanguage(languages) {
   let selectedLanguage=localStorage.getItem('selectedLanguage');
@@ -36,8 +39,8 @@ function selectLanguage(languages) {
     const userLang=(navigator.language || navigator.userLanguage).toLocaleLowerCase();
     let preferredFile=languages.find(language=>language.name=='default').file;
     for (let language of languages) if (userLang.startsWith(language.name)) {preferredFile=language.file; break;}
-    selectLanguageFile(preferredFile);
+    return selectLanguageFile(preferredFile);
   } else {
-    selectLanguageFile(languages.find(language=>language.name==selectedLanguage).file);
+    return selectLanguageFile(languages.find(language=>language.name==selectedLanguage).file);
   }
 }
