@@ -446,6 +446,13 @@ lang.distributions.gumbel.wikipedia="https://de.wikipedia.org/wiki/Gumbel-Vertei
 lang.distributions.gumbel.parameterInfoMean="Erwartungswert";
 lang.distributions.gumbel.parameterInfoStd="Standardabweichung";
 
+lang.distributions.hyperbolicSecant={};
+lang.distributions.hyperbolicSecant.name="Hyperbolische Sekantenverteilung";
+lang.distributions.hyperbolicSecant.info="";
+lang.distributions.hyperbolicSecant.wikipedia="https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution"; /* No German Wikipedia page */
+lang.distributions.hyperbolicSecant.parameterInfoMu="Lage (Erwartungswert)";
+lang.distributions.hyperbolicSecant.parameterInfoSigma="Skalierung (Standardabweichung)";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -888,6 +895,13 @@ lang.distributions.gumbel.info="The Gumbel distribution is also known as double 
 lang.distributions.gumbel.wikipedia="https://en.wikipedia.org/wiki/Gumbel_distribution";
 lang.distributions.gumbel.parameterInfoMean="Expected value";
 lang.distributions.gumbel.parameterInfoStd="Standard deviation";
+
+lang.distributions.hyperbolicSecant={};
+lang.distributions.hyperbolicSecant.name="Hyperbolic secant distribution";
+lang.distributions.hyperbolicSecant.info="";
+lang.distributions.hyperbolicSecant.wikipedia="https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution";
+lang.distributions.hyperbolicSecant.parameterInfoMu="Location (mean)";
+lang.distributions.hyperbolicSecant.parameterInfoSigma="Scale (standard deviation)";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

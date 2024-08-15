@@ -50,6 +50,7 @@ import {KumaraswamyDistribution} from './DistributionKumaraswamy.js';
 import {SineDistribution} from './DistributionSine.js';
 import {ArcsineDistribution} from './DistributionArcsine.js';
 import {GumbelDistribution} from './DistributionGumbel.js';
+import {HyperbolicSecantDistribution} from './DistributionHyperbolicSecant.js';
 
 
 /**
@@ -92,6 +93,7 @@ listDistributions.push(new KumaraswamyDistribution());
 listDistributions.push(new SineDistribution());
 listDistributions.push(new ArcsineDistribution());
 listDistributions.push(new GumbelDistribution());
+listDistributions.push(new HyperbolicSecantDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

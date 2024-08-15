@@ -18,7 +18,7 @@ export {ReciprocalDistribution}
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, isin, setRPlus, setRHTML, defF, variable, frac, plus, minus, mul} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setRPlus, setRHTML, defF, variable, frac, minus} from './MathMLTools.js';
 
 /**
  * Reciprocal distribution
