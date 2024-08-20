@@ -20,13 +20,16 @@ import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {isDesktopApp} from './Main.js';
-import {getFloat, getPositiveInt, formatNumber} from "./NumberTools.js";
+import {getFloat, getPositiveInt, formatNumber, formatNumberMax} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 
 /**
  * Fills in the language strings to the GUI elements.
+ * @param distName  Distribution name
+ * @param mainTitle Heading to be shown
+ * @param isRandomNumbers Random number mode (true) or pdf/cdf table mode (false)
  */
-function initGUILanguage(distName, mainTitle) {
+function initGUILanguage(distName, mainTitle, isRandomNumbers) {
   /* Header */
   appName1.innerHTML=distName;
   closeButton.title=language.distributions.infoDiagramCloseWindow;
@@ -53,6 +56,13 @@ function initGUILanguage(distName, mainTitle) {
   copyButton.onclick=copyTable;
   saveButton.innerHTML=" "+language.distributions.infoDiagramSaveValues;
   saveButton.onclick=saveTable;
+  if (isRandomNumbers) {
+    fitterButton.innerHTML=" "+language.distributions.infoDiagramFit;
+    fitterButton.title=language.distributions.infoDiagramFitInfo;
+    fitterButton.onclick=openFitter;
+  } else {
+    fitterButton.style.display="none";
+  }
 }
 
 let clipboardData="";
@@ -87,6 +97,15 @@ function saveTable() {
     element.click();
     document.body.removeChild(element);
   }
+}
+
+/**
+ * Opens the distribution fitter and uses the generated pseudo random numbers as input.
+ */
+function openFitter() {
+  localStorage.setItem('randomNumbers',randomNumbers.map(num=>""+formatNumberMax(num)).join("\n"));
+  const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
+  window.open(file+"?fromPseudoRandomNumbers=1","_blank");
 }
 
 /**
@@ -662,7 +681,7 @@ function initTable() {
 
   if (rndMode) {
     /* Generate random numbers */
-    initGUILanguage(distribution.name,language.distributions.infoDiagramGenerateRandomNumbersTitle);
+    initGUILanguage(distribution.name,language.distributions.infoDiagramGenerateRandomNumbersTitle,true);
     infoArea.innerHTML=language.distributions.infoDiagramGenerateRandomNumbersWorking;
     copyButton.style.display="none";
     saveButton.style.display="none";
@@ -677,7 +696,7 @@ function initTable() {
     };
   } else {
     /* Show PDF and CDF table */
-    initGUILanguage(distribution.name,language.distributions.infoDiagramTable);
+    initGUILanguage(distribution.name,language.distributions.infoDiagramTable,false);
     const info=document.createElement("div");
     info.innerHTML=language.GUI.selectDistribution+": <b>"+distribution.nameWithParameters+"</b>";
     infoArea.appendChild(info);

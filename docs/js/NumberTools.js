@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export {getFloat, getPositiveFloat, getNotNegativeFloat, getInt, getPositiveInt, getNotNegativeInt, formatNumber, formatNumberWithTitle, formatPercent}
+export {getFloat, getPositiveFloat, getNotNegativeFloat, getInt, getPositiveInt, getNotNegativeInt, formatNumber, formatNumberMax, formatNumberWithTitle, formatPercent, getDecimalSeparatorCharacter}
 
 /**
  * Parses a string to a floating point number
@@ -133,11 +133,21 @@ function formatNumber(number, digits) {
   }
 
   let str=number.toLocaleString(undefined, {minimumFractionDigits: usedDigits});
-  if (str.indexOf(".")>=0 || str.indexOf(",")>=0) {
+  const index=str.indexOf(getDecimalSeparatorCharacter());
+  if (index>=0) {
     while (str[str.length-1]=='0') str=str.substring(0,str.length-1);
     if (str[str.length-1]=='.' || str[str.length-1]==',') str=str.substring(0,str.length-1);
   }
   return str;
+}
+
+/**
+ * Formats a number as a local string with maximum number of digits.
+ * @param {Number} number Number to be formatted
+ * @returns Formatted number
+ */
+function formatNumberMax(number) {
+  return formatNumber(number,14);
 }
 
 /**
@@ -159,4 +169,13 @@ function formatNumberWithTitle(number, digits) {
  */
 function formatPercent(number, digits) {
   return formatNumber(number*100,digits)+"%";
+}
+
+/**
+ * Returns the language default decimal separator character
+ * @returns Language default decimal separator character
+ */
+function getDecimalSeparatorCharacter() {
+  const n=1.1;
+  return n.toLocaleString().substring(1,2);
 }

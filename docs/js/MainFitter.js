@@ -21,6 +21,7 @@ import {isDesktopApp} from './Main.js';
 import {getFloat} from './NumberTools.js';
 import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {listDistributions} from './DistributionSetup.js';
+import {loadSearchStringParameters} from "./StringTools.js";
 
 /**
  * Fills in the language strings to the GUI elements.
@@ -376,11 +377,20 @@ function initFitter() {
   /* Initializes the GUI language */
   initGUILanguage();
 
+  let loadNumbers=null;
+  const params=loadSearchStringParameters(["fromPseudoRandomNumbers"]);
+  if (params.fromPseudoRandomNumbers) {
+    const data=localStorage.getItem('randomNumbers');
+    localStorage.removeItem('randomNumbers');
+    if (data!=null) loadInputValues(data);
+  }
+
   /* Input values system */
   inputCard.ondragenter=e=>inputValuesDrag(e);
   inputCard.ondragleave=e=>inputValuesDrag(e);
   inputCard.ondragover=e=>inputValuesDrag(e);
   inputCard.ondrop=e=>inputValuesDrag(e);
 
+  /* Start */
   startFitter();
 }
