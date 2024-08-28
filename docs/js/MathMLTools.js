@@ -99,7 +99,8 @@ function defE(e, x, withEqual=true) {
  * @returns MathML code for the function definition
  */
 function defF(f, x, withEqual=true) {
-  return "<mi>"+f+"</mi><ms>(</ms>"+x+"<ms>)</ms>"+(withEqual?"<mo>=</mo>":"");
+  const mode=(x=='x' || x=='<mi>x</mi>')?"ms":"mo";
+  return "<mi>"+f+"</mi><"+mode+">(</"+mode+">"+x+"<"+mode+">)</"+mode+">"+(withEqual?"<mo>=</mo>":"");
 }
 
 /**

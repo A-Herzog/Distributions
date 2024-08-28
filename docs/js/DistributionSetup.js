@@ -51,6 +51,7 @@ import {SineDistribution} from './DistributionSine.js';
 import {ArcsineDistribution} from './DistributionArcsine.js';
 import {GumbelDistribution} from './DistributionGumbel.js';
 import {HyperbolicSecantDistribution} from './DistributionHyperbolicSecant.js';
+import {InverseGaussianDistribution} from './DistributionInverseGaussian.js';
 
 
 /**
@@ -94,6 +95,7 @@ listDistributions.push(new SineDistribution());
 listDistributions.push(new ArcsineDistribution());
 listDistributions.push(new GumbelDistribution());
 listDistributions.push(new HyperbolicSecantDistribution());
+listDistributions.push(new InverseGaussianDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

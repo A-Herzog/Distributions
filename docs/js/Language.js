@@ -455,6 +455,13 @@ lang.distributions.hyperbolicSecant.wikipedia="https://en.wikipedia.org/wiki/Hyp
 lang.distributions.hyperbolicSecant.parameterInfoMu="Lage (Erwartungswert)";
 lang.distributions.hyperbolicSecant.parameterInfoSigma="Skalierung (Standardabweichung)";
 
+lang.distributions.inverseGaussian={};
+lang.distributions.inverseGaussian.name="Inverse Gauß-Verteilung";
+lang.distributions.inverseGaussian.info="Die inverse Gauß-Verteilung, auch als inverse Normalverteilung bezeichnet, wird in verallgemeinerten linearen Modellen verwendet.";
+lang.distributions.inverseGaussian.wikipedia="https://de.wikipedia.org/wiki/Inverse_Normalverteilung";
+lang.distributions.inverseGaussian.parameterInfoLambda="Ereignisrate";
+lang.distributions.inverseGaussian.parameterInfoMu="Erwartungswert";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -906,6 +913,13 @@ lang.distributions.hyperbolicSecant.info="";
 lang.distributions.hyperbolicSecant.wikipedia="https://en.wikipedia.org/wiki/Hyperbolic_secant_distribution";
 lang.distributions.hyperbolicSecant.parameterInfoMu="Location (mean)";
 lang.distributions.hyperbolicSecant.parameterInfoSigma="Scale (standard deviation)";
+
+lang.distributions.inverseGaussian={};
+lang.distributions.inverseGaussian.name="Inverse Gaussian distribution";
+lang.distributions.inverseGaussian.info="The inverse Gaussian distribution, also known as the inverse normal distribution, is used in generalized linear models.";
+lang.distributions.inverseGaussian.wikipedia="https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution";
+lang.distributions.inverseGaussian.parameterInfoLambda="Event rate";
+lang.distributions.inverseGaussian.parameterInfoMu="Expected value";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
