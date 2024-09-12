@@ -29,6 +29,7 @@ import {isDesktopApp} from "./Main.js";
  */
 class ProbabilityDistribution {
   #name;
+  #nameWithFormat;
   #continuous;
   #support=null;
   #infoText=null;
@@ -56,9 +57,11 @@ class ProbabilityDistribution {
    * Constructor
    * @param {string} name Name of the probability distribution
    * @param {boolean} continuous Discrete (false) or continuous probability distribution (true)
+   * @param {string} nameWithFormat Name with optional html formating (optional; normal name will be used if missing)
    */
-  constructor(name, continuous) {
+  constructor(name, continuous, nameWithFormat=null) {
     this.#name=name;
+    if (nameWithFormat==null) this.#nameWithFormat=name; else this.#nameWithFormat=nameWithFormat;
     this.#continuous=continuous;
     this.#panel=null;
   }
@@ -68,6 +71,13 @@ class ProbabilityDistribution {
    */
   get name() {
     return this.#name;
+  }
+
+  /**
+   * Name of the probability distribution with html formating
+   */
+  get nameWithFormat() {
+    return this.#nameWithFormat;
   }
 
   /**
@@ -126,7 +136,7 @@ class ProbabilityDistribution {
    */
   _getGeneralProperties() {
     let properties=[];
-    properties.push(language.distributions.infoPropertiesName+": <strong>"+this.#name+"</strong>");
+    properties.push(language.distributions.infoPropertiesName+": <strong>"+this.#nameWithFormat+"</strong>");
     properties.push(language.distributions.infoPropertiesType+": <strong>"+((this.#continuous)?language.distributions.typeContinuous:language.distributions.typeDiscrete)+"</strong>");
     if (this.#support!=null) properties.push(language.distributions.infoPropertiesSupport+": <strong>"+this.#support+"</strong>");
     return properties;
@@ -810,9 +820,10 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
   /**
    * Constructor
    * @param {string} name Name of the probability distribution
+   * @param {string} nameWithFormat Name with optional html formating (optional; normal name will be used if missing)
    */
-  constructor(name) {
-    super(name,false);
+  constructor(name, nameWithFormat=null) {
+    super(name,false,nameWithFormat);
 
     this.#chartOptions={
       scales: {
@@ -1134,9 +1145,10 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
   /**
    * Constructor
    * @param {string} name Name of the probability distribution
+   * @param {string} nameWithFormat Name with optional html formating (optional; normal name will be used if missing)
    */
-  constructor(name) {
-    super(name,true);
+  constructor(name, nameWithFormat=null) {
+    super(name,true,nameWithFormat);
 
     this.#chartOptions={
       scales: {

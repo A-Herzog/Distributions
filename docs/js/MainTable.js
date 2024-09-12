@@ -317,7 +317,7 @@ function addPermaLink(parent) {
 function addHistogram(distribution, distributionValues, parent) {
   /* Calculate chart data */
   const x1=Math.floor(randomNumbers.reduce((a,b)=>Math.min(a,b)));
-  const x2=randomNumbers.reduce((a,b)=>Math.max(a,b));
+  const x2=Math.ceil(randomNumbers.reduce((a,b)=>Math.max(a,b)));
 
   let barData;
   let lineData;
@@ -685,6 +685,7 @@ function initTable() {
     infoArea.innerHTML=language.distributions.infoDiagramGenerateRandomNumbersWorking;
     copyButton.style.display="none";
     saveButton.style.display="none";
+    fitterButton.style.display="none";
     whenReadyCallback=()=>{
       if (distribution.discrete) {
         generateDiscreteRandomNumbers(distribution,values,rndCount,infoArea,tableArea);
@@ -693,6 +694,7 @@ function initTable() {
       }
       copyButton.style.display="";
       saveButton.style.display="";
+      fitterButton.style.display="";
     };
   } else {
     /* Show PDF and CDF table */

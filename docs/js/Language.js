@@ -462,6 +462,16 @@ lang.distributions.inverseGaussian.wikipedia="https://de.wikipedia.org/wiki/Inve
 lang.distributions.inverseGaussian.parameterInfoLambda="Ereignisrate";
 lang.distributions.inverseGaussian.parameterInfoMu="Erwartungswert";
 
+lang.distributions.johnson={};
+lang.distributions.johnson.name="Johnson-SU-Verteilung";
+lang.distributions.johnson.nameFormat="Johnson-S<sub>U</sub>-Verteilung";
+lang.distributions.johnson.info="Die Johnson S<sub>U</sub>-Verteilung ist eine von N. L. Johnson entwickelte vier-parametrige Wahrscheinlichkeitsverteilung. Die Verteilung wird u.a. zur Modellierung von Vermögenserträgen in der Portfolioverwaltung eingesetzt.";
+lang.distributions.johnson.wikipedia="https://en.wikipedia.org/wiki/Johnson%27s_SU-distribution"; /* No German Wikipedia page */
+lang.distributions.johnson.parameterInfoGamma=""; /* No special names for parameters */
+lang.distributions.johnson.parameterInfoXi=""; /* No special names for parameters */
+lang.distributions.johnson.parameterInfoDelta=""; /* No special names for parameters */
+lang.distributions.johnson.parameterInfoLambda=""; /* No special names for parameters */
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -920,6 +930,16 @@ lang.distributions.inverseGaussian.info="The inverse Gaussian distribution, also
 lang.distributions.inverseGaussian.wikipedia="https://en.wikipedia.org/wiki/Inverse_Gaussian_distribution";
 lang.distributions.inverseGaussian.parameterInfoLambda="Event rate";
 lang.distributions.inverseGaussian.parameterInfoMu="Expected value";
+
+lang.distributions.johnson={};
+lang.distributions.johnson.name="Johnson SU distribution";
+lang.distributions.johnson.nameFormat="Johnson S<sub>U</sub> distribution";
+lang.distributions.johnson.info="The Johnson S<sub>U</sub>-distribution is a four-parameter probability distributionsdeveloped by N. L. Johnson. The distribution is being used to model asset returns for portfolio management.";
+lang.distributions.johnson.wikipedia="https://en.wikipedia.org/wiki/Johnson%27s_SU-distribution";
+lang.distributions.johnson.parameterInfoGamma=""; /* No special names for parameters */
+lang.distributions.johnson.parameterInfoXi=""; /* No special names for parameters */
+lang.distributions.johnson.parameterInfoDelta=""; /* No special names for parameters */
+lang.distributions.johnson.parameterInfoLambda=""; /* No special names for parameters */
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
