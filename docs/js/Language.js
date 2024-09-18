@@ -472,6 +472,13 @@ lang.distributions.johnson.parameterInfoXi=""; /* No special names for parameter
 lang.distributions.johnson.parameterInfoDelta=""; /* No special names for parameters */
 lang.distributions.johnson.parameterInfoLambda=""; /* No special names for parameters */
 
+lang.distributions.levy={};
+lang.distributions.levy.name="Lévy-Verteilung";
+lang.distributions.levy.info="Die Lévy-Verteilung besitzt als besondere Eigenschaft einen unendlichen Erwartungswert.";
+lang.distributions.levy.wikipedia="https://de.wikipedia.org/wiki/Lévy-Verteilung";
+lang.distributions.levy.parameterInfoMu="Lageparameter";
+lang.distributions.levy.parameterInfoGamma="Skalenparameter";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -940,6 +947,13 @@ lang.distributions.johnson.parameterInfoGamma=""; /* No special names for parame
 lang.distributions.johnson.parameterInfoXi=""; /* No special names for parameters */
 lang.distributions.johnson.parameterInfoDelta=""; /* No special names for parameters */
 lang.distributions.johnson.parameterInfoLambda=""; /* No special names for parameters */
+
+lang.distributions.levy={};
+lang.distributions.levy.name="Lévy distribution";
+lang.distributions.levy.info="The Lévy distribution has an infinite expected value as a special property.";
+lang.distributions.levy.wikipedia="https://en.wikipedia.org/wiki/L%C3%A9vy_distribution";
+lang.distributions.levy.parameterInfoMu="Location";
+lang.distributions.levy.parameterInfoGamma="Scale";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
