@@ -479,6 +479,13 @@ lang.distributions.levy.wikipedia="https://de.wikipedia.org/wiki/Lévy-Verteilun
 lang.distributions.levy.parameterInfoMu="Lageparameter";
 lang.distributions.levy.parameterInfoGamma="Skalenparameter";
 
+lang.distributions.logistic={};
+lang.distributions.logistic.name="Logistische Verteilung";
+lang.distributions.logistic.info="Die logistische Verteilung wird insbesondere zur Beschreibung von Wachstumsprozessen mit Sättigungstendenz verwendet wird.";
+lang.distributions.logistic.wikipedia="https://de.wikipedia.org/wiki/Logistische_Verteilung";
+lang.distributions.logistic.parameterInfoMu="Lageparameter";
+lang.distributions.logistic.parameterInfoS="Skalenparameter";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -954,6 +961,13 @@ lang.distributions.levy.info="The Lévy distribution has an infinite expected va
 lang.distributions.levy.wikipedia="https://en.wikipedia.org/wiki/L%C3%A9vy_distribution";
 lang.distributions.levy.parameterInfoMu="Location";
 lang.distributions.levy.parameterInfoGamma="Scale";
+
+lang.distributions.logistic={};
+lang.distributions.logistic.name="Logistic distribution";
+lang.distributions.logistic.info="The logistic distribution is used in particular to describe growth processes with a tendency towards saturation.";
+lang.distributions.logistic.wikipedia="https://en.wikipedia.org/wiki/Logistic_distribution";
+lang.distributions.logistic.parameterInfoMu="Location";
+lang.distributions.logistic.parameterInfoS="Scale";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

@@ -54,6 +54,7 @@ import {HyperbolicSecantDistribution} from './DistributionHyperbolicSecant.js';
 import {InverseGaussianDistribution} from './DistributionInverseGaussian.js';
 import {JohnsonSUDistribution} from './DistributionJohnsonSU.js';
 import {LevyDistribution} from './DistributionLevy.js';
+import {LogisticDistribution} from './DistributionLogistic.js';
 
 
 
@@ -101,6 +102,7 @@ listDistributions.push(new HyperbolicSecantDistribution());
 listDistributions.push(new InverseGaussianDistribution());
 listDistributions.push(new JohnsonSUDistribution());
 listDistributions.push(new LevyDistribution());
+listDistributions.push(new LogisticDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
