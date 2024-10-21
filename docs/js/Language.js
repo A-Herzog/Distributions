@@ -486,6 +486,13 @@ lang.distributions.logistic.wikipedia="https://de.wikipedia.org/wiki/Logistische
 lang.distributions.logistic.parameterInfoMu="Lageparameter";
 lang.distributions.logistic.parameterInfoS="Skalenparameter";
 
+lang.distributions.logLogistic={};
+lang.distributions.logLogistic.name="Log-logistische Verteilung";
+lang.distributions.logLogistic.info="Die log-logistische Verteilung wird in der Lebensdaueranalyse für Ereignisse verwendet, deren Häufigkeit zunächst zunimmt und später abnimmt.";
+lang.distributions.logLogistic.wikipedia="https://en.wikipedia.org/wiki/Log-logistic_distribution"; /* No German Wikipedia page */
+lang.distributions.logLogistic.parameterInfoAlpha="Lageparameter";
+lang.distributions.logLogistic.parameterInfoBeta="Skalenparameter";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -968,6 +975,13 @@ lang.distributions.logistic.info="The logistic distribution is used in particula
 lang.distributions.logistic.wikipedia="https://en.wikipedia.org/wiki/Logistic_distribution";
 lang.distributions.logistic.parameterInfoMu="Location";
 lang.distributions.logistic.parameterInfoS="Scale";
+
+lang.distributions.logLogistic={};
+lang.distributions.logLogistic.name="Log-logistic distribution";
+lang.distributions.logLogistic.info="The log-logistic distribution is used in survival analysis as a parametric model for events whose rate increases initially and decreases later.";
+lang.distributions.logLogistic.wikipedia="https://en.wikipedia.org/wiki/Log-logistic_distribution";
+lang.distributions.logLogistic.parameterInfoAlpha="Scale";
+lang.distributions.logLogistic.parameterInfoBeta="Shape";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

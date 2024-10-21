@@ -55,6 +55,7 @@ import {InverseGaussianDistribution} from './DistributionInverseGaussian.js';
 import {JohnsonSUDistribution} from './DistributionJohnsonSU.js';
 import {LevyDistribution} from './DistributionLevy.js';
 import {LogisticDistribution} from './DistributionLogistic.js';
+import {LogLogisticDistribution} from './DistributionLogLogistic.js';
 
 
 
@@ -103,6 +104,7 @@ listDistributions.push(new InverseGaussianDistribution());
 listDistributions.push(new JohnsonSUDistribution());
 listDistributions.push(new LevyDistribution());
 listDistributions.push(new LogisticDistribution());
+listDistributions.push(new LogLogisticDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
