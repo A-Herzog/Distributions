@@ -481,7 +481,7 @@ lang.distributions.levy.parameterInfoGamma="Skalenparameter";
 
 lang.distributions.logistic={};
 lang.distributions.logistic.name="Logistische Verteilung";
-lang.distributions.logistic.info="Die logistische Verteilung wird insbesondere zur Beschreibung von Wachstumsprozessen mit Sättigungstendenz verwendet wird.";
+lang.distributions.logistic.info="Die logistische Verteilung wird insbesondere zur Beschreibung von Wachstumsprozessen mit Sättigungstendenz verwendet.";
 lang.distributions.logistic.wikipedia="https://de.wikipedia.org/wiki/Logistische_Verteilung";
 lang.distributions.logistic.parameterInfoMu="Lageparameter";
 lang.distributions.logistic.parameterInfoS="Skalenparameter";
@@ -492,6 +492,12 @@ lang.distributions.logLogistic.info="Die log-logistische Verteilung wird in der 
 lang.distributions.logLogistic.wikipedia="https://en.wikipedia.org/wiki/Log-logistic_distribution"; /* No German Wikipedia page */
 lang.distributions.logLogistic.parameterInfoAlpha="Lageparameter";
 lang.distributions.logLogistic.parameterInfoBeta="Skalenparameter";
+
+lang.distributions.maxwellBoltzmann={};
+lang.distributions.maxwellBoltzmann.name="Maxwell-Boltzmann-Verteilung";
+lang.distributions.maxwellBoltzmann.info="Die Maxwell-Boltzmann-Verteilung wird in der Thermodynamik zur Beschreibung der Teilchengeschwindigkeiten in idealen Gasen verwendet.";
+lang.distributions.maxwellBoltzmann.wikipedia="https://de.wikipedia.org/wiki/Maxwell-Boltzmann-Verteilung";
+lang.distributions.maxwellBoltzmann.parameterInfoA="Skalenparameter";
 
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
@@ -982,6 +988,12 @@ lang.distributions.logLogistic.info="The log-logistic distribution is used in su
 lang.distributions.logLogistic.wikipedia="https://en.wikipedia.org/wiki/Log-logistic_distribution";
 lang.distributions.logLogistic.parameterInfoAlpha="Scale";
 lang.distributions.logLogistic.parameterInfoBeta="Shape";
+
+lang.distributions.maxwellBoltzmann={};
+lang.distributions.maxwellBoltzmann.name="Maxwell-Boltzmann distribution";
+lang.distributions.maxwellBoltzmann.info="The Maxwell-Boltzmann distribution is used in thermodynamics to describe particle velocities in ideal gases.";
+lang.distributions.maxwellBoltzmann.wikipedia="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution";
+lang.distributions.maxwellBoltzmann.parameterInfoA="Scale";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

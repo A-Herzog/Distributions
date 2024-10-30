@@ -1443,7 +1443,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     let u=Math.random();
     if (this.calcProbability(values,a)[1]>u) return a;
     if (this.calcProbability(values,b)[1]<u) return b;
-    while (b-a>0.01) {
+    while (b-a>0.001) {
       const m=(a+b)/2;
       const value=this.calcProbability(values,m)[1];
       if (value>u) b=m; else a=m;

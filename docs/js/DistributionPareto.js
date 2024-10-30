@@ -35,7 +35,7 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._addContinuousParameter("xm","x<sub>m</sub>;",language.distributions.pareto.parameterInfoxm+" (<i>x<sub>m</sub></i>"+isin+setRPlusHTML+")",0,false,null,false,1);
+    this._addContinuousParameter("xm","x<sub>m</sub>",language.distributions.pareto.parameterInfoxm+" (<i>x<sub>m</sub></i>"+isin+setRPlusHTML+")",0,false,null,false,1);
     this._addContinuousParameter("alpha","&alpha;",language.distributions.pareto.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
 
     this._setCalcParameter("x",1.5);
