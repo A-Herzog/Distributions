@@ -127,6 +127,8 @@ function loadInputValues(values) {
   outputBody.innerHTML="";
 
   /* Preprocess input values */
+  values=values.replaceAll("\r\n","\n");
+  values=values.replaceAll("\r","\n");
   values=values.split("\n").map(v=>getFloat(v)).filter(v=>v!=null);
   const count=values.length;
   if (count==0) {inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError; return;}
