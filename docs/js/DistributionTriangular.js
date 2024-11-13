@@ -135,7 +135,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
   #getCDF(values, x) {
     if (x<values.a) return 0;
     if (x>values.b) return 1;
-    if (values.a==values.b) return 1;
+    if (values.a==values.b) return (x>=values.a)?1:0;
 
     if (x<=values.c) {
       return (x-values.a)**2*this.#factor1;

@@ -18,7 +18,7 @@ export {BetaDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, isin, setRHTML, setRPlus, setRPlusHTML, variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setRHTML, setRPlusHTML, variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
 
 
 

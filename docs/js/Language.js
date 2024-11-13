@@ -499,6 +499,16 @@ lang.distributions.maxwellBoltzmann.info="Die Maxwell-Boltzmann-Verteilung wird 
 lang.distributions.maxwellBoltzmann.wikipedia="https://de.wikipedia.org/wiki/Maxwell-Boltzmann-Verteilung";
 lang.distributions.maxwellBoltzmann.parameterInfoA="Skalenparameter";
 
+lang.distributions.pert={};
+lang.distributions.pert.name="Pert-Verteilung";
+lang.distributions.pert.info="Die Pert-Verteilung verwendet dieselben Parameter wie die Dreiecksverteilung, besitzt aber im Gegensatz zu dieser einen glatteren Verlauf.";
+lang.distributions.pert.wikipedia="https://en.wikipedia.org/wiki/PERT_distribution"; /* No German Wikipedia page */
+lang.distributions.pert.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.pert.parameterInfob="Modus";
+lang.distributions.pert.parameterInfoc="Obere Bereichsgrenze";
+lang.distributions.pert.parameterInfobError="Der Modus <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+lang.distributions.pert.parameterInfocError="Die obere Bereichsgrenze <i>c</i> muss größer oder gleich dem Modus <i>b</i> sein.";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -994,6 +1004,16 @@ lang.distributions.maxwellBoltzmann.name="Maxwell-Boltzmann distribution";
 lang.distributions.maxwellBoltzmann.info="The Maxwell-Boltzmann distribution is used in thermodynamics to describe particle velocities in ideal gases.";
 lang.distributions.maxwellBoltzmann.wikipedia="https://en.wikipedia.org/wiki/Maxwell%E2%80%93Boltzmann_distribution";
 lang.distributions.maxwellBoltzmann.parameterInfoA="Scale";
+
+lang.distributions.pert={};
+lang.distributions.pert.name="Pert distribution";
+lang.distributions.pert.info="The Pert distribution uses the same parameters as the triangular distribution, but unlike the triangular distribution, it has a smoother curve.";
+lang.distributions.pert.wikipedia="https://en.wikipedia.org/wiki/PERT_distribution";
+lang.distributions.pert.parameterInfoa="Lower bound";
+lang.distributions.pert.parameterInfob="Mode";
+lang.distributions.pert.parameterInfoc="Upper bound";
+lang.distributions.pert.parameterInfobError="The mode <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+lang.distributions.pert.parameterInfocError="The upper bound <i>c</i> has to be equal or larger than the mode <i>b</i>.";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
