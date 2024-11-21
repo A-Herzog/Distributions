@@ -18,7 +18,7 @@ export {WignerSemicircleDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, isin, setRPlus, setRPlusHTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setR, setRPlus, setRHTML, setRPlusHTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
 
 /**
  * Wigner semicircle distribution
@@ -30,12 +30,13 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
   constructor() {
     super(language.distributions.wignerSemicircle.name);
 
-    this.support=beginMathML+"<mo>[</mo><mo>-</mo><mi>R</mi><mo>,</mo><mi>R</mi><mo>]</mo>"+endMathML+", "+beginMathML+"<mo>R</mo>"+isin+setRPlus+endMathML;
+    this.support=beginMathML+"<mo>[</mo><mi>m</mi>"+minus+"<mi>R</mi><mo>,</mo><mi>m</mi>"+plus+"<mi>R</mi><mo>]</mo>"+endMathML+", "+beginMathML+"<mi>m</mi>"+isin+setR+endMathML+", "+beginMathML+"<mi>R</mi>"+isin+setRPlus+endMathML;
     this.infoText=language.distributions.wignerSemicircle.info;
     this.wikipediaURL=language.distributions.wignerSemicircle.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
+    this._addContinuousParameter("m","m",language.distributions.wignerSemicircle.parameterInfoM+" (<i>m</i>"+isin+setRHTML+")",null,false,null,false,0);
     this._addContinuousParameter("R","R",language.distributions.wignerSemicircle.parameterInfoR+" (<i>R</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
 
     this._setCalcParameter("x",2);
@@ -45,16 +46,17 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     const f=variable("f");
     const x=variable("x");
     const R=variable("R");
+    const m=variable("m");
 
     let pdf="";
     pdf+=beginMathML;
     pdf+=defF(f,x);
     pdf+=frac("<mn>2</mn>","<mo>&pi;</mo><msup>"+R+"<mn>2</mn></msup>");
-    pdf+="<msqrt><msup>"+R+"<mn>2</mn></msup>"+minus+"<msup>"+x+"<mn>2</mn></msup></msqrt>";
+    pdf+="<msqrt><msup>"+R+"<mn>2</mn></msup>"+minus+"<msup><mrow><mo>(</mo>"+x+minus+m+"<mo>)</mo></mrow><mn>2</mn></msup></msqrt>";
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
-    pdf+=x+"<mo>&isin;</mo><mo>[</mo><mo>-</mo>"+R+"<mo>;</mo>"+R+"<mo>]</mo>";
+    pdf+=x+"<mo>&isin;</mo><mo>[</mo><mo>-</mo>"+R+plus+m+"<mo>;</mo>"+R+plus+m+"<mo>]</mo>";
     pdf+=endMathML;
     return pdf;
   }
@@ -63,30 +65,33 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     const F=variable("F");
     const x=variable("x");
     const R=variable("R");
+    const m=variable("m");
 
     let cdf="";
     cdf+=beginMathML;
     cdf+=defF(F,x);
     cdf+=frac("<mn>1</mn>","<mn>2</mn>");
     cdf+=plus;
-    cdf+=frac(x+"<msqrt><msup>"+R+"<mn>2</mn></msup>"+minus+"<msup>"+x+"<mn>2</mn></msup></msqrt>","<mo>&pi;</mo><msup>"+R+"<mn>2</mn></msup>");
+    cdf+=frac("<mo>(</mo>"+x+minus+m+"<mo>)</mo><msqrt><msup>"+R+"<mn>2</mn></msup>"+minus+"<msup><mrow><mo>(</mo>"+x+minus+m+"<mo>)</mo></mrow><mn>2</mn></msup></msqrt>","<mo>&pi;</mo><msup>"+R+"<mn>2</mn></msup>");
     cdf+=plus;
-    cdf+=frac("<mo>arcsin</mo><mo>(</mo>"+frac(x,R)+"<mo>)</mo>","<mo>&pi;</mo>");
+    cdf+=frac("<mo>arcsin</mo><mo>(</mo>"+frac(x+minus+m,R)+"<mo>)</mo>","<mo>&pi;</mo>");
     cdf+=endMathML;
     cdf+=" "+language.distributions.for+" ";
     cdf+=beginMathML;
-    cdf+=x+"<mo>&isin;</mo><mo>[</mo><mo>-</mo>"+R+"<mo>;</mo>"+R+"<mo>]</mo>";
+    cdf+=x+"<mo>&isin;</mo><mo>[</mo><mo>-</mo>"+R+plus+m+"<mo>;</mo>"+R+plus+m+"<mo>]</mo>";
     cdf+=endMathML;
     return cdf;
   }
 
   #getPDF(values, x) {
+    x=x-values.m;
     if (x<=-values.R || x>=values.R) return 0;
 
     return this.#pdfFactor*Math.sqrt(values.R**2-x**2);
   }
 
   #getCDF(values, x) {
+    x=x-values.m;
     if (x<=-values.R) return 0;
     if (x>=values.R) return 1;
 
@@ -102,11 +107,12 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     /* Characteristics */
 
     const R=variable("R");
+    const m=variable("m");
 
-    const meanFormula=beginMathML+"<mn>0</mn>"+endMathML;
+    const meanFormula=beginMathML+m+endMathML;
     const varianceFormula=beginMathML+frac("<msup>"+R+"<mn>2</mn></msup>","<mn>4</mn>")+endMathML;
 
-    const meanValue=0;
+    const meanValue=values.m;
     const varianceValue=values.R**2/4;
 
     this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
@@ -114,12 +120,17 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     /* Diagram */
 
     const that=this;
-    const minX=-values.R*1.25;
-    const maxX=values.R*1.25;
+    const minX=values.m-Math.ceil(values.R*1.25);
+    const maxX=values.m+Math.ceil(values.R*1.25);
     this._setContinuousDiagram(minX,maxX,x=>that.#getPDF(values,x),x=>that.#getCDF(values,x));
   }
 
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
+  }
+
+  fitParameters(data) {
+    if (data.std<=0) return null;
+    return {m: data.mean, R: data.std*2};
   }
 }

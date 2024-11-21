@@ -406,6 +406,7 @@ lang.distributions.wignerSemicircle={};
 lang.distributions.wignerSemicircle.name="Wigner Halbkreisverteilung";
 lang.distributions.wignerSemicircle.info="Ber der nach dem Physiker Eugene Wigner benannten Verteilung bildet die Dichte einen Halbkreis mit Radius <b>R</b>. Die Verteilung tritt u.a. als Grenzverteilung der Eigenwerte verschiedener symmetrischer Matrizen auf.";
 lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution"; /* Leider keine deutsche Seite vorhanden */
+lang.distributions.wignerSemicircle.parameterInfoM="Mittelpunkt";
 lang.distributions.wignerSemicircle.parameterInfoR="Radius";
 
 lang.distributions.uQuadratic={}
@@ -912,6 +913,7 @@ lang.distributions.wignerSemicircle={};
 lang.distributions.wignerSemicircle.name="Wigner semicircle distribution";
 lang.distributions.wignerSemicircle.info="In the distribution named after the physicist Eugene Wigner, the density forms a semicircle with a radius <b>R</b>. The distribution occurs, among other things, as a limit distribution of the eigenvalues of various symmetrical matrices.";
 lang.distributions.wignerSemicircle.wikipedia="https://en.wikipedia.org/wiki/Wigner_semicircle_distribution";
+lang.distributions.wignerSemicircle.parameterInfoM="Center point";
 lang.distributions.wignerSemicircle.parameterInfoR="Radius";
 
 lang.distributions.uQuadratic={}
