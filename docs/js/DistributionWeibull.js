@@ -35,8 +35,8 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._addContinuousParameter("beta","&beta;",language.distributions.weibull.parameterInfoBeta+" (<i>a</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
-    this._addContinuousParameter("lambda","&lambda;",language.distributions.weibull.parameterInfoLambda+" (<i>b</i>"+isin+setRPlusHTML+")",0,false,null,false,0.2);
+    this._addContinuousParameter("beta","&beta;",language.distributions.weibull.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
+    this._addContinuousParameter("lambda","&lambda;",language.distributions.weibull.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,0.2);
 
     this._setCalcParameter("x",5);
   }
@@ -116,5 +116,46 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
     const u=Math.random();
     /* y=1-exp(-(lambda*x)^beta) <=> x=(-log(1-y))^(1/beta)/lambda */
     return (-Math.log(1-u))**(1/values.beta)/values.lambda;
+  }
+
+  #calcSCV(alpha) {
+		const gammaAlphaInv=jStat.gammafn(1/alpha);
+		return 2*alpha*jStat.gammafn(2/alpha)/gammaAlphaInv/gammaAlphaInv-1;
+	}
+
+  fitParameters(data) {
+    if (data.mean<=0.0) return null;
+		const cv=data.std/data.mean;
+		const scv=cv**2;
+
+		/* Approximate alpha be bisection */
+		let alphaMin=0.08;
+		let alphaMax=80;
+		let scvAlphaMin=5301247.466455577;
+		let scvAlphaMax=2.5244789703471326E-4;
+		let alpha;
+		if (scv>=scvAlphaMin) {
+			alpha=alphaMin;
+		} else if (scv<=scvAlphaMax) {
+			alpha=alphaMax;
+		} else {
+			while (alphaMax-alphaMin>0.00001) {
+				let alphaMean=(alphaMin+alphaMax)/2;
+				let scvAlphaMean=this.#calcSCV(alphaMean);
+				if (scvAlphaMean>scv) {
+					alphaMin=alphaMean;
+					scvAlphaMin=scvAlphaMean;
+				} else {
+					alphaMax=alphaMean;
+					scvAlphaMax=scvAlphaMean;
+				}
+			}
+			alpha=(alphaMin+alphaMax)/2;
+		}
+
+		/* Calculate beta using the expected value formula */
+		const beta=data.mean/jStat.gammafn(1+1/alpha);
+
+		return {lambda: 1/beta, beta: alpha}; /* Different parameter notations. */
   }
 }
