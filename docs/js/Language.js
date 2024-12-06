@@ -394,6 +394,7 @@ lang.distributions.halfNormal={};
 lang.distributions.halfNormal.name="Halbe Normalverteilung";
 lang.distributions.halfNormal.info="Die halbe Normalverteilung kombiniert den Verlauf der Normalverteilung mit der Eigenschaft, dass nur nichtnegative x-Werte mit einer positiven Dichte belegt werden.";
 lang.distributions.halfNormal.wikipedia="https://de.wikipedia.org/wiki/Normalverteilung";
+lang.distributions.halfNormal.parameterInfoS="Verschiebung";
 lang.distributions.halfNormal.parameterInfoMu="Erwartungswert";
 
 lang.distributions.irwinhall={};
@@ -901,6 +902,7 @@ lang.distributions.halfNormal={};
 lang.distributions.halfNormal.name="Half normal distribution";
 lang.distributions.halfNormal.info="The half normal distribution combines the course of the normal distribution with the property that only non-negative x-values are assigned a positive density.";
 lang.distributions.halfNormal.wikipedia="https://en.wikipedia.org/wiki/Normal_distribution";
+lang.distributions.halfNormal.parameterInfoS="Shift";
 lang.distributions.halfNormal.parameterInfoMu="Expected value";
 
 lang.distributions.irwinhall={};

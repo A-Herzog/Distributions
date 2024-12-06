@@ -18,7 +18,7 @@ export {HalfNormalDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, setRPlus0, isin, setRPlusHTML, setRPlus0HTML, variable, frac, defF, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, setRPlus0, isin, setRHTML, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
 import {erf} from './MathTools.js';
 import {formatNumber} from './NumberTools.js';
 
@@ -40,6 +40,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
+    this._addContinuousParameter("s","s",language.distributions.halfNormal.parameterInfoS+" (<i>s</i>"+isin+setRHTML+")",null,false,null,false,0);
     this._addContinuousParameter("mu","&mu;",language.distributions.halfNormal.parameterInfoMu+" (<i>&mu;</i>"+isin+setRPlusHTML+")",0,false,null,false,10);
 
     this._setCalcParameter("x",1);
@@ -48,6 +49,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   #getPDFText() {
     const f=variable("f");
     const x=variable("x");
+    const s=variable("s");
     const theta=variable("&theta;");
     const pi=variable("&pi;");
 
@@ -57,7 +59,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
     pdf+=frac("<mn>2</mn>"+theta,pi);
     pdf+="<mi mathvariant='normal'>exp</mi>";
     pdf+="<mo>(</mo>";
-    pdf+=minus+"<msup>"+x+"<mn>2</mn></msup>"+frac("<msup>"+theta+"<mn>2</mn></msup>",pi);
+    pdf+=minus+"<msup><mrow><mo>(</mo>"+x+minus+s+"<mo>)</mo></mrow><mn>2</mn></msup>"+frac("<msup>"+theta+"<mn>2</mn></msup>",pi);
     pdf+="<mo>)</mo>";
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
@@ -70,6 +72,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   #getCDFText() {
     const F=variable("F");
     const x=variable("x");
+    const s=variable("s");
     const theta=variable("&theta;");
     const pi=variable("&pi;");
 
@@ -78,7 +81,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+="<mi mathvariant='normal'>erf</mi>";
     cdf+="<mo>(</mo>";
-    cdf+=frac(theta+x,"<msqrt>"+pi+"</msqrt>")
+    cdf+=frac(theta+"<mo>(</mo>"+x+minus+s+"<mo>)</mo>","<msqrt>"+pi+"</msqrt>")
     cdf+="<mo>)</mo>";
     cdf+=endMathML;
     cdf+=" "+language.distributions.for+" ";
@@ -89,12 +92,16 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   }
 
   #getPDF(values, x) {
-    if (values.mu==0) return (x==0)?Infinity:0;
+    if (values.mu==0) return (x==values.s)?Infinity:0;
+    if (x<values.s) return 0;
+    x=x-values.s;
     return this.#pdfFactor1*Math.exp(-(x**2)*this.#pdfFactor2);
   }
 
   #getCDF(values, x) {
-    if (values.mu==0) return (x<0)?0:1;
+    if (values.mu==0) return (x<values.s)?0:1;
+    if (x<values.s) return 0;
+    x=x-values.s;
     return erf(x*this.#cdfFactor);
   }
 
@@ -106,6 +113,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
 
     /* Characteristics */
 
+    const s=variable("s");
     const pi=variable("&pi;");
     const mu=variable("&mu;");
     const theta=variable("&theta;");
@@ -113,10 +121,10 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
     const info=[];
     info.push(["",beginMathML+theta+endMathML,"=",beginMathML+frac("<mn>1</mn>",mu)+endMathML,"&approx;",formatNumber(1/values.mu)]);
 
-    const meanFormula=beginMathML+frac("<mn>1</mn>",theta)+endMathML;
+    const meanFormula=beginMathML+frac("<mn>1</mn>",theta)+plus+s+endMathML;
     const varianceFormula=beginMathML+frac(pi+minus+"<mn>2</mn>","<mn>2</mn><msup>"+theta+"<mn>2</mn></msup>")+endMathML;
 
-    const meanValue=values.mu;
+    const meanValue=values.mu+values.s;
     const varianceValue=(Math.PI-2)/(2*this.#theta**2);
 
     this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,info);
@@ -133,6 +141,6 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   }
 
   fitParameters(data) {
-    return {mu: data.mean};
+    return {mu: data.mean, s: 0};
   }
 }
