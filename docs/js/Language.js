@@ -180,6 +180,8 @@ lang.distributions.parameterErrorFloatMinMaxExclusiveInclusive="Es muss eine Zah
 lang.distributions.parameterErrorFloatMinMaxExclusiveExclusive="Es muss eine Zahl im Bereich von {0} bis {1} (jeweils exklusive der Grenzen) angegeben werden.";
 lang.distributions.parameterValueDown="Wert verringern";
 lang.distributions.parameterValueUp="Wert vergrößern";
+lang.distributions.showExpectedValue="Erwartungswert einzeichnen";
+lang.distributions.showStandardDeviation="Standardabweichung einzeichnen";
 
 lang.fitter={};
 lang.fitter.title="Verteilungsanpassung";
@@ -252,8 +254,8 @@ lang.distributions.negativeHypergeometric.parameterInfon="Anzahl der roten Kugel
 lang.distributions.negativeHypergeometric.parameterInfonError="Es können nicht mehr rote Kugeln ohne Zurücklegen gezogen werden (<i>n</i>), als insgesamt in der Urne enthalten sind (<i>R</i>).";
 
 lang.distributions.rademacher={};
-lang.distributions.rademacher.name="Rademacherverteilung";
-lang.distributions.rademacher.info="Die Rademacherverteilung wird u.a. zur Modellierung von einfachen Irrfahrten auf <abbr title='Ganze Zahlen &#x2124;=...,-3,-2,-1,0,1,2,3,...'>&#x2124;</abbr> verwendet.";
+lang.distributions.rademacher.name="Rademacher-Verteilung";
+lang.distributions.rademacher.info="Die Rademacher-Verteilung wird u.a. zur Modellierung von einfachen Irrfahrten auf <abbr title='Ganze Zahlen &#x2124;=...,-3,-2,-1,0,1,2,3,...'>&#x2124;</abbr> verwendet.";
 lang.distributions.rademacher.wikipedia="https://de.wikipedia.org/wiki/Rademacherverteilung";
 
 lang.distributions.zeta={};
@@ -688,6 +690,8 @@ lang.distributions.parameterErrorFloatMinMaxExclusiveInclusive="A number in the 
 lang.distributions.parameterErrorFloatMinMaxExclusiveExclusive="A number in the range from {0} to {1} (excluding the limits in each case) has to be specified.";
 lang.distributions.parameterValueDown="Decrease value";
 lang.distributions.parameterValueUp="Increase value";
+lang.distributions.showExpectedValue="Draw expected value";
+lang.distributions.showStandardDeviation="Draw standard deviation";
 
 lang.fitter={};
 lang.fitter.title="Distribution fitter";

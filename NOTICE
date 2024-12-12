@@ -9,6 +9,7 @@ open source licenses, see:
 - Bootstrap icons (https://icons.getbootstrap.com): MIT license
 - Chart.js (https://www.chartjs.org): MIT license
 - chartjs-plugin-zoom (https://www.chartjs.org/chartjs-plugin-zoom/latest/): MIT license
+- chartjs-plugin-annotation (https://www.chartjs.org/chartjs-plugin-annotation/latest/): MIT license
 - jStat (http://jstat.github.io/): MIT license
 
 For building a desktop app from the Javascript code Neutralinojs

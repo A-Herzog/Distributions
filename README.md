@@ -24,6 +24,7 @@ This product bundles some components licensed under different open source licens
 - [**Bootstrap icons**](https://icons.getbootstrap.com): [MIT license](https://opensource.org/license/mit/)
 - [**Chart.js**](https://www.chartjs.org): [MIT license](https://opensource.org/license/mit/)
 - [**chartjs-plugin-zoom**](https://www.chartjs.org/chartjs-plugin-zoom/latest/): [MIT license](https://opensource.org/license/mit/)
+- [**chartjs-plugin-annotation**](https://www.chartjs.org/chartjs-plugin-annotation/latest/): [MIT license](https://opensource.org/license/mit/)
 - [**jStat**](http://jstat.github.io/): [MIT license](https://opensource.org/license/mit/)
 
 For building a desktop app from the Javascript code [**Neutralinojs**](https://neutralino.js.org/) under the

@@ -192,8 +192,8 @@ class ProbabilityDistribution {
     let input, error, buttonUp, buttonDown;
     [input, error, buttonUp, buttonDown]=this.#addInputToPanel(parent,parameter.id,parameter.shortName,parameter.fullName,parameter.defaultValue);
 
-    input.onkeyup=()=>this.#fireParameterUpdated();
-    input.onchange=()=>this.#fireParameterUpdated();
+    input.onkeyup=()=>this._fireParameterUpdated();
+    input.onchange=()=>this._fireParameterUpdated();
 
     parameter.inputElement=input;
     parameter.errorElement=error;
@@ -203,13 +203,13 @@ class ProbabilityDistribution {
         const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
         const newValue=(parameter.hasMaxValue)?Math.min(parameter.maxValue,current+1):(current+1);
         input.value=formatNumber(newValue);
-        this.#fireParameterUpdated();
+        this._fireParameterUpdated();
       };
       buttonDown.onclick=()=>{
         const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
         const newValue=(parameter.hasMinValue)?Math.max(parameter.minValue,current-1):(current-1);
         input.value=formatNumber(newValue);
-        this.#fireParameterUpdated();
+        this._fireParameterUpdated();
       };
     } else {
       const step=(parameter.hasMinValue && parameter.hasMaxValue)?((parameter.maxValue-parameter.minValue)/20):1;
@@ -226,7 +226,7 @@ class ProbabilityDistribution {
           newValue=current+step;
         }
         input.value=formatNumber(newValue);
-        this.#fireParameterUpdated();
+        this._fireParameterUpdated();
       };
       buttonDown.onclick=()=>{
         const current=(parameter.currentValue==null)?parameter.defaultValue:parameter.currentValue;
@@ -241,7 +241,7 @@ class ProbabilityDistribution {
           newValue=current-step;
         }
         input.value=formatNumber(newValue);
-        this.#fireParameterUpdated();
+        this._fireParameterUpdated();
       };
     }
   }
@@ -302,14 +302,15 @@ class ProbabilityDistribution {
 
     /* Visualization */
     card=this.#addCard(span,this.#continuous?language.distributions.infoVisualizationContinuous:language.distributions.infoVisualizationDiscrete);
-    if (this.#pdfText!=null) {
+    if (this.#pdfText!=null || this.#cdfText!=null) {
       const p=document.createElement("p");
-      p.innerHTML=(this.#continuous?language.distributions.PDFContinuous:language.distributions.PDFDiscrete)+": "+this.#pdfText;
-      card.appendChild(p);
-    }
-    if (this.#cdfText!=null) {
-      const p=document.createElement("p");
-      p.innerHTML=language.distributions.CDF+": "+this.#cdfText;
+      if (this.#pdfText!=null) {
+        p.innerHTML+=(this.#continuous?language.distributions.PDFContinuous:language.distributions.PDFDiscrete)+": "+this.#pdfText;
+      }
+      if (this.#pdfText!=null && this.#cdfText!=null) p.innerHTML+=", ";
+      if (this.#cdfText!=null) {
+        p.innerHTML+=language.distributions.CDF+": "+this.#cdfText;
+      }
       card.appendChild(p);
     }
     this.#canvas=document.createElement("canvas");
@@ -358,12 +359,12 @@ class ProbabilityDistribution {
       this.#fireCalcParameterUpdated();
     };
 
-    this.#fireParameterUpdated();
+    this._fireParameterUpdated();
 
     return span;
   }
 
-  #fireParameterUpdated() {
+  _fireParameterUpdated() {
     const values={};
     let allOk=true;
 
@@ -458,7 +459,7 @@ class ProbabilityDistribution {
       parameter.inputElement.value=formatNumber(newValue,14);
     }
 
-    this.#fireParameterUpdated();
+    this._fireParameterUpdated();
   }
 
   #fireCalcParameterUpdated() {
@@ -816,6 +817,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
   #diagramXValues;
   #mean;
   #variance;
+  #checkBoxMean;
+  #checkBoxStd;
 
   /**
    * Constructor
@@ -939,6 +942,24 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     }
 
     /* Draw diagram */
+    this.#chartOptions.plugins.annotation={};
+    this.#chartOptions.plugins.annotation.annotations={};
+    if (isFinite(this.#mean) && this.#mean>=minX && this.#mean<=maxX) {
+      if (this.#checkBoxMean && this.#checkBoxMean.checked) {
+        const x=this.#mean+minX+paddingX;
+        this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderWidth: 2, label: {content: "E[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
+      }
+      if (this.#checkBoxStd && this.#checkBoxStd.checked) {
+        if (isFinite(this.#variance) && this.#mean-Math.sqrt(this.#variance)>=minX) {
+          const x=this.#mean-Math.sqrt(this.#variance)+minX+paddingX;
+          this.#chartOptions.plugins.annotation.annotations.line2={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]-Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
+        }
+        if (isFinite(this.#variance) && this.#mean+Math.sqrt(this.#variance)<=maxX) {
+          const x=this.#mean+Math.sqrt(this.#variance)+minX+paddingX;
+          this.#chartOptions.plugins.annotation.annotations.line3={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]+Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
+        }
+      }
+    }
     this._drawChart({
       data: {
         labels: dataX,
@@ -973,7 +994,44 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    */
   _initButtons() {
     const that=this;
+    let check;
+    let checkbox;
+    let label;
     let button;
+
+    /* Show E[X] in diagram */
+    this.canvasInfo.appendChild(check=document.createElement("div"));
+    check.className="form-check small";
+    check.style.display="inline-block";
+    check.appendChild(checkbox=document.createElement("input"));
+    checkbox.type="checkbox";
+    this.#checkBoxMean=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.onchange=e=>this._fireParameterUpdated();
+    check.appendChild(label=document.createElement("label"));
+    label.innerHTML=language.distributions.showExpectedValue;
+    label.htmlFor=checkbox;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.onclick=e=>{this.#checkBoxMean.checked=!this.#checkBoxMean.checked; this._fireParameterUpdated();};
+
+    /* Show E[X]+-Std[X] in diagram */
+    this.canvasInfo.appendChild(check=document.createElement("div"));
+    check.className="form-check small";
+    check.style.display="inline-block";
+    check.appendChild(checkbox=document.createElement("input"));
+    checkbox.type="checkbox";
+    this.#checkBoxStd=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.onchange=e=>this._fireParameterUpdated();
+    check.appendChild(label=document.createElement("label"));
+    label.innerHTML=language.distributions.showStandardDeviation;
+    label.htmlFor=checkbox;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.onclick=e=>{this.#checkBoxStd.checked=!this.#checkBoxStd.checked; this._fireParameterUpdated();};
+
+    this.canvasInfo.appendChild(document.createElement("br"));
 
     /* Reset zoom */
     this.canvasInfo.appendChild(button=document.createElement("button"));
@@ -1141,6 +1199,8 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
   #diagramXValues;
   #mean;
   #variance;
+  #checkBoxMean;
+  #checkBoxStd;
 
   /**
    * Constructor
@@ -1256,7 +1316,8 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     this.#diagramMaxX=maxX;
 
     /* Build PDF and CDF data sets */
-    const step=(maxX-minX)/500;
+    const steps=500;
+    const step=(maxX-minX)/steps;
     const dataPDF=[];
     const dataCDF=[];
     const dataX=[];
@@ -1269,6 +1330,24 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     }
 
     /* Draw diagram */
+    this.#chartOptions.plugins.annotation={};
+    this.#chartOptions.plugins.annotation.annotations={};
+    if (isFinite(this.#mean) && this.#mean>=minX && this.#mean<=maxX) {
+      if (this.#checkBoxMean && this.#checkBoxMean.checked) {
+        const x=(this.#mean-minX)/(maxX-minX)*steps;
+        this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderWidth: 2, label: {content: "E[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
+      }
+      if (this.#checkBoxStd && this.#checkBoxStd.checked) {
+        if (isFinite(this.#variance) && this.#mean-Math.sqrt(this.#variance)>=minX) {
+          const x=(this.#mean-Math.sqrt(this.#variance)-minX)/(maxX-minX)*steps;
+          this.#chartOptions.plugins.annotation.annotations.line2={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]-Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
+        }
+        if (isFinite(this.#variance) && this.#mean+Math.sqrt(this.#variance)<=maxX) {
+          const x=(this.#mean+Math.sqrt(this.#variance)-minX)/(maxX-minX)*steps;
+          this.#chartOptions.plugins.annotation.annotations.line3={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]+Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
+        }
+      }
+    }
     this._drawChart({
       data: {
         labels: dataX,
@@ -1303,7 +1382,44 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    */
   _initButtons() {
     const that=this;
+    let check;
+    let checkbox;
+    let label;
     let button;
+
+    /* Show E[X] in diagram */
+    this.canvasInfo.appendChild(check=document.createElement("div"));
+    check.className="form-check small";
+    check.style.display="inline-block";
+    check.appendChild(checkbox=document.createElement("input"));
+    checkbox.type="checkbox";
+    this.#checkBoxMean=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.onchange=e=>this._fireParameterUpdated();
+    check.appendChild(label=document.createElement("label"));
+    label.innerHTML=language.distributions.showExpectedValue
+    label.htmlFor=checkbox;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.onclick=e=>{this.#checkBoxMean.checked=!this.#checkBoxMean.checked; this._fireParameterUpdated();};
+
+    /* Show E[X]+-Std[X] in diagram */
+    this.canvasInfo.appendChild(check=document.createElement("div"));
+    check.className="form-check small";
+    check.style.display="inline-block";
+    check.appendChild(checkbox=document.createElement("input"));
+    checkbox.type="checkbox";
+    this.#checkBoxStd=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.onchange=e=>this._fireParameterUpdated();
+    check.appendChild(label=document.createElement("label"));
+    label.innerHTML=language.distributions.showStandardDeviation;
+    label.htmlFor=checkbox;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.onclick=e=>{this.#checkBoxStd.checked=!this.#checkBoxStd.checked; this._fireParameterUpdated();};
+
+    this.canvasInfo.appendChild(document.createElement("br"));
 
     /* Reset zoom */
     this.canvasInfo.appendChild(button=document.createElement("button"));
