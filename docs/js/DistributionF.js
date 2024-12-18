@@ -112,7 +112,7 @@ class FDistribution extends ContinuousProbabilityDistribution {
     /* Diagram */
 
     const that=this;
-    const maxX=Math.max(20,meanValue+3*Math.sqrt(varianceValue));
+    const maxX=Math.max(20,meanValue+3*isNaN(varianceValue)?10:Math.sqrt(varianceValue));
     this._setContinuousDiagram(0,maxX,x=>that.#getPDF(values,x),x=>that.#getCDF(values,x));
   }
 
@@ -122,9 +122,11 @@ class FDistribution extends ContinuousProbabilityDistribution {
 
   fitParameters(data) {
     if (data.mean<=1) return null;
-		const n=Math.round(2*data.mean/(data.mean-1));
-		const m=Math.round(2*n*n*(n-2)/(data.std*data.std*(n-2)*(n-2)*(n-4)-2*n*n));
-    if (m<1 || n<3) return null;
+		let n=Math.round(2*data.mean/(data.mean-1));
+		let m=Math.round(2*n*n*(n-2)/(data.std*data.std*(n-2)*(n-2)*(n-4)-2*n*n));
+    /* if (m<1 || n<3) return null; */
+    m=Math.max(m,1);
+    n=Math.max(n,3);
     return {m: m, n: n};
   }
 }
