@@ -118,4 +118,14 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
     /* y=1-(xm/x)^alpha <=> x=xm/(1-y)^(1/alpha)  */
     return values.xm/((1-u)**(1/values.alpha));
   }
+
+  fitParameters(data) {
+    if (data.std>0) {
+      const alpha=1+Math.sqrt(1+data.mean**2/(data.std**2));
+      if (alpha<2) alpha=2.01; /* for alpha<=2 we have var=infty */
+      return {xm: data.mean*(alpha-1)/alpha, alpha: alpha};
+    } else {
+      return null;
+    }
+  }
 }

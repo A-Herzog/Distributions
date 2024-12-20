@@ -156,7 +156,7 @@ function loadInputValues(values) {
   calcHistogram(fitterInput);
 
   /* Calc fit */
-  const fits=[];
+  let fits=[];
   for (let distribution of listDistributions) {
     const fitterResult=distribution.fitParameters(fitterInput);
     if (fitterResult!=null) fits.push({distribution: distribution, parameters: fitterResult});
@@ -184,6 +184,7 @@ function loadInputValues(values) {
       fit.delta=delta;
     }
   }
+  fits=fits.filter(f=>!isNaN(f.delta) && f.delta<1_000_000);
   fits.sort((f1,f2)=>f1.delta-f2.delta);
 
   /* Show results */

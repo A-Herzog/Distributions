@@ -90,4 +90,13 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
   calcProbability(values, k) {
     return Math.max(0,mathBinom(values.n,k)*values.p**k*(1-values.p)**(values.n-k));
   }
+
+  fitParameters(data) {
+    if (data.mean<=0 || data.std<=0) return null;
+    /* E=n*p, Var=n*p*(1-p) => n=E/p, p=1-Var/E */
+    const p=1-data.std**2/data.mean;
+    if (p<=0 || p>1) return null;
+    const n=Math.round(data.mean/p);
+    return {n: n, p: p};
+  }
 }

@@ -114,4 +114,27 @@ class ChiDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    if (data.mean>18.45) return null;
+		const factor=Math.sqrt(2);
+		let k=0;
+		let gammaK=jStat.gammafn(1.0/2.0);
+		let last=0;
+		while (k<341) {
+			k++;
+			const gammaKPlus1=jStat.gammafn((k+1)/2.0);
+			const y=factor*gammaKPlus1/gammaK;
+			if (y>=data.mean) {
+				if (last>0 && (data.mean-last)/(y-last)<0.5) {
+          return {k: k-1};
+				} else {
+					return {k: k};
+				}
+			}
+			gammaK=gammaKPlus1;
+			last=y;
+		}
+		return null;
+  }
 }

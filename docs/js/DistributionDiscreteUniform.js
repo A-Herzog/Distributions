@@ -109,6 +109,16 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     return 1/(values.b-values.a+1);
   }
 
+  fitParameters(data) {
+		if (data.mean<=0 || data.std<=0) return null;
+		/* E=(a+b)/2, Var=((b-a+1)^2-1)/12 => b=sqrt(12Var+1)/2+E-1/2, a=2E-b */
+		let b=Math.round(Math.sqrt(12*data.std**2+1)/2+data.mean-0.5);
+		let a=Math.round(2*data.mean-b);
+		if (a<0) a=0;
+		if (b<a) b=a+1;
+		return {a: a, b: b};
+  }
+
   _initButtons() {
     super._initButtons();
 

@@ -18,7 +18,7 @@ export {ZetaDistribution};
 
 import {DiscreteProbabilityDistribution, getDiscreteDefaultCDF} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, variable, minus, mul, equals, isin, defP, defF, frac, setNHTML, setRPlusHTML} from './MathMLTools.js';
+import {beginMathML, endMathML, variable, minus, equals, isin, defP, defF, frac, setNHTML} from './MathMLTools.js';
 import {zeta as zetaFunction} from './MathTools.js';
 
 
@@ -38,7 +38,7 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
 
-    this._addDiscreteParameter("s","s",language.distributions.zeta.parameterInfos+" (<i>s</i>"+isin+setNHTML+")",1,3);
+    this._addContinuousParameter("s","s",language.distributions.zeta.parameterInfos+" (<i>s</i>&gt;1)",1,false,null,false,3);
 
     this._setCalcParameter("k",5);
   }
@@ -87,5 +87,24 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
 
   calcProbability(values, k) {
     return 1/(k**values.s)/this.#zetaS;
+  }
+
+  fitParameters(data) {
+    if (data.mean<=1 || data.mean>=2.24) return null;
+
+    let sMin=2.4; /* For smaller values calculating the zeta function becomes very inaccurate */
+    let sMax=50;
+
+    while (sMax-sMin>0.01) {
+      const sMiddle=(sMin+sMax)/2;
+      const sMiddleMean=zetaFunction(sMiddle-1)/zetaFunction(sMiddle);
+      if (sMiddleMean>data.mean) {
+        sMin=sMiddle;
+      } else {
+        sMax=sMiddle;
+      }
+    }
+
+    return {s: (sMin+sMax)/2};
   }
 }

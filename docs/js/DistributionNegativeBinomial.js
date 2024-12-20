@@ -88,4 +88,13 @@ class NegativeBinomialDistribution extends DiscreteProbabilityDistribution {
   calcProbability(values, k) {
     return mathBinom(k+values.r-1,k)*values.p**values.r*(1-values.p)**k;
   }
+
+  fitParameters(data) {
+    if (data.mean<=0 || data.std<=0) return null;
+    /* E=r(1-p)/p, Var=r(1-p)/p^2 => p=E/Var, r=E*p/(1-p) */
+    const p=data.mean/(data.std**2);
+    if (p<=0 || p>1) return null;
+    const r=Math.round(data.mean*p/(1-p));
+    return {r: r, p: p};
+  }
 }

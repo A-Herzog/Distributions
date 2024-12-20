@@ -108,4 +108,10 @@ class RademacherDistribution extends DiscreteProbabilityDistribution {
   getRandomNumber(values) {
     return (Math.random()>=0.5)?1:-1;
   }
+
+  fitParameters(data) {
+    if (Math.abs(data.mean)>0.1) return null;
+    if (data.std<0.9 || data.std>1.1) return null;
+    return {};
+  }
 }

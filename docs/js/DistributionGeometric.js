@@ -96,4 +96,9 @@ class GeometricDistribution extends DiscreteProbabilityDistribution {
   calcProbability(values, k) {
     return values.p*(1-values.p)**k;
   }
+
+  fitParameters(data) {
+    /* (1-p)/p=mean <=> 1/(1+mean)=p */
+		return {p: 1/(1+Math.max(0,data.mean))};
+  }
 }

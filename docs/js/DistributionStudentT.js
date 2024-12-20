@@ -128,4 +128,15 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
   calcProbability(values, x) {
     return [this.#getPDF(values,x),this.#getCDF(values,x)];
   }
+
+  fitParameters(data) {
+    let nu;
+		if (data.std>1) {
+			const variance=data.std**2;
+			nu=2*variance/(variance-1);
+		} else {
+			nu=5;
+		}
+    return {mu: data.mean, nu: nu};
+  }
 }
