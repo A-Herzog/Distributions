@@ -513,6 +513,15 @@ lang.distributions.pert.parameterInfoc="Obere Bereichsgrenze";
 lang.distributions.pert.parameterInfobError="Der Modus <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 lang.distributions.pert.parameterInfocError="Die obere Bereichsgrenze <i>c</i> muss größer oder gleich dem Modus <i>b</i> sein.";
 
+lang.distributions.power={};
+lang.distributions.power.name="Potenzverteilung";
+lang.distributions.power.info="Die Potenzverteilung ist eine inverse Pareto-Verteilung.";
+lang.distributions.power.wikipedia="https://en.wikipedia.org/wiki/Pareto_distribution#Inverse-Pareto_Distribution_/_Power_Distribution"; /* No German Wikipedia page */
+lang.distributions.power.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.power.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.power.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+lang.distributions.power.parameterInfoc="Potenzierungswert";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1022,6 +1031,15 @@ lang.distributions.pert.parameterInfob="Mode";
 lang.distributions.pert.parameterInfoc="Upper bound";
 lang.distributions.pert.parameterInfobError="The mode <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
 lang.distributions.pert.parameterInfocError="The upper bound <i>c</i> has to be equal or larger than the mode <i>b</i>.";
+
+lang.distributions.power={};
+lang.distributions.power.name="Power distribution";
+lang.distributions.power.info="The power distribution is an inverse Pareto distribution.";
+lang.distributions.power.wikipedia="https://en.wikipedia.org/wiki/Pareto_distribution#Inverse-Pareto_Distribution_/_Power_Distribution";
+lang.distributions.power.parameterInfoa="Lower bound";
+lang.distributions.power.parameterInfob="Upper bound";
+lang.distributions.power.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+lang.distributions.power.parameterInfoc="Potentiation value";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

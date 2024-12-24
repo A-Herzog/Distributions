@@ -58,7 +58,7 @@ import {LogisticDistribution} from './DistributionLogistic.js';
 import {LogLogisticDistribution} from './DistributionLogLogistic.js';
 import {MaxwellBoltzmannDistribution} from './DistributionMaxwellBoltzmann.js';
 import {PertDistribution} from './DistributionPert.js';
-
+import {PowerDistribution} from './DistributionPower.js';
 
 
 /**
@@ -109,6 +109,7 @@ listDistributions.push(new LogisticDistribution());
 listDistributions.push(new LogLogisticDistribution());
 listDistributions.push(new MaxwellBoltzmannDistribution());
 listDistributions.push(new PertDistribution());
+listDistributions.push(new PowerDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
