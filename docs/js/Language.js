@@ -522,6 +522,12 @@ lang.distributions.power.parameterInfob="Obere Bereichsgrenze";
 lang.distributions.power.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 lang.distributions.power.parameterInfoc="Potenzierungswert";
 
+lang.distributions.rayleigh={};
+lang.distributions.rayleigh.name="Rayleigh-Verteilung";
+lang.distributions.rayleigh.info="Werden zwei normalverteilte, stochastisch unabhängige Zufallsvariablen als zweidimensionaler Vektor aufgefasst, so ist der Betrag des Vektors Rayleigh-verteilt.";
+lang.distributions.rayleigh.wikipedia="https://de.wikipedia.org/wiki/Rayleigh-Verteilung";
+lang.distributions.rayleigh.parameterInfom="Erwartungswert";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1040,6 +1046,12 @@ lang.distributions.power.parameterInfoa="Lower bound";
 lang.distributions.power.parameterInfob="Upper bound";
 lang.distributions.power.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
 lang.distributions.power.parameterInfoc="Potentiation value";
+
+lang.distributions.rayleigh={};
+lang.distributions.rayleigh.name="Rayleigh distribution";
+lang.distributions.rayleigh.info="If two normally distributed, stochastically independent random variables are interpreted as a two-dimensional vector, the absolute value of the vector is Rayleigh-distributed.";
+lang.distributions.rayleigh.wikipedia="https://en.wikipedia.org/wiki/Rayleigh_distribution";
+lang.distributions.rayleigh.parameterInfom="Expected value";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
