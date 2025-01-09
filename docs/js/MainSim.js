@@ -19,7 +19,7 @@ export {initSim}
 import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {isDesktopApp} from './Main.js';
-import {getFloat, getInt, formatNumber, formatPercent} from "./NumberTools.js";
+import {getFloat, getInt, getPositiveInt, formatNumber, formatPercent} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 
 /**
@@ -79,6 +79,8 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
   resetButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlReset;
   stepButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlStep;
   playPauseButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlStart;
+  playStepsButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlSteps;
+  playStepsInput.title=language.distributions.infoDiagramLawOfLargeNumbersControlStepsInput;
 }
 
 /**
@@ -437,15 +439,34 @@ function doStep(distribution, values, mode) {
 }
 
 /**
+ * Number of steps to be performend in run mode.
+ * (If set to a value lower than 0, no auto stop will be performed.)
+ * @see runSteps
+ */
+let autoStop=-1;
+
+/**
  * Sets up a timeout for the next simulation step.
  * @param {Object} distribution Distribution to be used
  * @param {Object} values Distribution parameters
  * @param {Number} mode Simulation mode (0: law of large numbers, 1: central limit theorem)
  */
 function initStepTimeout(distribution, values, mode) {
-  const delay=(mode==0)?75:10;
+  let delay;
+  if (autoStop>=0) {
+    delay=5;
+  } else {
+    delay=(mode==0)?75:10;
+  }
   runTimeout=setTimeout(()=>{
     doStep(distribution,values,mode);
+    if (autoStop>=0) {
+      autoStop--;
+      if (autoStop<=0) {
+        doStartStop(distribution,values,mode);
+        return;
+      }
+    }
     initStepTimeout(distribution,values,mode);
   },delay);
 }
@@ -467,6 +488,8 @@ function doStartStop(distribution, values, mode) {
     playPauseButton.classList.remove("bi-pause");
     playPauseButton.classList.add("bi-play");
     stepButton.disabled=false;
+    playStepsButton.disabled=false;
+    playStepsInput.disabled=false;
   } else {
     /* Start */
     initStepTimeout(distribution,values,mode);
@@ -474,6 +497,9 @@ function doStartStop(distribution, values, mode) {
     playPauseButton.classList.remove("bi-play");
     playPauseButton.classList.add("bi-pause");
     stepButton.disabled=true;
+    playStepsButton.disabled=true;
+    playStepsInput.disabled=true;
+
   }
   running=!running;
 }
@@ -506,8 +532,39 @@ function initCharts(distribution, values, mode, chart1data, chart1options, chart
     if (!running) doStep(distribution,values,mode);
   };
   playPauseButton.onclick=()=>{
+    autoStop=-1;
     doStartStop(distribution,values,mode);
   };
+  playStepsButton.onclick=()=>{
+    runSteps(distribution,values,mode);
+  }
+  playStepsInput.oninput=checkStepsInput;
+}
+
+/**
+ * Checks the entered auto stop value.
+ */
+function checkStepsInput() {
+  if (getPositiveInt(playStepsInput.value)==null) {
+    playStepsButton.classList.add("disabled");
+    playStepsInput.classList.add("is-invalid");
+  } else {
+    playStepsButton.classList.remove("disabled");
+    playStepsInput.classList.remove("is-invalid");
+  }
+}
+
+/**
+ * Starts an auto stop simulation.
+ * @param {Object} distribution Distribution to be used
+ * @param {Object} values Distribution parameters
+ * @param {Number} mode Simulation mode (0: law of large numbers, 1: central limit theorem)
+ */
+function runSteps(distribution, values, mode) {
+  const stepCount=getPositiveInt(playStepsInput.value);
+  if (stepCount==null) return;
+  autoStop=stepCount;
+  doStartStop(distribution,values,mode);
 }
 
 /**
@@ -698,7 +755,11 @@ function initSim() {
   /* Distribution depending default modes */
   if (mode==-1) {
     [distribution, values, mode]=getDistributionFromSearchString();
-    if (distribution==null) return;
+    if (distribution==null) {
+      mainContent.innerHTML="No simulation parameter specified.";
+      startSim();
+      return;
+    }
   }
 
   /* Select color mode */
