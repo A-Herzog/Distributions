@@ -52,7 +52,12 @@ function start() {
   }
 
   /* More tools & download buttons */
-  let bottomInfo="<p class='mt-3'>"+language.GUI.toolsLabel+"</p><p><button id=\"openFitterButton\" class=\"btn btn-primary my-1 bi-fingerprint\"> "+language.fitter.title+"</button></p>";
+  let bottomInfo="";
+
+  bottomInfo+="<p class='mt-3'>"+language.GUI.toolsLabel+"</p><p>";
+  bottomInfo+="<button id=\"openFitterButton\" class=\"btn btn-primary me-2 my-1 bi-fingerprint\"> "+language.fitter.title+"</button>";
+  bottomInfo+="<button id=\"openLCGButton\" class=\"btn btn-primary me-2 my-1 bi-123\"> "+language.lcg.title+"</button>";
+  bottomInfo+="</p>";
   if (isDesktopApp) {
     const footer=document.querySelector('footer');
     for (let link of footer.querySelectorAll("a")) if (link.href!='') {
@@ -72,6 +77,10 @@ function start() {
   bottomInfoArea.innerHTML=bottomInfo;
   openFitterButton.onclick=()=>{
     const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
+    window.open(file,"_blank");
+  };
+  openLCGButton.onclick=()=>{
+    const file="lcg"+((document.documentElement.lang=='de')?"_de":"")+".html";
     window.open(file,"_blank");
   };
 }

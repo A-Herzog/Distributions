@@ -201,6 +201,36 @@ lang.fitter.histogram="Histogramm";
 lang.fitter.fittedDistribution="Angepasste Verteilung";
 lang.fitter.openInEditor="Verteilung in Editor laden";
 
+lang.lcg={};
+lang.lcg.title="Linearer Kongruenzgenerator";
+lang.lcg.wikipedia="https://de.wikipedia.org/wiki/Kongruenzgenerator";
+lang.lcg.info=`
+<p>Zur Durchführung von stochastischen Simulationen werden <strong>Zufallszahlen</strong>, die gemäß bestimmter Wahrscheinlichkeitsverteilungen verteilt sind, benötigt. Diese Zufallszahlen gewinnt man durch verschiedene, verteilungsabhängige Methoden aus Zufallszahlen, die auf dem Intervall [0,1] gleichverteilt sind.</p>
+<p>Generell können in einem deterministisch arbeitenden Computer keine echten Zufallszahlen erzeugt werden, sondern stets nur <strong>Pseudo-Zufallszahlen</strong>. Diese Peudo-Zufallszahlen sind zwar sind zwar ebenfalls näherungsweise auf dem Intervall [0,1] gleichverteilt und erfüllen eine Reihe von Kriterien echter Zufallszahlen, besitzen aber dennoch gewisse Regelmäßigkeiten, die echte Zufallszahlen nicht aufweisen. Für Anwendungen in der Kryptographie ist es wichtig, dass diese Regelmäßigkeiten möglichst gering ausfallen und insbesondere nicht aus einer Reihe von Pseudo-Zufallszahlen auf die jeweils nächste Pseudo-Zufallszahl geschlossen werden kann. Für die Anwendung in der stochastischen Simulation sind jedoch keine so starken Voraussetzungen notwendig, so dass hier häufig <strong>lineare Kongruenzgeneratoren</strong> zur Erzeugung von Zufallszahlen zur Anwendung kommen.</p>
+<p>Bei einem linearen Kongruenzgenerator wird die jeweils nächste Zufallszahl (<strong>a<sub>n+1</sub></strong>) aus der vorherigen gewonnen, in dem der letzte Wert mit einer fest gewählten Zahl multipliziert (<strong>b</strong>) wird und anschließend ebenfalls ein fest gewählter Wert addiert (<strong>c</strong>) wird. Abschließend wird das Ergebnis modulo eines ebenfalls fest gewählten Wertes (<strong>m</strong>) betrachtet. Damit sich eine Verteilung zwischen 0 und 1 ergibt, werden die so ermittelten Zahlen durch den gewählten Modul geteilt:</p>
+<p>
+<strong>a<sub>0</sub></strong> := Startwert<br>
+<strong>a<sub>n+1</sub></strong> := <strong>b&middot;a<sub>n</sub>+c mod m</strong><br>
+Zufallszahlen: <strong>u<sub>n</sub></strong> := <strong>a<sub>n</sub>/m</strong>
+</p>
+<p>Die Qualität der Zufallszahlen, d.h. wie gut die sich ergebenden Werte un eine Gleichverteilung auf [0,1] annähern, hängt von der Wahl von <strong>b</strong>, <strong>c</strong> und <strong>m</strong> ab.</p>
+`;
+lang.lcg.pseudoRandomNumbers="Pseudozufallszahlen";
+lang.lcg.showCompleteTable="Gesamte Tabelle anzeigen";
+lang.lcg.gridStructure="Gitterstruktur";
+lang.lcg.processing="Verarbeitung...";
+lang.lcg.tableHeading="Berechnung von Zufallszahlen gemäß der Rechenvorschrift";
+lang.lcg.tableHeadingWithInitialValue="mit Startwert";
+lang.lcg.tableHeadingAnd="und";
+lang.lcg.resultA="Die Periodenlänge beträgt mehr als";
+lang.lcg.resultB="Die Periodenlänge beträgt";
+lang.lcg.resultC=", d.h. nach";
+lang.lcg.resultD="Zahlen wiederholt sich die Zahlenfolge.";
+lang.lcg.resultInfoA="Die maximale Periodenlänge für einen linearen Kongruenzgenerator mit Modul";
+lang.lcg.resultInfoB="beträgt";
+lang.lcg.resultInfoC="Die gewählten Parameter schöpfen die maximal mögliche Periodenlänge optimal aus.";
+lang.lcg.resultInfoD="Die gewählten Parameter für den multiplikativen und den additiven Parameter sind folglich nicht optimal. Eine Anleitung, wie die Parameter gewählt werden müssen, um auf die maximale Periodenlänge zu kommen, gibt es u.a. <a href='http://de.wikipedia.org/wiki/Kongruenzgenerator#Linearer_Kongruenzgenerator' target='_blank'>hier</a>.";
+
 lang.distributions.hypergeometric={};
 lang.distributions.hypergeometric.name="Hypergeometrische Verteilung";
 lang.distributions.hypergeometric.info="In einer Urne befinden sich insgesamt <b>N</b> Kugeln, <b>R</b> rote und <b>N-R</b> schwarze. Es werden ohne Zurücklegen <b>n</b> Kugeln gezogen. Die hypergeometrische Verteilung gibt dann an, mit welcher Wahrscheinlichkeit wie viele rote Kugeln in den <b>n</b> Kugeln enthalten sind.";
@@ -727,6 +757,36 @@ lang.fitter.outputHeader="Distribution fitting results";
 lang.fitter.histogram="Histogram";
 lang.fitter.fittedDistribution="Fitted distribution";
 lang.fitter.openInEditor="Open in distribution editor";
+
+lang.lcg={};
+lang.lcg.title="Linear congruential generator";
+lang.lcg.wikipedia="https://en.wikipedia.org/wiki/Linear_congruential_generator";
+lang.lcg.info=`
+<p>For stochastic simulations, <strong>random numbers</strong> that are distributed according to certain probability distributions are required. These random numbers are obtained using various distribution-dependent methods from random numbers that are equally distributed on the interval [0,1].</p>
+<p>In general, no real random numbers can be generated in a deterministic computer, only <strong>pseudo-random numbers</strong>. Although these Peudo random numbers are also approximately uniformly distributed on the interval [0,1] and fulfill a number of criteria of true random numbers, they still have certain regularities that true random numbers do not have. For applications in cryptography, it is important that these regularities are as small as possible and, in particular, that it is not possible to deduce the next pseudo-random number from a series of pseudo-random numbers. For use in stochastic simulation, however, no such strong prerequisites are necessary, so that <strong>linear congruence generators</strong> are often used here to generate random numbers.</p>
+<p>In a linear congruence generator, the next random number (<strong>a<sub>n+1</sub></strong>) is obtained from the previous one by multiplying the last value by a fixed number (<strong>b</strong>) and then adding a fixed value (<strong>c</strong>). Finally, the result is considered modulo another fixed value (<strong>m</strong>). To obtain a distribution between 0 and 1, the numbers determined in this way are divided by the selected module:</p>
+<p>
+<strong>a<sub>0</sub></strong> := Initial value<br>
+<strong>a<sub>n+1</sub></strong> := <strong>b&middot;a<sub>n</sub>+c mod m</strong><br>
+Random number: <strong>u<sub>n</sub></strong> := <strong>a<sub>n</sub>/m</strong>
+</p>
+<p>The quality of the random numbers, i.e. how well the resulting values approximate a uniform distribution to [0,1], depends on the choice of <strong>b</strong>, <strong>c</strong> and <strong>m</strong>.</p>
+`;
+lang.lcg.pseudoRandomNumbers="Pseudo-random numbers";
+lang.lcg.showCompleteTable="Show complete table";
+lang.lcg.gridStructure="Grid structure";
+lang.lcg.processing="Processing...";
+lang.lcg.tableHeading="Calculation of random numbers according to the calculation rule";
+lang.lcg.tableHeadingWithInitialValue="with initial value";
+lang.lcg.tableHeadingAnd="and";
+lang.lcg.resultA="The period length is more than";
+lang.lcg.resultB="The period length is";
+lang.lcg.resultC="this means after";
+lang.lcg.resultD="numbers the series starts again.";
+lang.lcg.resultInfoA="The maximum period length for a linear congruence generator with module";
+lang.lcg.resultInfoB="is";
+lang.lcg.resultInfoC="The selected parameters make optimum use of the maximum possible period length.";
+lang.lcg.resultInfoD="The parameters selected for the multiplicative and additive parameters are therefore not optimal. Instructions on how to select the parameters in order to achieve the maximum period length can be found <a href='https://en.wikipedia.org/wiki/Linear_congruential_generator' target='_blank'>here</a>.";
 
 lang.distributions.hypergeometric={};
 lang.distributions.hypergeometric.name="Hypergeometric distribution";
