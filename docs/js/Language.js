@@ -560,6 +560,14 @@ lang.distributions.rayleigh.info="Werden zwei normalverteilte, stochastisch unab
 lang.distributions.rayleigh.wikipedia="https://de.wikipedia.org/wiki/Rayleigh-Verteilung";
 lang.distributions.rayleigh.parameterInfom="Erwartungswert";
 
+lang.distributions.fatigueLife={};
+lang.distributions.fatigueLife.name="Fatigue-Life-Verteilung";
+lang.distributions.fatigueLife.info="Die Fatigue-Life-Verteilung wird vor allem in der Zuverlässigkeitstheorie eingesetzt.";
+lang.distributions.fatigueLife.wikipedia="https://en.wikipedia.org/wiki/Birnbaum%E2%80%93Saunders_distribution";
+lang.distributions.fatigueLife.parameterInfoMu="Lageparameter";
+lang.distributions.fatigueLife.parameterInfoBeta="Skalenparameter";
+lang.distributions.fatigueLife.parameterInfoGamma="Formparameter";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1116,6 +1124,14 @@ lang.distributions.rayleigh.name="Rayleigh distribution";
 lang.distributions.rayleigh.info="If two normally distributed, stochastically independent random variables are interpreted as a two-dimensional vector, the absolute value of the vector is Rayleigh-distributed.";
 lang.distributions.rayleigh.wikipedia="https://en.wikipedia.org/wiki/Rayleigh_distribution";
 lang.distributions.rayleigh.parameterInfom="Expected value";
+
+lang.distributions.fatigueLife={};
+lang.distributions.fatigueLife.name="Fatigue life distribution";
+lang.distributions.fatigueLife.info="The fatigue life distribution is mainly used in reliability theory.";
+lang.distributions.fatigueLife.wikipedia="https://en.wikipedia.org/wiki/Birnbaum%E2%80%93Saunders_distribution";
+lang.distributions.fatigueLife.parameterInfoMu="Location";
+lang.distributions.fatigueLife.parameterInfoBeta="Scale";
+lang.distributions.fatigueLife.parameterInfoGamma="Shape";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

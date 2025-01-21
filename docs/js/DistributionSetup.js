@@ -60,6 +60,7 @@ import {MaxwellBoltzmannDistribution} from './DistributionMaxwellBoltzmann.js';
 import {PertDistribution} from './DistributionPert.js';
 import {PowerDistribution} from './DistributionPower.js';
 import {RayleighDistribution} from './DistributionRayleigh.js';
+import {FatigueLifeDistribution} from './DistributionFatigueLife.js';
 
 
 /**
@@ -112,6 +113,7 @@ listDistributions.push(new MaxwellBoltzmannDistribution());
 listDistributions.push(new PertDistribution());
 listDistributions.push(new PowerDistribution());
 listDistributions.push(new RayleighDistribution());
+listDistributions.push(new FatigueLifeDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
