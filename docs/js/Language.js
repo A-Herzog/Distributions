@@ -568,6 +568,14 @@ lang.distributions.fatigueLife.parameterInfoMu="Lageparameter";
 lang.distributions.fatigueLife.parameterInfoBeta="Skalenparameter";
 lang.distributions.fatigueLife.parameterInfoGamma="Formparameter";
 
+lang.distributions.frechet={};
+lang.distributions.frechet.name="Fréchet-Verteilung";
+lang.distributions.frechet.info="Die Fréchet-Verteilung ist auch unter dem Namen Inverse Weibull-Verteilung bekannt. Die Verteilung ist nach dem französischen Mathematiker <a href='https://de.wikipedia.org/wiki/Maurice_Ren%C3%A9_Fr%C3%A9chet' target='_blank'>Maurice René Fréchet</a> benannt und wird zur Modellierung von Extermereignissen (z.B. der Regenmengen an einzelnen Tagen) verwendet.";
+lang.distributions.frechet.wikipedia="https://de.wikipedia.org/wiki/Fr%C3%A9chet-Verteilung";
+lang.distributions.frechet.parameterInfoDelta="Lageparameter";
+lang.distributions.frechet.parameterInfoBeta="Skalenparameter";
+lang.distributions.frechet.parameterInfoAlpha="Formparameter";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1132,6 +1140,14 @@ lang.distributions.fatigueLife.wikipedia="https://en.wikipedia.org/wiki/Birnbaum
 lang.distributions.fatigueLife.parameterInfoMu="Location";
 lang.distributions.fatigueLife.parameterInfoBeta="Scale";
 lang.distributions.fatigueLife.parameterInfoGamma="Shape";
+
+lang.distributions.frechet={};
+lang.distributions.frechet.name="Fréchet distribution";
+lang.distributions.frechet.info="The Fréchet distribution is also known as inverse Weibull distribution. The distribution is named after the French mathematican <a href='https://en.wikipedia.org/wiki/Maurice_Fr%C3%A9chet' target='_blank'>Maurice René Fréchet</a> and is use to model exterm events (like the amount of rain on a single day).";
+lang.distributions.frechet.wikipedia="https://en.wikipedia.org/wiki/Fr%C3%A9chet_distribution";
+lang.distributions.frechet.parameterInfoDelta="Location";
+lang.distributions.frechet.parameterInfoBeta="Scale";
+lang.distributions.frechet.parameterInfoAlpha="Shape";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
