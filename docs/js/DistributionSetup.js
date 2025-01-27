@@ -62,6 +62,7 @@ import {PowerDistribution} from './DistributionPower.js';
 import {RayleighDistribution} from './DistributionRayleigh.js';
 import {FatigueLifeDistribution} from './DistributionFatigueLife.js';
 import {FrechetDistribution} from './DistributionFrechet.js';
+import {LogarithmicDistribution} from './DistributionLogarithmic.js';
 
 
 /**
@@ -116,6 +117,7 @@ listDistributions.push(new PowerDistribution());
 listDistributions.push(new RayleighDistribution());
 listDistributions.push(new FatigueLifeDistribution());
 listDistributions.push(new FrechetDistribution());
+listDistributions.push(new LogarithmicDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

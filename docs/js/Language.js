@@ -576,6 +576,12 @@ lang.distributions.frechet.parameterInfoDelta="Lageparameter";
 lang.distributions.frechet.parameterInfoBeta="Skalenparameter";
 lang.distributions.frechet.parameterInfoAlpha="Formparameter";
 
+lang.distributions.logarithmic={};
+lang.distributions.logarithmic.name="Logarithmische Verteilung";
+lang.distributions.logarithmic.info="Die logarithmische Verteilung wird u.a. in der Versicherungsmathematik als Schadenshöhenverteilung verwendet.";
+lang.distributions.logarithmic.wikipedia="https://de.wikipedia.org/wiki/Logarithmische_Verteilung";
+lang.distributions.logarithmic.parameterInfoP="Erfolgswahrscheinlichkeit";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1148,6 +1154,12 @@ lang.distributions.frechet.wikipedia="https://en.wikipedia.org/wiki/Fr%C3%A9chet
 lang.distributions.frechet.parameterInfoDelta="Location";
 lang.distributions.frechet.parameterInfoBeta="Scale";
 lang.distributions.frechet.parameterInfoAlpha="Shape";
+
+lang.distributions.logarithmic={};
+lang.distributions.logarithmic.name="Logarithmic distribution";
+lang.distributions.logarithmic.info="The logarithmic distribution is used in actuarial mathematics, for example, as a loss amount distribution.";
+lang.distributions.logarithmic.wikipedia="https://en.wikipedia.org/wiki/Logarithmic_distribution";
+lang.distributions.logarithmic.parameterInfoP="Success probability";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
