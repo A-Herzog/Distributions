@@ -326,6 +326,8 @@ function addHistogram(distribution, distributionValues, parent) {
     /* Prepare histogram object */
     const step=(x2-x1<=100)?1:((x2-x1)/100);
     const histogram=[];
+    if (!isFinite(step)) return;
+
     let i=0;
     while (true) {
       const x=x1+step*i;

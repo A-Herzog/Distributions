@@ -582,6 +582,13 @@ lang.distributions.logarithmic.info="Die logarithmische Verteilung wird u.a. in 
 lang.distributions.logarithmic.wikipedia="https://de.wikipedia.org/wiki/Logarithmische_Verteilung";
 lang.distributions.logarithmic.parameterInfoP="Erfolgswahrscheinlichkeit";
 
+lang.distributions.logCauchy={};
+lang.distributions.logCauchy.name="Log-Cauchy-Verteilung";
+lang.distributions.logCauchy.info="Die Log-Cauchy-Verteilung ergibt sich, wenn eine Cauchy-verteilte Zufallsvariable logarithmiert wird.";
+lang.distributions.logCauchy.wikipedia="https://en.wikipedia.org/wiki/Log-Cauchy_distribution"; /* No German Wikipedia page */
+lang.distributions.logCauchy.parameterInfoMu="Lageparameter";
+lang.distributions.logCauchy.parameterInfoSigma="Skalenparameter";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1160,6 +1167,13 @@ lang.distributions.logarithmic.name="Logarithmic distribution";
 lang.distributions.logarithmic.info="The logarithmic distribution is used in actuarial mathematics, for example, as a loss amount distribution.";
 lang.distributions.logarithmic.wikipedia="https://en.wikipedia.org/wiki/Logarithmic_distribution";
 lang.distributions.logarithmic.parameterInfoP="Success probability";
+
+lang.distributions.logCauchy={};
+lang.distributions.logCauchy.name="Log-Cauchy distribution";
+lang.distributions.logCauchy.info="The Log-Cauchy distribution results when a Cauchy-distributed random variable is logarithmized.";
+lang.distributions.logCauchy.wikipedia="https://en.wikipedia.org/wiki/Log-Cauchy_distribution";
+lang.distributions.logCauchy.parameterInfoMu="Location";
+lang.distributions.logCauchy.parameterInfoSigma="Scale";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
