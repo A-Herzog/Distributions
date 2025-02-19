@@ -100,7 +100,7 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscreteSupport(values) {
+  getDiscreteSupport(values, forHistogram) {
     return [values.a,values.b];
   }
 

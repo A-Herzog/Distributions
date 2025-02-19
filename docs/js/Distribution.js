@@ -922,7 +922,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
 
     /* Get min and max X */
     let minX, maxX;
-    [minX, maxX]=this.getDiscreteSupport(values);
+    [minX, maxX]=this.getDiscreteSupport(values,false);
     if (isNaN(maxX) || maxX>1000) maxX=1000;
     const paddingX=Math.min(10,Math.max(3,Math.round((maxX-minX)/10)));
 
@@ -1126,7 +1126,7 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    * @param {Number} value Value to calculate the probability for
    */
   _calcValues(parameterValues, value) {
-    const support=this.getDiscreteSupport(parameterValues);
+    const support=this.getDiscreteSupport(parameterValues,true);
 
     const k=variable("k");
     const X=variable("X");
@@ -1156,9 +1156,10 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
   /**
    * Gets the net support.
    * @param {Object} values Object containing the values for the parameter ids
+   * @param {Boolean} forHistogram Get support for diagrams (false) or for calculations and histograms (true)
    * @returns 2 element array containing the minimum and the maximum value for which P(X=k)>0
    */
-  getDiscreteSupport(values) {
+  getDiscreteSupport(values, forHistogram) {
     return [0,100];
   }
 

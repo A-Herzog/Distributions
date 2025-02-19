@@ -225,7 +225,7 @@ function initDiscreteTable(distribution, values, parent) {
   let table, tbody;
   [table, tbody]=buildTableElement(parent,["k","P(X=k)",["P(X&le;k)","P(X<=k)"]]);
 
-  const support=distribution.getDiscreteSupport(values);
+  const support=distribution.getDiscreteSupport(values,true);
 
   let sum=0;
   for (let k=support[0];k<=support[1];k++) {
@@ -565,7 +565,7 @@ function randomNumbersReload(newCount) {
  * @param {Object} tableArea Parent html element for the results table
  */
 function generateDiscreteRandomNumbers(distribution, values, count, infoArea, tableArea) {
-  const support=distribution.getDiscreteSupport(values);
+  const support=distribution.getDiscreteSupport(values,true);
   const cdf=[];
   let s=0;
   const cdfDelta=Math.min(0,support[0]);

@@ -81,7 +81,7 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscreteSupport(values) {
+  getDiscreteSupport(values, forHistogram) {
     return (values.s==1)?[1,100]:[1,20];
   }
 

@@ -64,6 +64,7 @@ import {FatigueLifeDistribution} from './DistributionFatigueLife.js';
 import {FrechetDistribution} from './DistributionFrechet.js';
 import {LogarithmicDistribution} from './DistributionLogarithmic.js';
 import {LogCauchyDistribution} from './DistributionLogCauchy.js';
+import {BorelDistribution} from './DistributionBorel.js';
 
 
 /**
@@ -120,6 +121,7 @@ listDistributions.push(new FatigueLifeDistribution());
 listDistributions.push(new FrechetDistribution());
 listDistributions.push(new LogarithmicDistribution());
 listDistributions.push(new LogCauchyDistribution());
+listDistributions.push(new BorelDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

@@ -103,7 +103,7 @@ class NegativeHypergeometricDistribution extends DiscreteProbabilityDistribution
     this._updateDiscreteDiagram();
   }
 
-  getDiscreteSupport(values) {
+  getDiscreteSupport(values, forHistogram) {
     return [1,values.N];
   }
 

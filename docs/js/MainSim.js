@@ -172,7 +172,7 @@ function getDefaultChartOptions() {
  */
 function generateRandomNumber(distribution, values) {
   if (distribution.discrete) {
-    const support=distribution.getDiscreteSupport(values);
+    const support=distribution.getDiscreteSupport(values,true);
     if (typeof(distribution.calculatedCdf)=='undefined') {
       const cdf=[];
       let s=0;
@@ -277,7 +277,7 @@ function doStepLawOfLargeNumbers(distribution, values) {
   chart1.update();
 
   if (distribution.discrete) {
-    const support=distribution.getDiscreteSupport(values);
+    const support=distribution.getDiscreteSupport(values,true);
     histogram[rnd-Math.min(0,support[0])]++;
   } else {
     const support=distribution.getDiagramSupport(values);
@@ -363,7 +363,7 @@ function doStepLawOfLargeNumbers(distribution, values) {
  * @param {Object} values Distribution parameters
  */
 function doStepCentralLimitTheorem(distribution, values) {
-  const support=(distribution.discrete)?distribution.getDiscreteSupport(values):distribution.getDiagramSupport(values);
+  const support=(distribution.discrete)?distribution.getDiscreteSupport(values,true):distribution.getDiagramSupport(values);
 
   const n=1000;
   let s=0;
@@ -584,7 +584,7 @@ function initLawOfLargeNumbers(distribution, values) {
   if (distribution.mean!=null) {
     const mean=distribution.mean;
     if (distribution.discrete) {
-      const support=distribution.getDiscreteSupport(values);
+      const support=distribution.getDiscreteSupport(values,true);
       chart1options.scales.y.min=Math.max(Math.min(mean-1,mean*0.5),support[0]);
       chart1options.scales.y.max=Math.min(Math.max(mean+1,mean*1.5),support[1]);
     } else {
@@ -606,7 +606,7 @@ function initLawOfLargeNumbers(distribution, values) {
   const chart2data={};
 
   if (distribution.discrete) {
-    const support=distribution.getDiscreteSupport(values);
+    const support=distribution.getDiscreteSupport(values,true);
     const labels=[];
     const pdf=[];
     histogram=[];
@@ -674,7 +674,7 @@ function initCentralLimitTheorem(distribution, values) {
   const chart1data={};
 
   if (distribution.discrete) {
-    const support=distribution.getDiscreteSupport(values);
+    const support=distribution.getDiscreteSupport(values,true);
     const labels=[];
     histogram=[];
     for (let i=Math.min(0,support[0]);i<=support[1];i++) {

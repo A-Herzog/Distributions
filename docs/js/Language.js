@@ -589,6 +589,12 @@ lang.distributions.logCauchy.wikipedia="https://en.wikipedia.org/wiki/Log-Cauchy
 lang.distributions.logCauchy.parameterInfoMu="Lageparameter";
 lang.distributions.logCauchy.parameterInfoSigma="Skalenparameter";
 
+lang.distributions.borel={};
+lang.distributions.borel.name="Borel-Verteilung";
+lang.distributions.borel.info="Die Borel-Verteilung kommt bei der Modellierung von Verzweigungsprozessen und in der Warteschlangentheorie zum Einsatz. Wenn die Anzahl der Nachkommen eines Lebenswesens mit einem Erwartungswert kleiner als 1 Poisson-verteilt ist, dann ist die Gesamtzahl an Nachkommen (über alle Generationen hinweg) Borel verteilt.";
+lang.distributions.borel.wikipedia="https://en.wikipedia.org/wiki/Borel_distribution"; /* No German Wikipedia page */
+lang.distributions.borel.parameterInfoMu="Erwartungswert der zugehörigen Poisson-Verteilung";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1174,6 +1180,12 @@ lang.distributions.logCauchy.info="The Log-Cauchy distribution results when a Ca
 lang.distributions.logCauchy.wikipedia="https://en.wikipedia.org/wiki/Log-Cauchy_distribution";
 lang.distributions.logCauchy.parameterInfoMu="Location";
 lang.distributions.logCauchy.parameterInfoSigma="Scale";
+
+lang.distributions.borel={};
+lang.distributions.borel.name="Borel distribution";
+lang.distributions.borel.info="The Borel distribution is used in the modeling of branching processes and in queueing theory. If the number of offspring of a living being is Poisson distributed with an expected value less than 1, then the total number of offspring (across all generations) is Borel distributed.";
+lang.distributions.borel.wikipedia="https://en.wikipedia.org/wiki/Borel_distribution";
+lang.distributions.borel.parameterInfoMu="Expected value of the corresponding Poisson distribution";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

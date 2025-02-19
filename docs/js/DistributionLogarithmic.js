@@ -77,7 +77,7 @@ class LogarithmicDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscreteSupport(values) {
+  getDiscreteSupport(values, forHistogram) {
     const ln1p=Math.log(1-values.p);
     const varianceValue=-values.p*(ln1p+values.p)/((1-values.p)**2*ln1p**2);
     return [0,Math.max(20,Math.round(Math.sqrt(varianceValue)*10))];
@@ -91,13 +91,13 @@ class LogarithmicDistribution extends DiscreteProbabilityDistribution {
   fitParameters(data) {
     const mean=data.mean;
     if (mean<=1.00006) return 0.0001;
-	if (mean>1085) return 0.9999;
+	  if (mean>1085) return 0.9999;
 
-	let minP=0.001;
-	let maxP=0.999;
-	while (maxP-minP>0.0001) {
-	  const p=(minP+maxP)/2;
-	  const calcMean=-p/(1-p)/Math.log(1-p);
+	  let minP=0.001;
+	  let maxP=0.999;
+	  while (maxP-minP>0.0001) {
+	    const p=(minP+maxP)/2;
+	    const calcMean=-p/(1-p)/Math.log(1-p);
       if (calcMean>mean) {
         maxP=p;
       } else {

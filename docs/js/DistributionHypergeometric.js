@@ -103,7 +103,7 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
     this._updateDiscreteDiagram();
   }
 
-  getDiscreteSupport(values) {
+  getDiscreteSupport(values, forHistogram) {
     return [0,Math.min(values.R,values.n)];
   }
 
