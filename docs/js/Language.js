@@ -595,6 +595,12 @@ lang.distributions.borel.info="Die Borel-Verteilung kommt bei der Modellierung v
 lang.distributions.borel.wikipedia="https://en.wikipedia.org/wiki/Borel_distribution"; /* No German Wikipedia page */
 lang.distributions.borel.parameterInfoMu="Erwartungswert der zugehörigen Poisson-Verteilung";
 
+lang.distributions.bernoulli={};
+lang.distributions.bernoulli.name="Bernoulli-Verteilung";
+lang.distributions.bernoulli.info="Die Bernoulli-Verteilung wird zur Modellierung von zufälligen Ereignissen, bei denen nur zwei Ausgänge möglich sind, verwendet. Die möglichen Ergebnisse werden dann meist \"Erfolg\" und \"Misserfolg\". Dem Erfolg wird dann die Wahrscheinlichkeit <i>p</i> zugeordnet.";
+lang.distributions.bernoulli.wikipedia="https://de.wikipedia.org/wiki/Bernoulli-Verteilung";
+lang.distributions.bernoulli.parameterInfoP="Wahrscheinlichkeit für einen Erfolg";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1186,6 +1192,12 @@ lang.distributions.borel.name="Borel distribution";
 lang.distributions.borel.info="The Borel distribution is used in the modeling of branching processes and in queueing theory. If the number of offspring of a living being is Poisson distributed with an expected value less than 1, then the total number of offspring (across all generations) is Borel distributed.";
 lang.distributions.borel.wikipedia="https://en.wikipedia.org/wiki/Borel_distribution";
 lang.distributions.borel.parameterInfoMu="Expected value of the corresponding Poisson distribution";
+
+lang.distributions.bernoulli={};
+lang.distributions.bernoulli.name="Bernoulli distribution";
+lang.distributions.bernoulli.info="The Bernoulli distribution is used to model random events where only two outcomes are possible. The possible outcomes are then usually \"success\" and \"failure\". The probability <i>p</i> is then assigned to success.";
+lang.distributions.bernoulli.wikipedia="https://en.wikipedia.org/wiki/Bernoulli_distribution";
+lang.distributions.bernoulli.parameterInfoP="Probability for success";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

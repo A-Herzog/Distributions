@@ -49,6 +49,11 @@ function start() {
         if (dist!=null) selectDistribution(dist,distributionArea);
       }
     }
+  } else {
+    /* Select binomial distribution if no parameters are specified */
+    distSelect.value=language.distributions.binomial.name;
+    const dist=getDistributionsByName(distSelect.value);
+    if (dist!=null) selectDistribution(dist,distributionArea);
   }
 
   /* More tools & download buttons */
