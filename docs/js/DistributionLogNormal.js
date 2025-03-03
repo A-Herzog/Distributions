@@ -100,7 +100,7 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
     const sigma=variable("&sigma;");
     const sigmaNorm="<msub>"+sigma+"<mi mathvariant='normal'>norm</mi></msub>";
 
-    const muFormula="<mi mathvariant='normal'>log</mi><mo>(</mo>"+muNorm+"<mo>)</mo>"+plus+frac("<msup>"+sigma+"<mn>2</mn></msup>","<mn>2</mn>");
+    const muFormula="<mi mathvariant='normal'>log</mi><mo>(</mo>"+muNorm+"<mo>)</mo>"+minus+frac("<msup>"+sigma+"<mn>2</mn></msup>","<mn>2</mn>");
     const sigma2Formula="<mi mathvariant='normal'>log</mi><mo>(</mo><msup><mrow><mo>(</mo>"+frac(sigmaNorm,muNorm)+"<mo>)</mo></mrow><mn>2</mn></msup>"+plus+"<mn>1</mn><mo>)</mo>";
 
     const info=[];
@@ -131,21 +131,21 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
 
   getRandomNumber(values) {
     if (!this.#randomAvailable) {
-    let q=10, u=0, v=0;
-			while (q==0 || q>=1) {
-				u=2*Math.random()-1;
-				v=2*Math.random()-1;
-				q=u*u+v*v;
-			}
-			const p=Math.sqrt(-2*Math.log(q)/q);
-			this.#randomAvailable=true;
-			const product=p*this.#sigma;
-			this.#nextRandom=Math.exp(v*product+this.#mu);
-			return Math.exp(u*product+this.#mu);
-		} else {
-			this.#randomAvailable=false;
-			return this.#nextRandom;
-		}
+      let q=10, u=0, v=0;
+      while (q==0 || q>=1) {
+        u=2*Math.random()-1;
+        v=2*Math.random()-1;
+        q=u*u+v*v;
+      }
+      const p=Math.sqrt(-2*Math.log(q)/q);
+      this.#randomAvailable=true;
+      const product=p*this.#sigma;
+      this.#nextRandom=Math.exp(v*product+this.#mu);
+      return Math.exp(u*product+this.#mu);
+    } else {
+      this.#randomAvailable=false;
+      return this.#nextRandom;
+    }
   }
 
   fitParameters(data) {
