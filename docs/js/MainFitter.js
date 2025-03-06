@@ -95,7 +95,8 @@ function calcHistogram(data) {
   /* Calculate limits and step wide */
   const x1=Math.floor(data.min);
   const x2=Math.ceil(data.max)+1;
-  const step=(x2-x1<=100)?1:((x2-x1)/100);
+  /* const step=(x2-x1<=100)?1:((x2-x1)/100); - makes nicer x-axis values but generates worse fits for small ranges */
+  const step=(x2-x1)/100;
 
   /* Prepare histogram object */
   data.histogram=[];

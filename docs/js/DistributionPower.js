@@ -97,7 +97,7 @@ class PowerDistribution extends ContinuousProbabilityDistribution {
     if (x<values.a || x>values.b) return 0;
     if (values.a==values.b) return (x==values.a)?Infinity:0;
 
-    return Math.pow(x-values.a,values.c)/this.#denominator;
+    return values.c*Math.pow(x-values.a,values.c-1)/this.#denominator;
   }
 
   #getCDF(values, x) {
