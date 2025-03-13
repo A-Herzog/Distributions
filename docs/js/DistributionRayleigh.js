@@ -92,7 +92,7 @@ class RayleighDistribution extends ContinuousProbabilityDistribution {
 
   #getPDF(values, x) {
     if (x<0) return 0;
-	return x/this.#sigma2*Math.exp(-(x**2)/2/this.#sigma2);
+    return x/this.#sigma2*Math.exp(-(x**2)/2/this.#sigma2);
   }
 
   #getCDF(values, x) {

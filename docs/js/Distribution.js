@@ -89,6 +89,7 @@ class ProbabilityDistribution {
       const name=this.#parameters.filter(parameter=>parameter.id==key)[0].shortName;
       param.push(name+"="+formatNumber(this._currentParameterValues[key]));
     }
+    if (param.length==0) return this.#name;
     return this.#name+"("+param.join(";")+")";
   }
 
@@ -1050,7 +1051,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&"+params.join("&");
+      let searchString="?distribution="+distShortName;
+      if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
 
@@ -1097,7 +1099,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&random=1&"+params.join("&");
+      let searchString="?distribution="+distShortName+"&random=1";
+      if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
 
@@ -1106,7 +1109,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&"+params.join("&");
+      let searchString="?distribution="+distShortName;
+      if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
 
@@ -1115,7 +1119,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&mode=1&"+params.join("&");
+      let searchString="?distribution="+distShortName+"&mode=1";
+      if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
   }
@@ -1161,6 +1166,15 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    */
   getDiscreteSupport(values, forHistogram) {
     return [0,100];
+  }
+
+  /**
+   * Get the support to be used when generating random numbers.
+   * @param {Object} values Object containing the values for the parameter ids
+   * @returns 2 element array containing the minimum and the maximum value for which P(X=k)>0
+   */
+  getRandomNumbersSupport(values) {
+    return this.getDiscreteSupport(values,true);
   }
 
   /**

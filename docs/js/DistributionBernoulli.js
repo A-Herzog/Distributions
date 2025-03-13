@@ -18,7 +18,7 @@ export {BernoulliDistribution};
 
 import {DiscreteProbabilityDistribution, getDiscreteDefaultCDF} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, variable, minus, mul, equals, isin, defP, frac, setRPlusHTML, setN0HTML} from './MathMLTools.js';
+import {beginMathML, endMathML, variable, minus, mul, equals, isin, defP, setN0HTML} from './MathMLTools.js';
 
 
 
@@ -41,7 +41,6 @@ class BernoulliDistribution extends DiscreteProbabilityDistribution {
   }
 
   #getPDFText() {
-    const k=variable("k");
     const p=variable("p");
     const X=variable("X");
 

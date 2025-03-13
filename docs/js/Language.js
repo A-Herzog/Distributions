@@ -601,6 +601,11 @@ lang.distributions.bernoulli.info="Die Bernoulli-Verteilung wird zur Modellierun
 lang.distributions.bernoulli.wikipedia="https://de.wikipedia.org/wiki/Bernoulli-Verteilung";
 lang.distributions.bernoulli.parameterInfoP="Wahrscheinlichkeit für einen Erfolg";
 
+lang.distributions.gaussKuzmin={};
+lang.distributions.gaussKuzmin.name="Gauss-Kuzmin-Verteilung";
+lang.distributions.gaussKuzmin.info="Die Gauss-Kuzmin-Verteilung tritt als Grenzverteilung für die Koeffizienten von Kettenbrüchen auf.";
+lang.distributions.gaussKuzmin.wikipedia="https://en.wikipedia.org/wiki/Gauss%E2%80%93Kuzmin_distribution"; /* No German Wikipedia page */
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1198,6 +1203,11 @@ lang.distributions.bernoulli.name="Bernoulli distribution";
 lang.distributions.bernoulli.info="The Bernoulli distribution is used to model random events where only two outcomes are possible. The possible outcomes are then usually \"success\" and \"failure\". The probability <i>p</i> is then assigned to success.";
 lang.distributions.bernoulli.wikipedia="https://en.wikipedia.org/wiki/Bernoulli_distribution";
 lang.distributions.bernoulli.parameterInfoP="Probability for success";
+
+lang.distributions.gaussKuzmin={};
+lang.distributions.gaussKuzmin.name="Gauss-Kuzmin distribution";
+lang.distributions.gaussKuzmin.info="The Gauss-Kuzmin distribution occurs as a limit distribution for the coefficients of continued fractions.";
+lang.distributions.gaussKuzmin.wikipedia="https://en.wikipedia.org/wiki/Gauss%E2%80%93Kuzmin_distribution";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

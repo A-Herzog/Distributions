@@ -108,11 +108,11 @@ class LogCauchyDistribution extends ContinuousProbabilityDistribution {
 
   getRandomNumber(values) {
     const u=Math.random();
-	/*
-	p=1/pi*arctan((log(x)-mu)/sigma)+0.5
-	<=> tan((p-0.5)*pi)=(log(x)-mu)/sigma
-	<=> exp(tan((p-0.5)*pi)*sigma+mu)=x
-	 */
-	return Math.exp(Math.tan((u-0.5)*Math.PI)*values.sigma+values.mu);
+	  /*
+	  p=1/pi*arctan((log(x)-mu)/sigma)+0.5
+	  <=> tan((p-0.5)*pi)=(log(x)-mu)/sigma
+	  <=> exp(tan((p-0.5)*pi)*sigma+mu)=x
+	   */
+	  return Math.exp(Math.tan((u-0.5)*Math.PI)*values.sigma+values.mu);
   }
 }

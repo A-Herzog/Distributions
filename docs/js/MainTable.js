@@ -20,7 +20,7 @@ import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {isDesktopApp} from './Main.js';
-import {getFloat, getPositiveInt, formatNumber, formatNumberMax} from "./NumberTools.js";
+import {getFloat, getPositiveInt, formatNumber} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 
 /**
@@ -103,7 +103,10 @@ function saveTable() {
  * Opens the distribution fitter and uses the generated pseudo random numbers as input.
  */
 function openFitter() {
-  localStorage.setItem('randomNumbers',randomNumbers.map(num=>""+formatNumberMax(num)).join("\n"));
+  console.log("start");
+  const l=Date.now();
+  localStorage.setItem('randomNumbers',randomNumbers.map(num=>""+num).join("\n")); /* We do not need locale number; fitter is accepting everything. toLocaleString() is very slow. */
+  console.log("done "+(Date.now()-l));
   const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
   window.open(file+"?fromPseudoRandomNumbers=1","_blank");
 }
@@ -316,8 +319,15 @@ function addPermaLink(parent) {
  */
 function addHistogram(distribution, distributionValues, parent) {
   /* Calculate chart data */
-  const x1=Math.floor(randomNumbers.reduce((a,b)=>Math.min(a,b)));
-  const x2=Math.ceil(randomNumbers.reduce((a,b)=>Math.max(a,b)));
+  let x1, x2;
+  if (distribution.getDiscreteSupport) {
+    const support=distribution.getDiscreteSupport(distributionValues,true);
+    x1=Math.floor(Math.max(support[0],randomNumbers.reduce((a,b)=>Math.min(a,b))));
+    x2=Math.ceil(Math.min(support[1],randomNumbers.reduce((a,b)=>Math.max(a,b))));
+  } else {
+    x1=Math.floor(randomNumbers.reduce((a,b)=>Math.min(a,b)));
+    x2=Math.ceil(randomNumbers.reduce((a,b)=>Math.max(a,b)));
+  }
 
   let barData;
   let lineData;
@@ -361,9 +371,10 @@ function addHistogram(distribution, distributionValues, parent) {
     for (let i=x1;i<=x2;i++) histogram.push({x: i, n: 0});
 
     /* Calculate histogram */
+    const maxIndex=histogram.length-1;
     for (let value of randomNumbers) {
       const index=value-x1;
-      histogram[index].n++;
+      histogram[Math.max(0,Math.min(maxIndex,index))].n++;
     }
 
     /* Calculate probabilities */
@@ -565,7 +576,7 @@ function randomNumbersReload(newCount) {
  * @param {Object} tableArea Parent html element for the results table
  */
 function generateDiscreteRandomNumbers(distribution, values, count, infoArea, tableArea) {
-  const support=distribution.getDiscreteSupport(values,true);
+  const support=distribution.getRandomNumbersSupport(values);
   const cdf=[];
   let s=0;
   const cdfDelta=Math.min(0,support[0]);
