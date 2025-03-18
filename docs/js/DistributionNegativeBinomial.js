@@ -97,4 +97,8 @@ class NegativeBinomialDistribution extends DiscreteProbabilityDistribution {
     const r=Math.round(data.mean*p/(1-p));
     return {r: r, p: p};
   }
+
+  get canFit() {
+    return true;
+  }
 }

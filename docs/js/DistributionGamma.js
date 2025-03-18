@@ -129,4 +129,8 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
    const alpha=data.mean/beta;
     return {alpha: alpha, beta: beta};
   }
+
+  get canFit() {
+    return true;
+  }
 }

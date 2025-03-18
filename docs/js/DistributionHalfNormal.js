@@ -143,4 +143,8 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   fitParameters(data) {
     return {mu: data.mean, s: 0};
   }
+
+  get canFit() {
+    return true;
+  }
 }

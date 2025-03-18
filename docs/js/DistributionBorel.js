@@ -95,4 +95,8 @@ class BorelDistribution extends DiscreteProbabilityDistribution {
     /* mean=1/(1-mu) <=> 1-(1/mean)=mu */
     return {mu: 1-1/data.mean};
   }
+
+  get canFit() {
+    return true;
+  }
 }

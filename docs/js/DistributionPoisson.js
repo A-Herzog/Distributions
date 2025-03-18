@@ -92,4 +92,8 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
     if (data.mean<=0) return null;
     return {lambda: data.mean};
   }
+
+  get canFit() {
+    return true;
+  }
 }

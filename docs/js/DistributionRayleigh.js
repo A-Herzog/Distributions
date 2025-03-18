@@ -136,4 +136,8 @@ class RayleighDistribution extends ContinuousProbabilityDistribution {
     if (data.mean<=0) return null;
     return {m: data.mean};
   }
+
+  get canFit() {
+    return true;
+  }
 }

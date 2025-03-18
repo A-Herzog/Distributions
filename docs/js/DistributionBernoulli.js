@@ -89,4 +89,8 @@ class BernoulliDistribution extends DiscreteProbabilityDistribution {
     if (data.mean<=0 || data.mean>=1) return null;
     return {p: data.mean};
   }
+
+  get canFit() {
+    return true;
+  }
 }

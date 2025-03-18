@@ -152,4 +152,8 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
     if (data.mean<=0 || data.std<=0) return null;
     return {mean: data.mean, std: data.std};
   }
+
+  get canFit() {
+    return true;
+  }
 }

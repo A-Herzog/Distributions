@@ -158,4 +158,8 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
 
 		return {lambda: 1/beta, beta: alpha}; /* Different parameter notations. */
   }
+
+  get canFit() {
+    return true;
+  }
 }

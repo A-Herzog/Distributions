@@ -151,4 +151,8 @@ class IrwinHallDistribution extends ContinuousProbabilityDistribution {
     if (data.mean<0.25) return null;
     return {n: Math.round(data.mean*2)};
   }
+
+  get canFit() {
+    return true;
+  }
 }

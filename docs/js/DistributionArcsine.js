@@ -139,4 +139,8 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
   fitParameters(data) {
     return {a: data.min, b: data.max};
   }
+
+  get canFit() {
+    return true;
+  }
 }

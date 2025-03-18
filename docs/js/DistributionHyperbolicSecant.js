@@ -133,4 +133,8 @@ class HyperbolicSecantDistribution extends ContinuousProbabilityDistribution {
     if (data.std<=0) return null;
     return {mu: data.mean, sigma: data.std};
   }
+
+  get canFit() {
+    return true;
+  }
 }

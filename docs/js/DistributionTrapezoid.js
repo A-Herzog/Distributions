@@ -288,4 +288,8 @@ class TrapezoidDistribution extends ContinuousProbabilityDistribution {
 		const f=(fMax+fMin)/2;
     return {a: a, b: a+f, c: d-f, d: d};
   }
+
+  get canFit() {
+    return true;
+  }
 }

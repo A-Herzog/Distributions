@@ -133,4 +133,8 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
    if (n==1) return null; /* This would be equivalent to exponential distribution */
     return {n: n, lambda: lambda};
   }
+
+  get canFit() {
+    return true;
+  }
 }

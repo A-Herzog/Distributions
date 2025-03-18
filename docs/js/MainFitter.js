@@ -48,7 +48,8 @@ function initGUILanguage() {
   /* Content */
   inputHeader.innerHTML=language.fitter.inputValues;
   inputBodyLoadInfo.innerHTML=language.fitter.inputValuesLoadInfo;
-  outputHeader.innerHTML=language.fitter.outputHeader;
+  inputBodyFitInfo.innerHTML=language.fitter.info;
+  outputHeader.innerHTML="<b>"+language.fitter.outputHeader+"</b> <small>("+listDistributions.filter(distribution=>distribution.canFit).length+" "+language.fitter.outputHeaderInfo+")</small>";
 }
 
 let dragEnterCount=0;
@@ -158,9 +159,15 @@ function loadInputValues(values) {
 
   /* Calc fit */
   let fits=[];
+  let fitsNotTheseValues=[];
   for (let distribution of listDistributions) {
+    if (!distribution.canFit) continue;
     const fitterResult=distribution.fitParameters(fitterInput);
-    if (fitterResult!=null) fits.push({distribution: distribution, parameters: fitterResult});
+    if (fitterResult!=null) {
+      fits.push({distribution: distribution, parameters: fitterResult});
+    } else {
+      fitsNotTheseValues.push(distribution);
+    }
   }
   for (let fit of fits) {
     fit.distribution.setParameters(fit.parameters);
@@ -185,12 +192,15 @@ function loadInputValues(values) {
       fit.delta=delta;
     }
   }
+  fitsNotTheseValues.push(...fits.filter(f=>isNaN(f.delta) || f.delta>=1_000_000).map(fit=>fit.distribution));
   fits=fits.filter(f=>!isNaN(f.delta) && f.delta<1_000_000);
   fits.sort((f1,f2)=>f1.delta-f2.delta);
+  fitsNotTheseValues.sort((d1,d2)=>d1.name>d2.name);
 
   /* Show results */
   outputCard.style.display="";
   for (let i=0;i<fits.length;i++) addFitOutput(fitterInput, fits[i],i+1);
+  for (let i=0;i<fitsNotTheseValues.length;i++) addNoFitOutput(fitsNotTheseValues[i],i+1+fits.length);
 }
 
 let accordionItemCounter=0;
@@ -343,18 +353,53 @@ function addFitOutput(input, fit, nr) {
 }
 
 /**
+ * Shows the results for one distribution with no match for the data.
+ * @param {Object} distribution Tested distribution
+ * @param {Object} nr 1-based number of the distribution
+ */
+function addNoFitOutput(distribution, nr) {
+  let button;
+
+  accordionItemCounter++;
+
+  const item=document.createElement("div");
+  item.className="accordion-item";
+  outputBody.appendChild(item);
+
+  const header=document.createElement("h2");
+  header.className="accordion-header";
+  item.appendChild(header);
+
+  button=document.createElement("button");
+  button.className="accordion-button collapsed";
+  button.type="button";
+  button.dataset.bsToggle="collapse";
+  button.dataset.bsTarget="#accordionItem"+accordionItemCounter;
+  button.setAttribute("aria-expanded","false");
+  button.setAttribute("aria-controls","accordionItem"+accordionItemCounter);
+  button.innerHTML=nr+".&ensp;"+getFitInfo({distribution: distribution},false);
+  header.appendChild(button);
+}
+
+/**
  * Generates an information string for the fit.
  * @param {String} Fit result record
+ * @param {Boolean} hasFit Is this a fitted distribution?
  * @return Information string
  */
-function getFitInfo(fit) {
-  let result="<strong>"+fit.distribution.name+"</strong>&thinsp;<small>(";
-  let firstParameter=true;
-  for (let parameter in fit.parameters) {
-    if (firstParameter) firstParameter=false; else result+=", ";
-    result+=parameter+"="+fit.parameters[parameter].toLocaleString();
+function getFitInfo(fit, hasFit=true) {
+  let result="<strong>"+fit.distribution.name+"</strong>";
+  if (hasFit) {
+    result+="&thinsp;<small>(";
+    let firstParameter=true;
+    for (let parameter in fit.parameters) {
+      if (firstParameter) firstParameter=false; else result+=", ";
+      result+=parameter+"="+fit.parameters[parameter].toLocaleString();
+    }
+    result+=")</small>: &Delta;="+fit.delta.toLocaleString(undefined, {minimumFractionDigits: 5});
+  } else {
+    result+="&thinsp;<small>("+language.fitter.outputNoFit+")</small>";
   }
-  result+=")</small>: &Delta;="+fit.delta.toLocaleString(undefined, {minimumFractionDigits: 5});
   return result;
 }
 
@@ -381,7 +426,6 @@ function initFitter() {
   /* Initializes the GUI language */
   initGUILanguage();
 
-  let loadNumbers=null;
   const params=loadSearchStringParameters(["fromPseudoRandomNumbers"]);
   if (params.fromPseudoRandomNumbers) {
     const data=localStorage.getItem('randomNumbers');

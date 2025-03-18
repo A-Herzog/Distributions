@@ -156,4 +156,8 @@ class PowerDistribution extends ContinuousProbabilityDistribution {
 	const c=1/(1-(data.mean-data.min)/(data.max-data.min))-1;
     return {a: data.min, b: data.max, c: c};
   }
+
+  get canFit() {
+    return true;
+  }
 }

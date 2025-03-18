@@ -126,4 +126,8 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     if (data.std<=0) return null;
     return {mu: data.mean, sigma: data.std/Math.sqrt(2)};
   }
+
+  get canFit() {
+    return true;
+  }
 }

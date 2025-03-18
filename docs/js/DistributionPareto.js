@@ -128,4 +128,8 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
       return null;
     }
   }
+
+  get canFit() {
+    return true;
+  }
 }

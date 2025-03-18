@@ -133,4 +133,8 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     if (data.std<=0) return null;
     return {m: data.mean, R: data.std*2};
   }
+
+  get canFit() {
+    return true;
+  }
 }

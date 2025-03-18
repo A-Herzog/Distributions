@@ -119,6 +119,10 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
 		return {a: a, b: b};
   }
 
+  get canFit() {
+    return true;
+  }
+
   _initButtons() {
     super._initButtons();
 

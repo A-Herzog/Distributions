@@ -129,4 +129,8 @@ class InverseGaussianDistribution extends ContinuousProbabilityDistribution {
    const lambda=data.mean**3/data.std**2;
     return {lambda: lambda, mu: mu};
   }
+
+  get canFit() {
+    return true;
+  }
 }

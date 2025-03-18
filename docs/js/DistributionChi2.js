@@ -120,4 +120,8 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
     if (data.mean<0.5) return null;
     return {k: Math.round(data.mean)};
   }
+
+  get canFit() {
+    return true;
+  }
 }

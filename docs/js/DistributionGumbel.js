@@ -160,4 +160,8 @@ class GumbelDistribution extends ContinuousProbabilityDistribution {
     if (data.std<=0) return null;
     return {mean: data.mean, std: data.std};
   }
+
+  get canFit() {
+    return true;
+  }
 }

@@ -130,4 +130,8 @@ class LogisticDistribution extends ContinuousProbabilityDistribution {
     /* var=s^2*PI^2/3 <=> std=s*pi/sqrt(3) <=> std*sqrt(3)/pi=s */
     return {mu: data.mean, s: data.std*Math.sqrt(3)/Math.PI};
   }
+
+  get canFit() {
+    return true;
+  }
 }

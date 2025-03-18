@@ -159,4 +159,8 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
 
 		return {a: data.min, b: data.max, alpha: alpha, beta: beta};
   }
+
+  get canFit() {
+    return true;
+  }
 }

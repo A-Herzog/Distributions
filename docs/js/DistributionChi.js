@@ -137,4 +137,8 @@ class ChiDistribution extends ContinuousProbabilityDistribution {
 		}
 		return null;
   }
+
+  get canFit() {
+    return true;
+  }
 }

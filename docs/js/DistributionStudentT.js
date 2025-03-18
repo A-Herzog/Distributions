@@ -139,4 +139,8 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
 		}
     return {mu: data.mean, nu: nu};
   }
+
+  get canFit() {
+    return true;
+  }
 }

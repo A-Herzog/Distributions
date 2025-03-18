@@ -107,4 +107,8 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
 
     return {s: (sMin+sMax)/2};
   }
+
+  get canFit() {
+    return true;
+  }
 }

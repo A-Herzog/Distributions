@@ -106,4 +106,8 @@ class LogarithmicDistribution extends DiscreteProbabilityDistribution {
     }
     return {p: (minP+maxP)/2};
   }
+
+  get canFit() {
+    return true;
+  }
 }

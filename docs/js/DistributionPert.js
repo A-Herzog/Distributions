@@ -180,4 +180,8 @@ class PertDistribution extends ContinuousProbabilityDistribution {
     if (data.std<=0) return null;
     return {a: data.mean-Math.sqrt(7)*data.std,b: data.mean,c: data.mean+Math.sqrt(7)*data.std};
   }
+
+  get canFit() {
+    return true;
+  }
 }

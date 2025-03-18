@@ -114,4 +114,8 @@ class RademacherDistribution extends DiscreteProbabilityDistribution {
     if (data.std<0.9 || data.std>1.1) return null;
     return {};
   }
+
+  get canFit() {
+    return true;
+  }
 }

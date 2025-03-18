@@ -135,4 +135,8 @@ class MaxwellBoltzmannDistribution extends ContinuousProbabilityDistribution {
 
    return {a: data.mean/2/Math.sqrt(2/Math.PI)};
   }
+
+  get canFit() {
+    return true;
+  }
 }

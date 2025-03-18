@@ -129,4 +129,8 @@ class FDistribution extends ContinuousProbabilityDistribution {
     n=Math.max(n,3);
     return {m: m, n: n};
   }
+
+  get canFit() {
+    return true;
+  }
 }

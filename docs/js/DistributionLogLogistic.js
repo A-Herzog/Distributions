@@ -148,4 +148,8 @@ class LogLogisticDistribution extends ContinuousProbabilityDistribution {
 
    return {alpha: alpha, beta: beta};
   }
+
+  get canFit() {
+    return true;
+  }
 }

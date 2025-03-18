@@ -107,4 +107,8 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     if (data.mean<=0) return null;
     return {lambda: 1/data.mean};
   }
+
+  get canFit() {
+    return true;
+  }
 }

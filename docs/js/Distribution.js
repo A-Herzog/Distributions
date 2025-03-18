@@ -806,6 +806,14 @@ class ProbabilityDistribution {
   fitParameters(data) {
     return null;
   }
+
+  /**
+   * Returns the information if this distribution is in general useable for distribution fitting.
+   * @returns Can this distribution used for fitting?
+   */
+  get canFit() {
+    return false;
+  }
 }
 
 

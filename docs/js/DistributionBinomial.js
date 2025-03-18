@@ -99,4 +99,8 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
     const n=Math.round(data.mean/p);
     return {n: n, p: p};
   }
+
+  get canFit() {
+    return true;
+  }
 }

@@ -192,4 +192,8 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
   fitParameters(data) {
     return {a: data.mean-Math.sqrt(6)*data.std, c: data.mean, b: data.mean+Math.sqrt(6)*data.std};
   }
+
+  get canFit() {
+    return true;
+  }
 }
