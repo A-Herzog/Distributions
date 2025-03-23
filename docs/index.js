@@ -62,6 +62,7 @@ function start() {
   bottomInfo+="<p class='mt-3'>"+language.GUI.toolsLabel+"</p><p>";
   bottomInfo+="<button id=\"openFitterButton\" class=\"btn btn-primary me-2 my-1 bi-fingerprint\"> "+language.fitter.title+"</button>";
   bottomInfo+="<button id=\"openLCGButton\" class=\"btn btn-primary me-2 my-1 bi-123\"> "+language.lcg.title+"</button>";
+  bottomInfo+="<button id=\"openDiceSimulationButton\" class=\"btn btn-primary me-2 my-1 bi-dice-6\"> "+language.distributions.infoDiagramDiceRollSimulation+"</button>";
   bottomInfo+="</p>";
   if (isDesktopApp) {
     const footer=document.querySelector('footer');
@@ -86,6 +87,10 @@ function start() {
   };
   openLCGButton.onclick=()=>{
     const file="lcg"+((document.documentElement.lang=='de')?"_de":"")+".html";
+    window.open(file,"_blank");
+  };
+  openDiceSimulationButton.onclick=()=>{
+    const file="sim"+((document.documentElement.lang=='de')?"_de":"")+".html?dice=1";
     window.open(file,"_blank");
   };
 }
