@@ -94,7 +94,64 @@ function initGUILanguage() {
     buttonShowAll.style.display="none";
     for (let element of document.getElementsByClassName("optional")) element.style.display="";
   }
+  tableExport.innerHTML=" "+language.distributions.infoExportTabelle;
+  tableCopy.innerHTML=" "+language.distributions.infoDiagramCopyValues;
+  tableSave.innerHTML=" "+language.distributions.infoDiagramSaveValues;
   gridHeader.innerHTML=language.lcg.gridStructure;
+  chartExport.innerHTML=" "+language.distributions.infoDiagramExport;
+  chartCopy.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+  chartSave.innerHTML=" "+language.distributions.infoDiagramExportSave;
+
+  tableCopy.onclick=copyTable;
+  tableSave.onclick=saveTable;
+
+  chartCopy.onclick=()=>{
+    if (typeof(ClipboardItem)!="undefined") {
+      gridCanvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+    } else {
+      alert(language.distributions.infoDiagramExportCopyError);
+    }
+  };
+
+  chartSave.onclick=()=>{
+    const element=document.createElement("a");
+    element.href=gridCanvas.toDataURL("image/png");
+    element.download="diagram.png";
+    element.click();
+  };
+}
+
+let clipboardData="";
+
+/**
+ * Copies the table content to clipboard.
+ */
+function copyTable() {
+  navigator.clipboard.writeText(clipboardData);
+}
+
+/**
+ * Saves the table content to a file.
+ */
+function saveTable() {
+  if (isDesktopApp) {
+    Neutralino.os.showSaveDialog(language.distributions.infoDiagramSaveValues, {defaultPath: 'table.txt', filters: [
+      {name: language.distributions.infoDiagramSaveValuesTextFiles+' (*.txt)', extensions: ['txt']}
+    ]}).then(file=>{
+      file=file.trim();
+      if (file=='') return;
+      if (!file.toLocaleLowerCase().endsWith(".txt")) file+=".txt";
+      Neutralino.filesystem.writeFile(file,clipboardData);
+    });
+  } else {
+    const element=document.createElement('a');
+    element.setAttribute('href','data:text/plain;charset=utf-8,'+encodeURIComponent(clipboardData));
+    element.setAttribute('download','table.txt');
+    element.style.display='none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
 }
 
 function update() {
@@ -124,6 +181,7 @@ function update() {
 
   /* Generate table */
   let table="";
+  clipboardData="";
 
   table+="<p>";
   table+=language.lcg.tableHeading;
@@ -149,6 +207,7 @@ function update() {
     } else {
       table+="<tr>";
     }
+    clipboardData+=n+"\t"+a+"\t"+formatNumber(a/mod,5)+"\n";
     table+="<td>"+n+"</td><td>"+a+"</td><td>"+formatNumber(a/mod,5)+"</td></tr>";
     if (rndNumbersSet.has(a)) {
       const index=rndNumbers.indexOf(a);

@@ -328,12 +328,14 @@ function addFitOutput(input, fit, nr) {
   contentBody.appendChild(info=document.createElement("div"));
   info.className="mt-3";
 
+  /* Reset zoom button */
   info.appendChild(button=document.createElement("button"));
   button.type="button";
   button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
   button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
   button.onclick=()=>chart.resetZoom();
 
+  /* Load to editor button */
   if (!isDesktopApp) {
     info.appendChild(button=document.createElement("button"));
     button.type="button";
@@ -350,6 +352,44 @@ function addFitOutput(input, fit, nr) {
       window.open(url,"_blank");
     };
   }
+
+  /* Export diagram */
+  const div=document.createElement("div");
+  div.className="dropdown";
+  div.style.display="inline-block";
+  info.appendChild(div);
+  div.appendChild(button=document.createElement("button"));
+  button.type="button";
+  button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 mb-2 dropdown-toggle";
+  button.dataset.bsToggle="dropdown";
+  button.innerHTML=" "+language.distributions.infoDiagramExport;
+  const ul=document.createElement("ul");
+  ul.className="dropdown-menu";
+  div.appendChild(ul);
+  let li;
+  ul.appendChild(li=document.createElement("li"));
+  li.appendChild(button=document.createElement("button"));
+  button.type="button";
+  button.className="bi-clipboard dropdown-item";
+  button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+  button.onclick=()=>{
+    if (typeof(ClipboardItem)!="undefined") {
+      canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+    } else {
+      alert(language.distributions.infoDiagramExportCopyError);
+    }
+  };
+  ul.appendChild(li=document.createElement("li"));
+  li.appendChild(button=document.createElement("button"));
+  button.type="button";
+  button.className="bi-download dropdown-item";
+  button.innerHTML=" "+language.distributions.infoDiagramExportSave;
+  button.onclick=()=>{
+    const element=document.createElement("a");
+    element.href=canvas.toDataURL("image/png");
+    element.download="diagram.png";
+    element.click();
+  };
 }
 
 /**

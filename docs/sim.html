@@ -34,7 +34,7 @@
   <script defer src="./libs/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"></script>
   <script defer src="./libs/chart.umd.js" integrity="sha384-tgbB5AKnszdcfwcZtTfuhR3Ko1XZdlDfsLtkxiiAZiVkkXCkFmp+FQFh+V/UTo54"></script>
   <script defer src="./libs/chartjs-plugin-zoom.min.js" integrity="sha384-zPzbVRXfR492Sd5D+HydTYCxxgHAfgVO8KERbLlpeH5unsmbAEXrscGUUqLZG9BM"></script>
-  <script defer src="./libs/chartjs-plugin-annotation.min.js" integrity="sha384-LlnIQjhuirFXtmws5wJdVC+rflp3IgecA4NEipW6tmYswuvjVo3iJcg55F5cOO3D"></script>
+  <script defer src="./libs/chartjs-plugin-annotation.min.js" integrity="sha384-RdLDp1Wjm2RmSTz+wFpp8eesVQUEP9Ph5x/qSbcORDh8I5i06ZFwznKXb6KDhwiS"></script>
   <script defer src="./libs/jstat.min.js" integrity="sha384-7uGOMhLhjroTamet5l69PR8EGxKUyWZlZOFFDRymtVqIfsh4Hj7uZRctW67ZCdkD"></script>
   <script defer src="./libs/neutralino.js"></script>
 </head>
@@ -76,6 +76,13 @@
         <div class="mt-3 small" id="chart1info"></div>
         <div class="mt-3" style="display: block;">
           <button type="button" class="btn btn-warning btn-sm bi-zoom-out mt-1 me-2" id="chart1defaultZoomButton"></button>
+          <div class="dropdown" style="display: inline-block">
+            <button type="button" class="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle" data-bs-toggle="dropdown" id="chart1export"></button>
+            <ul class="dropdown-menu">
+              <li><button type="button" class="bi-clipboard dropdown-item" id="chart1copy"></button></li>
+              <li><button type="button" class="bi-download dropdown-item" id="chart1save"></button></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -88,6 +95,13 @@
         <div class="mt-3 small" id="chart2info"></div>
         <div class="mt-3" style="display: block;">
           <button type="button" class="btn btn-warning btn-sm bi-zoom-out mt-1 me-2" id="chart2defaultZoomButton"></button>
+          <div class="dropdown" style="display: inline-block">
+            <button type="button" class="btn btn-primary btn-sm bi-graph-up mt-1 me-2 dropdown-toggle" data-bs-toggle="dropdown" id="chart2export"></button>
+            <ul class="dropdown-menu">
+              <li><button type="button" class="bi-clipboard dropdown-item" id="chart2copy"></button></li>
+              <li><button type="button" class="bi-download dropdown-item" id="chart2save"></button></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

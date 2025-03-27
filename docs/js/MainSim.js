@@ -71,9 +71,45 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
   chart1header.innerHTML=title1;
   chart1info.innerHTML=language.distributions.infoDiagramZoomInfo;
   chart1defaultZoomButton.innerHTML=" "+language.distributions.infoDiagramResetZoom;
+  chart1export.innerHTML=" "+language.distributions.infoDiagramExport;
+  chart1copy.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+  chart1save.innerHTML=" "+language.distributions.infoDiagramExportSave;
   chart2header.innerHTML=title2;
   chart2info.innerHTML=language.distributions.infoDiagramZoomInfo;
   chart2defaultZoomButton.innerHTML=" "+language.distributions.infoDiagramResetZoom;
+  chart2export.innerHTML=" "+language.distributions.infoDiagramExport;
+  chart2copy.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+  chart2save.innerHTML=" "+language.distributions.infoDiagramExportSave;
+
+  chart1copy.onclick=()=>{
+    if (typeof(ClipboardItem)!="undefined") {
+      chart1canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+    } else {
+      alert(language.distributions.infoDiagramExportCopyError);
+    }
+  };
+
+  chart1save.onclick=()=>{
+    const element=document.createElement("a");
+    element.href=chart1canvas.toDataURL("image/png");
+    element.download="diagram.png";
+    element.click();
+  };
+
+  chart2copy.onclick=()=>{
+    if (typeof(ClipboardItem)!="undefined") {
+      chart2canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+    } else {
+      alert(language.distributions.infoDiagramExportCopyError);
+    }
+  };
+
+  chart2save.onclick=()=>{
+    const element=document.createElement("a");
+    element.href=chart2canvas.toDataURL("image/png");
+    element.download="diagram.png";
+    element.click();
+  };
 
   /* Control area */
   resetButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlReset;
