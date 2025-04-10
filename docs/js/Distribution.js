@@ -1016,13 +1016,14 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     checkbox.type="checkbox";
     this.#checkBoxMean=checkbox;
     checkbox.className="form-check-input";
+    checkbox.id="showE"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
     check.appendChild(label=document.createElement("label"));
     label.innerHTML=language.distributions.showExpectedValue;
     label.htmlFor=checkbox;
     label.className="form-check-label pe-3";
     label.style.userSelect="none";
-    label.onclick=e=>{this.#checkBoxMean.checked=!this.#checkBoxMean.checked; this._fireParameterUpdated();};
+    label.htmlFor="showE"+this.constructor.name;
 
     /* Show E[X]+-Std[X] in diagram */
     this.canvasInfo.appendChild(check=document.createElement("div"));
@@ -1032,13 +1033,14 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     checkbox.type="checkbox";
     this.#checkBoxStd=checkbox;
     checkbox.className="form-check-input";
+    checkbox.id="showStd"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
     check.appendChild(label=document.createElement("label"));
     label.innerHTML=language.distributions.showStandardDeviation;
     label.htmlFor=checkbox;
     label.className="form-check-label pe-3";
     label.style.userSelect="none";
-    label.onclick=e=>{this.#checkBoxStd.checked=!this.#checkBoxStd.checked; this._fireParameterUpdated();};
+    label.htmlFor="showStd"+this.constructor.name;
 
     this.canvasInfo.appendChild(document.createElement("br"));
 
@@ -1418,13 +1420,14 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     checkbox.type="checkbox";
     this.#checkBoxMean=checkbox;
     checkbox.className="form-check-input";
+    checkbox.id="showE"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
     check.appendChild(label=document.createElement("label"));
     label.innerHTML=language.distributions.showExpectedValue
     label.htmlFor=checkbox;
     label.className="form-check-label pe-3";
     label.style.userSelect="none";
-    label.onclick=e=>{this.#checkBoxMean.checked=!this.#checkBoxMean.checked; this._fireParameterUpdated();};
+    label.htmlFor="showE"+this.constructor.name;
 
     /* Show E[X]+-Std[X] in diagram */
     this.canvasInfo.appendChild(check=document.createElement("div"));
@@ -1434,13 +1437,14 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     checkbox.type="checkbox";
     this.#checkBoxStd=checkbox;
     checkbox.className="form-check-input";
+    checkbox.id="showStd"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
     check.appendChild(label=document.createElement("label"));
     label.innerHTML=language.distributions.showStandardDeviation;
     label.htmlFor=checkbox;
     label.className="form-check-label pe-3";
     label.style.userSelect="none";
-    label.onclick=e=>{this.#checkBoxStd.checked=!this.#checkBoxStd.checked; this._fireParameterUpdated();};
+    label.htmlFor="showStd"+this.constructor.name;
 
     this.canvasInfo.appendChild(document.createElement("br"));
 
