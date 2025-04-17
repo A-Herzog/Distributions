@@ -185,6 +185,7 @@ lang.distributions.parameterValueDown="Wert verringern";
 lang.distributions.parameterValueUp="Wert vergrößern";
 lang.distributions.showExpectedValue="Erwartungswert einzeichnen";
 lang.distributions.showStandardDeviation="Standardabweichung einzeichnen";
+lang.distributions.xAutoRange="x-Bereich automatisch";
 
 lang.fitter={};
 lang.fitter.title="Verteilungsanpassung";
@@ -792,6 +793,7 @@ lang.distributions.parameterValueDown="Decrease value";
 lang.distributions.parameterValueUp="Increase value";
 lang.distributions.showExpectedValue="Draw expected value";
 lang.distributions.showStandardDeviation="Draw standard deviation";
+lang.distributions.xAutoRange="x auto range";
 
 lang.fitter={};
 lang.fitter.title="Distribution fitter";

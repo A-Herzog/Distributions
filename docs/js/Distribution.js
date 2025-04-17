@@ -52,6 +52,11 @@ class ProbabilityDistribution {
   #calcInput;
   #calcError;
   #calcResults;
+  _checkBoxMean;
+  _checkBoxStd;
+  _inputMinX;
+  _inputMax;
+  _checkAutoRange;
 
   /**
    * Constructor
@@ -799,6 +804,331 @@ class ProbabilityDistribution {
   }
 
   /**
+   * Adds a show E[X] in diagram checkbox
+   * @param {Object} parent Parent element
+   */
+  _addShowE(parent) {
+    const check=document.createElement("div");
+    parent.appendChild(check);
+    check.className="form-check small";
+    check.style.display="inline-block";
+
+    const checkbox=document.createElement("input")
+    check.appendChild(checkbox);
+    checkbox.type="checkbox";
+    this._checkBoxMean=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.id="showE"+this.constructor.name;
+    checkbox.onchange=e=>this._fireParameterUpdated();
+
+    const label=document.createElement("label");
+    check.appendChild(label);
+    label.innerHTML=language.distributions.showExpectedValue;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.htmlFor="showE"+this.constructor.name;
+  }
+
+  /**
+   * Adds a show E[X]+-Std[X] in diagram checkbox
+   * @param {Object} parent Parent element
+   */
+  _addShowStd(parent) {
+    const check=document.createElement("div");
+    parent.appendChild(check);
+    check.className="form-check small";
+    check.style.display="inline-block";
+
+    const checkbox=document.createElement("input")
+    check.appendChild(checkbox);
+    checkbox.type="checkbox";
+    this._checkBoxStd=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.id="showStd"+this.constructor.name;
+    checkbox.onchange=e=>this._fireParameterUpdated();
+
+    const label=document.createElement("label");
+    check.appendChild(label);
+    label.innerHTML=language.distributions.showStandardDeviation;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.htmlFor="showStd"+this.constructor.name;
+  }
+
+  /**
+   * Adds x range input and checkboxes
+   * @param {Object} parent Parent element
+   */
+  _addRangeSetup(parent) {
+    let div;
+    let span;
+
+    /* Min X */
+
+    parent.appendChild(div=document.createElement("div"));
+    div.className="input-group input-group-sm mb-3 ms-3";
+    div.style.display="inline-flex";
+    div.style.width="150px";
+
+    div.appendChild(span=document.createElement("span"));
+    span.className="input-group-text";
+    span.innerHTML="x<sub>min</sub>:=";
+
+    div.appendChild(this._inputMinX=document.createElement("input"));
+    this._inputMinX.type="text";
+    this._inputMinX.className="form-control";
+    this._inputMinX.id="minX"+this.constructor.name;
+    this._inputMinX.disabled=true;
+    this._inputMinX.oninput=e=>{if (!this._inputMinX.disabled) this._fireParameterUpdated();}
+    this._inputMinX.onkeyup=e=>{if (!this._inputMinX.disabled) this._fireParameterUpdated();}
+
+    /* Max X */
+
+    parent.appendChild(div=document.createElement("div"));
+    div.className="input-group input-group-sm mb-3 ms-1";
+    div.style.display="inline-flex";
+    div.style.width="150px";
+
+    div.appendChild(span=document.createElement("span"));
+    span.className="input-group-text";
+    span.innerHTML="x<sub>max</sub>:=";
+
+    div.appendChild(this._inputMaxX=document.createElement("input"));
+    this._inputMaxX.type="text";
+    this._inputMaxX.className="form-control";
+    this._inputMaxX.id="minX"+this.constructor.name;
+    this._inputMaxX.disabled=true;
+    this._inputMaxX.oninput=e=>{if (!this._inputMaxX.disabled) this._fireParameterUpdated();}
+    this._inputMaxX.onkeyup=e=>{if (!this._inputMaxX.disabled) this._fireParameterUpdated();}
+
+    /* Auto range */
+
+    const check=document.createElement("div");
+    parent.appendChild(check);
+    check.className="form-check small ms-2";
+    check.style.display="inline-block";
+
+    const checkbox=document.createElement("input")
+    check.appendChild(checkbox);
+    checkbox.type="checkbox";
+    this._checkAutoRange=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.id="autoX"+this.constructor.name;
+    checkbox.onchange=e=>this._fireParameterUpdated();
+    checkbox.checked=true;
+
+    const label=document.createElement("label");
+    check.appendChild(label);
+    label.innerHTML=language.distributions.xAutoRange;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.htmlFor="autoX"+this.constructor.name;
+  }
+
+  /**
+   * Returns the selected x range.
+   * @returns Array of min and max x or null in case of error or auto range active
+   */
+  _getRange() {
+    if (typeof(this._checkAutoRange)=='undefined') return;
+
+    if (this._checkAutoRange.checked) {
+      this._inputMinX.classList.remove("is-invalid");
+      this._inputMaxX.classList.remove("is-invalid");
+      this._inputMinX.disabled=true;
+      this._inputMaxX.disabled=true;
+      return null;
+    }
+
+    this._inputMinX.disabled=false;
+    this._inputMaxX.disabled=false;
+
+    const minX=getFloat(this._inputMinX);
+    const maxX=getFloat(this._inputMaxX);
+    this._inputMinX.classList.toggle("is-invalid",minX===null);
+    this._inputMaxX.classList.toggle("is-invalid",maxX===null || (minX!==null && minX>=maxX));
+
+    if (minX==null || maxX===null || minX>=maxX) return null;
+    return [minX, maxX];
+  }
+
+  /**
+   * Sets the values for minimum and maximum x in the input boxes
+   * (to show values in auto range mode).
+   * @param {Number} minX Minimum X value
+   * @param {Number} maxX Maximum x value
+   */
+  _setRangeInput(minX, maxX) {
+    if (typeof(this._checkAutoRange)=='undefined') return;
+
+    if (!this._checkAutoRange.checked) return;
+    this._inputMinX.value=formatNumber(minX);
+    this._inputMaxX.value=formatNumber(maxX);
+  }
+
+  /**
+   * Adds a reset zoom button
+   * @param {Object} parent Parent element
+   */
+  _addResetZoom(parent) {
+    const button=document.createElement("button");
+    parent.appendChild(button);
+    button.type="button";
+    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
+    button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
+    button.onclick=()=>this.chart.resetZoom();
+  }
+
+  /**
+   * Adds a show table button
+   * @param {Object} parent Parent element
+   */
+  _addShowTableButton(parent) {
+    const button=document.createElement("button");
+    parent.appendChild(button);
+    button.type="button";
+    button.className="btn btn-primary btn-sm bi-table mt-1 me-2 mb-2";
+    button.innerHTML=" "+language.distributions.infoDiagramShowValues;
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      let searchString="?distribution="+distShortName;
+      if (params.length>0) searchString+="&"+params.join("&");
+      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
+    }
+  }
+
+  /**
+   * Adds a export diagram button
+   * @param {Object} parent Parent element
+   */
+  _addExportDiagramButton(parent) {
+    const that=this;
+    let button;
+
+    const div=document.createElement("div");
+    div.className="dropdown";
+    div.style.display="inline-block";
+    parent.appendChild(div);
+    div.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 mb-2 dropdown-toggle";
+    button.dataset.bsToggle="dropdown";
+    button.innerHTML=" "+language.distributions.infoDiagramExport;
+    const ul=document.createElement("ul");
+    ul.className="dropdown-menu";
+    div.appendChild(ul);
+    let li;
+    ul.appendChild(li=document.createElement("li"));
+    li.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="bi-clipboard dropdown-item";
+    button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
+    button.onclick=()=>{
+      if (typeof(ClipboardItem)!="undefined") {
+        that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
+      } else {
+        alert(language.distributions.infoDiagramExportCopyError);
+      }
+    };
+    ul.appendChild(li=document.createElement("li"));
+    li.appendChild(button=document.createElement("button"));
+    button.type="button";
+    button.className="bi-download dropdown-item";
+    button.innerHTML=" "+language.distributions.infoDiagramExportSave;
+    button.onclick=()=>{
+      const element=document.createElement("a");
+      element.href=that.canvas.toDataURL("image/png");
+      element.download="diagram.png";
+      element.click();
+    };
+  }
+
+  /**
+   * Adds a random numbers button
+   */
+  _addRandomNumbersButton() {
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+
+    const button=this._addButton("bi-123",language.distributions.infoDiagramGenerateRandomNumbers);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      let searchString="?distribution="+distShortName+"&random=1";
+      if (params.length>0) searchString+="&"+params.join("&");
+      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
+    }
+  }
+
+  /**
+   * Adds a law of large numbers button
+   */
+  _addLawOfLargeNumbersButton() {
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+
+    const button=this._addButton("bi-bar-chart",language.distributions.infoDiagramLawOfLargeNumbers);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      let searchString="?distribution="+distShortName;
+      if (params.length>0) searchString+="&"+params.join("&");
+      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
+    }
+  }
+
+  /* Adds a central limit theorem button */
+  _addCentralLimitTheoremButton() {
+    let distShortName=this.constructor.name;
+    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
+
+    const button=this._addButton("bi-plus-lg",language.distributions.infoDiagramCentralLimitTheorem);
+    button.onclick=()=>{
+      const params=[];
+      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
+      let searchString="?distribution="+distShortName+"&mode=1";
+      if (params.length>0) searchString+="&"+params.join("&");
+      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
+    }
+  }
+
+  /**
+   * Adds buttons below diagram.
+   */
+  _initButtons() {
+    /* Show E[X] in diagram */
+    this._addShowE(this.canvasInfo);
+
+    /* Show E[X]+-Std[X] in diagram */
+    this._addShowStd(this.canvasInfo);
+
+    this._addRangeSetup(this.canvasInfo);
+
+    this.canvasInfo.appendChild(document.createElement("br"));
+
+    /* Reset zoom */
+    this._addResetZoom(this.canvasInfo);
+
+    /* Show table */
+    this._addShowTableButton(this.canvasInfo);
+
+    /* Export diagram */
+    this._addExportDiagramButton(this.canvasInfo);
+
+    /* Random numbers */
+    this._addRandomNumbersButton();
+
+    /* Law of large numbers */
+    this._addLawOfLargeNumbersButton();
+
+    /* Central limit theorem */
+    this._addCentralLimitTheoremButton();
+  }
+
+  /**
    * Returns distribution parameters to fit the input values.
    * @param {Object} data Fitting input values
    * @returns Distribution parameters object or null if no fit could be calculated for the given input values
@@ -826,9 +1156,6 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
   #diagramXValues;
   #mean;
   #variance;
-  #checkBoxMean;
-  #checkBoxStd;
-
   /**
    * Constructor
    * @param {string} name Name of the probability distribution
@@ -927,13 +1254,25 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    * @param {Object} pdf Array of tuples (x, p) of the pdf values for the diagram
    */
   _updateDiscreteDiagram() {
+    if (!this.canvasInfo) return;
+
+    /* Init buttons on first call */
+    if (this.canvasInfo && this.canvasInfo.children.length==0) this._initButtons();
+
     const values=this._currentParameterValues;
 
     /* Get min and max X */
-    let minX, maxX;
-    [minX, maxX]=this.getDiscreteSupport(values,false);
-    if (isNaN(maxX) || maxX>1000) maxX=1000;
-    const paddingX=Math.min(10,Math.max(3,Math.round((maxX-minX)/10)));
+    let minX, maxX, paddingX;
+    const range=this._getRange();
+    if (range!=null) {
+      [minX, maxX]=range;
+      paddingX=0;
+    } else {
+      [minX, maxX]=this.getDiscreteSupport(values,false);
+      if (isNaN(maxX) || maxX>1000) maxX=1000;
+      paddingX=Math.min(10,Math.max(3,Math.round((maxX-minX)/10)));
+    }
+    this._setRangeInput(minX-paddingX,maxX+paddingX);
 
     /* Build PDF and CDF data sets */
     const dataPDF=[];
@@ -941,8 +1280,9 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     const dataX=[];
     let sum=0;
     this.#diagramXValues=[];
+    const support=this.getDiscreteSupport(values);
     for (let x=minX-paddingX;x<=maxX+paddingX;x++) {
-      const p=(x<minX || x>maxX)?0:this.calcProbability(values,x);
+      const p=(x<minX || x>maxX || x<support[0] || x>support[1])?0:this.calcProbability(values,x);
       sum=Math.min(1,sum+p);
       dataX.push("k="+x);
       this.#diagramXValues.push(x);
@@ -954,11 +1294,11 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     this.#chartOptions.plugins.annotation={};
     this.#chartOptions.plugins.annotation.annotations={};
     if (isFinite(this.#mean) && this.#mean>=minX && this.#mean<=maxX) {
-      if (this.#checkBoxMean && this.#checkBoxMean.checked) {
+      if (this._checkBoxMean && this._checkBoxMean.checked) {
         const x=this.#mean+minX+paddingX;
         this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderWidth: 2, label: {content: "E[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
       }
-      if (this.#checkBoxStd && this.#checkBoxStd.checked) {
+      if (this._checkBoxStd && this._checkBoxStd.checked) {
         if (isFinite(this.#variance) && this.#mean-Math.sqrt(this.#variance)>=minX) {
           const x=this.#mean-Math.sqrt(this.#variance)+minX+paddingX;
           this.#chartOptions.plugins.annotation.annotations.line2={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]-Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
@@ -979,9 +1319,6 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       },
       options: this.#chartOptions
     });
-
-    /* Init table and random numbers buttons on first call */
-    if (this.canvasInfo && this.canvasInfo.children.length==0) this._initButtons();
   }
 
   /**
@@ -995,143 +1332,6 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
       window.open(url);
     } else {
       window.open(url);
-    }
-  }
-
-  /**
-   * Adds buttons below diagram.
-   */
-  _initButtons() {
-    const that=this;
-    let check;
-    let checkbox;
-    let label;
-    let button;
-
-    /* Show E[X] in diagram */
-    this.canvasInfo.appendChild(check=document.createElement("div"));
-    check.className="form-check small";
-    check.style.display="inline-block";
-    check.appendChild(checkbox=document.createElement("input"));
-    checkbox.type="checkbox";
-    this.#checkBoxMean=checkbox;
-    checkbox.className="form-check-input";
-    checkbox.id="showE"+this.constructor.name;
-    checkbox.onchange=e=>this._fireParameterUpdated();
-    check.appendChild(label=document.createElement("label"));
-    label.innerHTML=language.distributions.showExpectedValue;
-    label.htmlFor=checkbox;
-    label.className="form-check-label pe-3";
-    label.style.userSelect="none";
-    label.htmlFor="showE"+this.constructor.name;
-
-    /* Show E[X]+-Std[X] in diagram */
-    this.canvasInfo.appendChild(check=document.createElement("div"));
-    check.className="form-check small";
-    check.style.display="inline-block";
-    check.appendChild(checkbox=document.createElement("input"));
-    checkbox.type="checkbox";
-    this.#checkBoxStd=checkbox;
-    checkbox.className="form-check-input";
-    checkbox.id="showStd"+this.constructor.name;
-    checkbox.onchange=e=>this._fireParameterUpdated();
-    check.appendChild(label=document.createElement("label"));
-    label.innerHTML=language.distributions.showStandardDeviation;
-    label.htmlFor=checkbox;
-    label.className="form-check-label pe-3";
-    label.style.userSelect="none";
-    label.htmlFor="showStd"+this.constructor.name;
-
-    this.canvasInfo.appendChild(document.createElement("br"));
-
-    /* Reset zoom */
-    this.canvasInfo.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
-    button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
-    button.onclick=()=>this.chart.resetZoom();
-
-    /* Show table */
-    this.canvasInfo.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="btn btn-primary btn-sm bi-table mt-1 me-2 mb-2";
-    button.innerHTML=" "+language.distributions.infoDiagramShowValues;
-    let distShortName=this.constructor.name;
-    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName;
-      if (params.length>0) searchString+="&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
-    }
-
-    /* Export diagram */
-    const div=document.createElement("div");
-    div.className="dropdown";
-    div.style.display="inline-block";
-    this.canvasInfo.appendChild(div);
-    div.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 mb-2 dropdown-toggle";
-    button.dataset.bsToggle="dropdown";
-    button.innerHTML=" "+language.distributions.infoDiagramExport;
-    const ul=document.createElement("ul");
-    ul.className="dropdown-menu";
-    div.appendChild(ul);
-    let li;
-    ul.appendChild(li=document.createElement("li"));
-    li.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="bi-clipboard dropdown-item";
-    button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
-    button.onclick=()=>{
-      if (typeof(ClipboardItem)!="undefined") {
-        that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
-      } else {
-        alert(language.distributions.infoDiagramExportCopyError);
-      }
-    };
-    ul.appendChild(li=document.createElement("li"));
-    li.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="bi-download dropdown-item";
-    button.innerHTML=" "+language.distributions.infoDiagramExportSave;
-    button.onclick=()=>{
-      const element=document.createElement("a");
-      element.href=that.canvas.toDataURL("image/png");
-      element.download="diagram.png";
-      element.click();
-    };
-
-    /* Random numbers */
-    button=this._addButton("bi-123",language.distributions.infoDiagramGenerateRandomNumbers);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName+"&random=1";
-      if (params.length>0) searchString+="&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
-    }
-
-    /* Law of large numbers */
-    button=this._addButton("bi-bar-chart",language.distributions.infoDiagramLawOfLargeNumbers);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName;
-      if (params.length>0) searchString+="&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
-    }
-
-    /* Central limit theorem */
-    button=this._addButton("bi-plus-lg",language.distributions.infoDiagramCentralLimitTheorem);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName+"&mode=1";
-      if (params.length>0) searchString+="&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
   }
 
@@ -1224,8 +1424,6 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
   #diagramXValues;
   #mean;
   #variance;
-  #checkBoxMean;
-  #checkBoxStd;
 
   /**
    * Constructor
@@ -1337,6 +1535,15 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
   _setContinuousDiagram(minX, maxX, pdfCallback, cdfCallback) {
     if (!this.canvasInfo) return;
 
+    /* Init buttons on first call */
+    if (this.canvasInfo && this.canvasInfo.children.length==0) this._initButtons();
+
+    const range=this._getRange();
+    if (range!=null) {
+      [minX, maxX]=range;
+    }
+    this._setRangeInput(minX,maxX);
+
     this.#diagramMinX=minX;
     this.#diagramMaxX=maxX;
 
@@ -1358,11 +1565,11 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     this.#chartOptions.plugins.annotation={};
     this.#chartOptions.plugins.annotation.annotations={};
     if (isFinite(this.#mean) && this.#mean>=minX && this.#mean<=maxX) {
-      if (this.#checkBoxMean && this.#checkBoxMean.checked) {
+      if (this._checkBoxMean && this._checkBoxMean.checked) {
         const x=(this.#mean-minX)/(maxX-minX)*steps;
         this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderWidth: 2, label: {content: "E[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
       }
-      if (this.#checkBoxStd && this.#checkBoxStd.checked) {
+      if (this._checkBoxStd && this._checkBoxStd.checked) {
         if (isFinite(this.#variance) && this.#mean-Math.sqrt(this.#variance)>=minX) {
           const x=(this.#mean-Math.sqrt(this.#variance)-minX)/(maxX-minX)*steps;
           this.#chartOptions.plugins.annotation.annotations.line2={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]-Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
@@ -1383,9 +1590,6 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
       },
       options: this.#chartOptions
     });
-
-    /* Init download and random numbers buttons on first call */
-    if (this.canvasInfo.children.length==0) this._initButtons();
   }
 
   /**
@@ -1399,139 +1603,6 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
       window.open(url);
     } else {
       window.open(url);
-    }
-  }
-
-  /**
-   * Adds buttons below diagram.
-   */
-  _initButtons() {
-    const that=this;
-    let check;
-    let checkbox;
-    let label;
-    let button;
-
-    /* Show E[X] in diagram */
-    this.canvasInfo.appendChild(check=document.createElement("div"));
-    check.className="form-check small";
-    check.style.display="inline-block";
-    check.appendChild(checkbox=document.createElement("input"));
-    checkbox.type="checkbox";
-    this.#checkBoxMean=checkbox;
-    checkbox.className="form-check-input";
-    checkbox.id="showE"+this.constructor.name;
-    checkbox.onchange=e=>this._fireParameterUpdated();
-    check.appendChild(label=document.createElement("label"));
-    label.innerHTML=language.distributions.showExpectedValue
-    label.htmlFor=checkbox;
-    label.className="form-check-label pe-3";
-    label.style.userSelect="none";
-    label.htmlFor="showE"+this.constructor.name;
-
-    /* Show E[X]+-Std[X] in diagram */
-    this.canvasInfo.appendChild(check=document.createElement("div"));
-    check.className="form-check small";
-    check.style.display="inline-block";
-    check.appendChild(checkbox=document.createElement("input"));
-    checkbox.type="checkbox";
-    this.#checkBoxStd=checkbox;
-    checkbox.className="form-check-input";
-    checkbox.id="showStd"+this.constructor.name;
-    checkbox.onchange=e=>this._fireParameterUpdated();
-    check.appendChild(label=document.createElement("label"));
-    label.innerHTML=language.distributions.showStandardDeviation;
-    label.htmlFor=checkbox;
-    label.className="form-check-label pe-3";
-    label.style.userSelect="none";
-    label.htmlFor="showStd"+this.constructor.name;
-
-    this.canvasInfo.appendChild(document.createElement("br"));
-
-    /* Reset zoom */
-    this.canvasInfo.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="btn btn-warning btn-sm bi-zoom-out mt-1 me-2 mb-2";
-    button.innerHTML=" "+language.distributions.infoDiagramResetZoom;
-    button.onclick=()=>this.chart.resetZoom();
-
-    /* Show table */
-    this.canvasInfo.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="btn btn-primary btn-sm bi-table mt-1 me-2 mb-2";
-    button.innerHTML=" "+language.distributions.infoDiagramShowValues;
-    let distShortName=this.constructor.name;
-    distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
-    }
-
-    /* Export diagram */
-    const div=document.createElement("div");
-    div.className="dropdown";
-    div.style.display="inline-block";
-    this.canvasInfo.appendChild(div);
-    div.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="btn btn-primary btn-sm bi-graph-up mt-1 me-2 mb-2 dropdown-toggle";
-    button.dataset.bsToggle="dropdown";
-    button.innerHTML=" "+language.distributions.infoDiagramExport;
-    const ul=document.createElement("ul");
-    ul.className="dropdown-menu";
-    div.appendChild(ul);
-    let li;
-    ul.appendChild(li=document.createElement("li"));
-    li.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="bi-clipboard dropdown-item";
-    button.innerHTML=" "+language.distributions.infoDiagramExportCopy;
-    button.onclick=()=>{
-      if (typeof(ClipboardItem)!="undefined") {
-        that.canvas.toBlob(blob=>navigator.clipboard.write([new ClipboardItem({"image/png": blob})]));
-      } else {
-        alert(language.distributions.infoDiagramExportCopyError);
-      }
-    };
-    ul.appendChild(li=document.createElement("li"));
-    li.appendChild(button=document.createElement("button"));
-    button.type="button";
-    button.className="bi-download dropdown-item";
-    button.innerHTML=" "+language.distributions.infoDiagramExportSave;
-    button.onclick=()=>{
-      const element=document.createElement("a");
-      element.href=that.canvas.toDataURL("image/png");
-      element.download="diagram.png";
-      element.click();
-    };
-
-    /* Random numbers */
-    button=this._addButton("bi-123",language.distributions.infoDiagramGenerateRandomNumbers);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&random=&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
-    }
-
-    /* Law of large numbers */
-    button=this._addButton("bi-bar-chart",language.distributions.infoDiagramLawOfLargeNumbers);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
-    }
-
-    /* Central limit theorem */
-    button=this._addButton("bi-plus-lg",language.distributions.infoDiagramCentralLimitTheorem);
-    button.onclick=()=>{
-      const params=[];
-      for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      const searchString="?distribution="+distShortName+"&mode=1&"+params.join("&");
-      this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
   }
 

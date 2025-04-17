@@ -103,10 +103,7 @@ function saveTable() {
  * Opens the distribution fitter and uses the generated pseudo random numbers as input.
  */
 function openFitter() {
-  console.log("start");
-  const l=Date.now();
   localStorage.setItem('randomNumbers',randomNumbers.map(num=>""+num).join("\n")); /* We do not need locale number; fitter is accepting everything. toLocaleString() is very slow. */
-  console.log("done "+(Date.now()-l));
   const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
   window.open(file+"?fromPseudoRandomNumbers=1","_blank");
 }
