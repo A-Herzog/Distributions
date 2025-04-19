@@ -363,6 +363,22 @@ lang.distributions.triangular.parameterInfobError="Die obere Bereichsgrenze <i>b
 lang.distributions.triangular.parameterInfoc="Modus";
 lang.distributions.triangular.parameterInfocError="Der Modus <i>c</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 
+lang.distributions.sawtoothLeft={};
+lang.distributions.sawtoothLeft.name="Linke Sägezahnverteilung";
+lang.distributions.sawtoothLeft.info="Die Sägezahnverteilungen stellen einen vereinfachten Spezialfall der Dreiecksverteilung dar.";
+lang.distributions.sawtoothLeft.wikipedia="https://de.wikipedia.org/wiki/Dreiecksverteilung";
+lang.distributions.sawtoothLeft.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.sawtoothLeft.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.sawtoothLeft.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+
+lang.distributions.sawtoothRight={};
+lang.distributions.sawtoothRight.name="Rechte Sägezahnverteilung";
+lang.distributions.sawtoothRight.info="Die Sägezahnverteilungen stellen einen vereinfachten Spezialfall der Dreiecksverteilung dar.";
+lang.distributions.sawtoothRight.wikipedia="https://de.wikipedia.org/wiki/Dreiecksverteilung";
+lang.distributions.sawtoothRight.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.sawtoothRight.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.sawtoothRight.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+
 lang.distributions.trapezoid={};
 lang.distributions.trapezoid.name="Trapezverteilung";
 lang.distributions.trapezoid.info="The trapezoid distribution is a combination of a triangular distribution and a uniform distribution.";
@@ -426,13 +442,13 @@ lang.distributions.chi2.parameterInfok="Freiheitsgrade";
 lang.distributions.chi={};
 lang.distributions.chi.name="Chi-Verteilung";
 lang.distributions.chi.info="Die Wurzel aus der Summe von <b>k</b> standardnormalverteilten Zufallsvariablen ist &Chi;-verteilt.";
-lang.distributions.chi.wikipedia="https://en.wikipedia.org/wiki/Chi_distribution"; /* Leide keine deutsche Seite vorhanden */
+lang.distributions.chi.wikipedia="https://en.wikipedia.org/wiki/Chi_distribution"; /* Leider keine deutsche Seite vorhanden */
 lang.distributions.chi.parameterInfok="Freiheitsgrade";
 
 lang.distributions.halfNormal={};
 lang.distributions.halfNormal.name="Halbe Normalverteilung";
 lang.distributions.halfNormal.info="Die halbe Normalverteilung kombiniert den Verlauf der Normalverteilung mit der Eigenschaft, dass nur nichtnegative x-Werte mit einer positiven Dichte belegt werden.";
-lang.distributions.halfNormal.wikipedia="https://de.wikipedia.org/wiki/Normalverteilung";
+lang.distributions.halfNormal.wikipedia="https://en.wikipedia.org/wiki/Half-normal_distribution"; /* Leider keine deutsche Seite vorhanden */
 lang.distributions.halfNormal.parameterInfoS="Verschiebung";
 lang.distributions.halfNormal.parameterInfoMu="Erwartungswert";
 
@@ -971,6 +987,22 @@ lang.distributions.triangular.parameterInfobError="The upper bound <i>b</i> has 
 lang.distributions.triangular.parameterInfoc="Mode";
 lang.distributions.triangular.parameterInfocError="The mode <i>c</i> has to be equal or larger than the lower bound <i>a</i>.";
 
+lang.distributions.sawtoothLeft={};
+lang.distributions.sawtoothLeft.name="Left Sawtooth distribution";
+lang.distributions.sawtoothLeft.info="The sawtooth distributions represent a simplified special case of the triangular distribution.";
+lang.distributions.sawtoothLeft.wikipedia="https://en.wikipedia.org/wiki/Triangular_distribution";
+lang.distributions.sawtoothLeft.parameterInfoa="Lower bound";
+lang.distributions.sawtoothLeft.parameterInfob="Upper bound";
+lang.distributions.sawtoothLeft.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+
+lang.distributions.sawtoothRight={};
+lang.distributions.sawtoothRight.name="Right Sawtooth distribution";
+lang.distributions.sawtoothRight.info="The sawtooth distributions represent a simplified special case of the triangular distribution.";
+lang.distributions.sawtoothRight.wikipedia="https://en.wikipedia.org/wiki/Triangular_distribution";
+lang.distributions.sawtoothRight.parameterInfoa="Lower bound";
+lang.distributions.sawtoothRight.parameterInfob="Upper bound";
+lang.distributions.sawtoothRight.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+
 lang.distributions.trapezoid={};
 lang.distributions.trapezoid.name="Trapezoid distribution";
 lang.distributions.trapezoid.info="Die Trapezverteilung stellt eine Kombination aus einer Dreiecksverteilung und einer Gleichverteilung dar.";
@@ -1040,7 +1072,7 @@ lang.distributions.chi.parameterInfok="Degrees of freedom";
 lang.distributions.halfNormal={};
 lang.distributions.halfNormal.name="Half normal distribution";
 lang.distributions.halfNormal.info="The half normal distribution combines the course of the normal distribution with the property that only non-negative x-values are assigned a positive density.";
-lang.distributions.halfNormal.wikipedia="https://en.wikipedia.org/wiki/Normal_distribution";
+lang.distributions.halfNormal.wikipedia="https://en.wikipedia.org/wiki/Half-normal_distribution";
 lang.distributions.halfNormal.parameterInfoS="Shift";
 lang.distributions.halfNormal.parameterInfoMu="Expected value";
 
