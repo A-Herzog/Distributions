@@ -116,11 +116,15 @@ class SawtoothLeftDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac("<mn>2</mn>"+a+plus+b,"<mn>3</mn>")+endMathML;
     const varianceFormula=beginMathML+frac("<msup><mrow><mo>(</mo>"+a+minus+b+"<mo>)</mo></mrow><mn>2</mn></msup>","<mn>18</mn>")+endMathML;
+    const medianFormula=beginMathML+b+minus+frac(b+minus+a,"<msqrt><mn>2</mn></msqrt>")+endMathML;
+    const modeFormula=beginMathML+a+endMathML;
 
     const meanValue=(2*values.a+values.b)/3;
     const varianceValue=(values.a-values.b)**2/18;
+    const medianValue=values.b-(values.b-values.a)/Math.sqrt(2);
+    const modeValue=values.a;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

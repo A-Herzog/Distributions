@@ -102,13 +102,18 @@ class LevyDistribution extends ContinuousProbabilityDistribution {
 
     /* Characteristics */
 
+    const mu=variable("&mu;");
+    const gamma=variable("&gamma;");
+
     const meanFormula=beginMathML+"<mn>&infin;</mn>"+endMathML;
     const varianceFormula=beginMathML+"<mn>&infin;</mn>"+endMathML;
+    const modeFormula=beginMathML+mu+plus+frac(gamma,"<mn>3</mn>")+endMathML;
 
     const meanValue=Infinity;
     const varianceValue=Infinity;
+    const modeValue=values.mu+values.gamma/3;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

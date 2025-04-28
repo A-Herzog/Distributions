@@ -18,7 +18,7 @@ export {GumbelDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, isin, setR, setRHTML, setRPlusHTML, variable, frac, defF, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setR, setRHTML, setRPlusHTML, variable, frac, defF, minus, mul} from './MathMLTools.js';
 import {formatNumber} from './NumberTools.js';
 
 
@@ -122,15 +122,19 @@ class GumbelDistribution extends ContinuousProbabilityDistribution {
     const muFormula=variable("&mu;");
 
     const info=[];
-    info.push(["",beginMathML+betaFormula+endMathML,"=",beginMathML+"<mi>std</mi>"+frac("<msqrt><mn>6</mn></msqrt>","<mi>&pi;</mi>")+endMathML,"&approx;",formatNumber(beta)]);
-    info.push(["",beginMathML+muFormula+endMathML,"=",beginMathML+"<mi>mean</mi>"+minus+"<mi>beta</mi>"+frac("<mi>&pi;</mi>","<mn>2</mn><mi>e</mi>")+endMathML,"&approx;",formatNumber(mu)]);
+    info.push(["",beginMathML+betaFormula+endMathML,"=",beginMathML+"<mi>std</mi>"+mul+frac("<msqrt><mn>6</mn></msqrt>","<mi>&pi;</mi>")+endMathML,"&approx;",formatNumber(beta)]);
+    info.push(["",beginMathML+muFormula+endMathML,"=",beginMathML+"<mi>mean</mi>"+minus+"<mi>beta</mi>"+mul+"<abbr title='"+language.distributions.EulerMascheroni+"'>"+frac("<mi>&pi;</mi>","<mn>2</mn><mi>e</mi>")+"</abbr>"+endMathML,"&approx;",formatNumber(mu)]);
     const meanFormula=beginMathML+"<mo>mean</mo>"+endMathML;
     const varianceFormula=beginMathML+"<msup><mo>std</mo><mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+muFormula+minus+betaFormula+mul+defF("log",defF("log","<mn>2</mn>",false),false)+endMathML;
+    const modeFormula=beginMathML+muFormula+endMathML;
 
     const meanValue=values.mean;
     const varianceValue=values.std**2;
+    const medianValue=mu-beta*Math.log(Math.log(2));
+    const modeValue=mu;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,info);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue,info);
 
     /* Diagram */
 

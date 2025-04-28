@@ -115,7 +115,7 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
     const meanValue=values.mu;
     const varianceValue=(values.nu>2)?(values.nu/(values.nu-2)):Infinity;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue,meanFormula,meanValue);
 
     /* Diagram */
 

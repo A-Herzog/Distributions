@@ -89,8 +89,9 @@ class RademacherDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+"<mn>0</mn>"+endMathML;
     const varianceFormula=beginMathML+"<mn>1</mn>"+endMathML;
+    const medianFormula=beginMathML+"<mn>0</mn>"+endMathML;
 
-    this._setDiscreteCharacteristics(meanFormula,0,varianceFormula,1);
+    this._setDiscreteCharacteristics(meanFormula,0,varianceFormula,1,medianFormula,0);
 
     /* Count density */
 

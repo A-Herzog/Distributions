@@ -129,11 +129,14 @@ class IrwinHallDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(n,"<mn>2</mn>")+endMathML;
     const varianceFormula=beginMathML+frac(n,"<mn>12</mn>")+endMathML;
+    const modeFormula=(values.n==1)?null:meanFormula;
+
 
     const meanValue=values.n/2;
     const varianceValue=values.n/12;
+    const modeValue=(values.n==1)?null:meanValue;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue,modeFormula,modeValue);
 
     /* Diagram */
 

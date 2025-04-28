@@ -18,7 +18,7 @@ export {WeibullDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, isin, setRPlus0, setRPlus0HTML, setRPlusHTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setRPlus0, setRPlus0HTML, setRPlusHTML, variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
 
 
 
@@ -96,11 +96,15 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(Gamma+"<mo>(</mo><mn>1</mn>"+plus+frac("<mn>1</mn>",beta)+"<mo>)</mo>",lambda)+endMathML;
     const varianceFormula=beginMathML+frac(Gamma+"<mo>(</mo><mn>1</mn>"+plus+frac("<mn>2</mn>",beta)+"<mo>)</mo>"+minus+"<msup>"+Gamma+"<mn>2</mn></msup><mo>(</mo><mn>1</mn>"+plus+frac("<mn>1</mn>",beta)+"<mo>)</mo>","<msup>"+lambda+"<mn>2</mn></msup>")+endMathML;
+    const medianFormula=beginMathML+frac("<msup><mrow><mo>(</mo>"+defF("log","<mn>2</mn>",false)+"<mo>)</mo></mrow>"+frac("<mn>1</mn>",beta),lambda)+endMathML;
+    const modeFormula=(values.beta>1)?(beginMathML+frac("<mn>1</mn>",lambda)+mul+"<msup><mrow><mo>(</mo>"+frac(beta+minus+"<mn>1</mn>",beta)+"<mo>)</mo></mrow>"+frac("<mn>1</mn>",beta)+"</msup>"+endMathML):(beginMathML+"<mn>0</mn>"+endMathML);
 
     const meanValue=jStat.gammafn(1+1/values.beta)/values.lambda;
     const varianceValue=(jStat.gammafn(1+2/values.beta)-jStat.gammafn(1+1/values.beta)**2)/(values.lambda**2);
+    const medianValue=Math.pow(Math.LN2,1/values.beta)/values.lambda;
+    const modeValue=(values.beta>1)?(Math.pow((values.beta-1)/values.beta,1/values.beta)/values.lambda):0;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

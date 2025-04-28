@@ -159,11 +159,25 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(a+plus+b+plus+c,"<mn>3</mn>")+endMathML;
     const varianceFormula=beginMathML+frac("<msup><mrow><mo>(</mo>"+a+minus+b+"<mo>)</mo></mrow><mn>2</mn></msup>"+plus+"<msup><mrow><mo>(</mo>"+b+minus+c+"<mo>)</mo></mrow><mn>2</mn></msup>"+plus+"<msup><mrow><mo>(</mo>"+a+minus+c+"<mo>)</mo></mrow><mn>2</mn></msup>","<mn>36</mn>")+endMathML;
+    let medianFormula;
+    if (values.c>=(values.a+values.b)/2) {
+      medianFormula=beginMathML+a+plus+"<msqrt>"+frac("<mo>(</mo>"+b+minus+a+"<mo>)</mo><mo>(</mo>"+c+minus+a+"<mo>)</mo>","<mn>2</mn>")+"</msqrt>"+endMathML;
+    } else {
+      medianFormula=beginMathML+b+minus+"<msqrt>"+frac("<mo>(</mo>"+b+minus+a+"<mo>)</mo><mo>(</mo>"+b+minus+c+"<mo>)</mo>","<mn>2</mn>")+"</msqrt>"+endMathML;
+    }
+    const modeFormula=beginMathML+c+endMathML;
 
     const meanValue=(values.a+values.b+values.c)/3;
     const varianceValue=((values.a-values.b)**2+(values.b-values.c)**2+(values.a-values.c)**2)/36;
+    let medianValue;
+    if (values.c>=(values.a+values.b)/2) {
+      medianValue=values.a+Math.sqrt((values.b-values.a)*(values.c-values.a)/2);
+    } else {
+      medianValue=values.b-Math.sqrt((values.b-values.a)*(values.b-values.c)/2);
+    }
+    const modeValue=values.c;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

@@ -76,11 +76,15 @@ class GeometricDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+frac("<mn>1</mn>"+minus+p,p)+endMathML;
     const varianceFormula=beginMathML+frac("<mn>1</mn>"+minus+p,"<msup>"+p+"<mn>2</mn></msup>")+endMathML;
+    const medianFormula=beginMathML+"<mo>&#x2308;</mo>"+frac(minus+"<mn>1</mn>","<msub><mi>log</mi><mn>2</mn></msub><mo>(</mo><mn>1</mn>"+minus+p+"<mo>)</mo>")+"<mo>&#x2309;</mo>"+minus+"<mn>1</mn>"+endMathML;
+    const modeFormula=beginMathML+"<mn>0</mn>"+endMathML;
 
     const meanValue=(1-values.p)/values.p;
     const varianceValue=(1-values.p)/(values.p**2);
+    const medianValue=Math.ceil(-1/Math.log2(1-values.p))-1;
+    const modeValue=0;
 
-    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Count density */
 

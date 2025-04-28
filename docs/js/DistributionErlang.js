@@ -107,11 +107,13 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+n+mul+lambda+endMathML;
     const varianceFormula=beginMathML+n+mul+"<msup>"+lambda+"<mn>2</mn></msup>"+endMathML;
+    const modeFormula=beginMathML+frac(n+minus+"<mn>1</mn>",lambda)+endMathML;
 
     const meanValue=values.n*values.lambda;
     const varianceValue=values.n*values.lambda**2;
+    const modeValue=(values.n-1)/values.lambda;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

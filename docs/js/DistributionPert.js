@@ -158,11 +158,15 @@ class PertDistribution extends ContinuousProbabilityDistribution {
     const meanFormula=beginMathML+frac(a+plus+"<mn>4</mn>"+b+plus+c,"<mn>6</mn>")+endMathML;
     const mu="<mi mathvariant='normal'>E</mi><mo>[</mo><mi>X</mi><mo>]</mo>";
     const varianceFormula=beginMathML+frac("<mo>(</mo>"+mu+minus+a+"<mo>)</mo><mo>(</mo>"+c+minus+mu+"<mo>)</mo>","<mn>7</mn>")+endMathML;
+    const medianFormula=beginMathML+frac(a+plus+"<mn>6</mn>"+b+plus+c,"<mn>8</mn>")+endMathML;
+    const modeFormula=beginMathML+b+endMathML;
 
     const meanValue=(values.a+4*values.b+values.c)/6;
     const varianceValue=(meanValue-values.a)*(values.c-meanValue)/7;
+    const medianValue=(values.a+8*values.b+values.c)/8;
+    const modeValue=values.b;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

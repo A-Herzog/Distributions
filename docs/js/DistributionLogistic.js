@@ -100,7 +100,7 @@ class LogisticDistribution extends ContinuousProbabilityDistribution {
     const meanValue=values.mu;
     const varianceValue=values.s**2*Math.PI**2/3;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue,meanFormula,meanValue);
 
     /* Diagram */
 

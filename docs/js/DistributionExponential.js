@@ -82,11 +82,15 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac("<mn>1</mn>",lambda)+endMathML;
     const varianceFormula=beginMathML+frac("<mn>1</mn>","<msup>"+lambda+"<mn>2</mn></msup>")+endMathML;
+    const medianFormula=beginMathML+frac(defF("log","<mn>2</mn>",false),lambda)+endMathML;
+    const modeFormula=beginMathML+"<mn>0</mn>"+endMathML;
 
     const meanValue=1/values.lambda;
     const varianceValue=1/(values.lambda**2);
+    const medianValue=Math.log(2)/values.lambda;
+    const modeValue=0;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

@@ -18,7 +18,7 @@ export {ParetoDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, setR, setRHTML, isin, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
 
 
 
@@ -95,17 +95,21 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(alpha+xm,alpha+minus+"<mn>1</mn>")+endMathML;
     const varianceFormula=beginMathML+"<msup><mrow><mo>(</mo>"+frac(xm,alpha+minus+"<mn>1</mn>")+"<mo>)</mo></mrow><mn>2</mn></msup>"+frac(alpha,alpha+minus+"<mn>2</mn>")+endMathML;
+    const medianFormula=beginMathML+xm+"<mroot><mn>2</mn>"+alpha+"</mroot>"+endMathML;
+    const modeFormula=beginMathML+xm+endMathML;
 
     const meanValue=(values.alpha<=1)?Infinity:(values.alpha*values.xm)/(values.alpha-1);
     const varianceValue=(values.alpha<=2)?Infinity:(values.xm/(values.alpha-1))**2*values.alpha/(values.alpha-2);
+    const medianValue=values.xm*Math.pow(2,1/values.alpha);
+    const modeValue=values.xm;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 
     const that=this;
-    const minX=Math.min(0,meanValue-3*Math.max(6,Math.sqrt(varianceValue)));
-    const maxX=Math.max(1,meanValue+3*Math.max(6,Math.sqrt(varianceValue)));
+    const minX=values.xm-5;
+    const maxX=values.xm+100;
     this._setContinuousDiagram(minX,maxX,x=>that.#getPDF(values,x),x=>that.#getCDF(values,x));
   }
 

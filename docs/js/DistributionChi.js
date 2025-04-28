@@ -98,11 +98,18 @@ class ChiDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+"<msqrt><mn>2</mn></msqrt>"+frac(Gamma+"<mo>(</mo>"+frac(k+plus+"<mn>1</mn>","<mn>2</mn>")+"<mo>)</mo>",Gamma+"<mo>(</mo>"+frac(k,"<mn>2</mn>")+"<mo>)</mo>")+endMathML;
     const varianceFormula=beginMathML+k+minus+"<mn>2</mn><msup><mrow><mo>(</mo>"+frac(Gamma+"<mo>(</mo>"+frac(k+plus+"<mn>1</mn>","<mn>2</mn>")+"<mo>)</mo>",Gamma+"<mo>(</mo>"+frac(k,"<mn>2</mn>")+"<mo>)</mo>")+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+"<msqrt>"+k+"<msup><mrow><mo>(</mo><mn>1</mn>"+minus+frac("<mn>2</mn>","<mn>9</mn>"+k)+"<mo>)</mo></mrow><mn>3</mn></msup></msqrt>"+endMathML;
+    let  modeFormula=null;
+    if (values.k>=1) modeFormula=beginMathML+"<msqrt>"+k+minus+"<mn>1</mn></msqrt>"+endMathML;
+
 
     const meanValue=Math.sqrt(2)*jStat.gammafn((values.k+1)/2)/jStat.gammafn(values.k/2);
     const varianceValue=values.k-meanValue**2;
+    const medianValue=Math.sqrt(values.k*(1-2/9/values.k)**3);
+    let modeValue=null;
+    if (values.k>=1) modeValue=Math.sqrt(values.k-1);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

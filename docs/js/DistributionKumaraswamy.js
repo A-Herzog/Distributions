@@ -101,15 +101,24 @@ class KumaraswamyDistribution extends ContinuousProbabilityDistribution {
   _calcDistribution(values) {
     /* Characteristics */
 
+    const a=variable("a");
+    const b=variable("b");
+
     const meanFormula=beginMathML+this.#getM(1)+endMathML;
     const varianceFormula=beginMathML+this.#getM(2)+minus+"<msup><mrow><mo>(</mo>"+this.#getM(1)+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+"<msup><mrow><mo>(</mo><mn>1</mn>"+minus+"<msup><mn>2</mn><mrow>"+minus+frac("<mn>1</mn>",variable(b))+"</mrow></msup><mo>)</mo></mrow>"+frac("<mn>1</mn>",a)+"</msup>"+endMathML;
+    let modeFormula=null;
+    if (values.a>=1 && values.b>=1 && !(values.a==1 && values.b==1)) modeFormula=beginMathML+"<msup><mrow><mo>(</mo>"+frac(a+minus+"<mn>1</mn>",a+b+minus+"<mn>1</mn>")+"<mo>)</mo></mrow>"+frac("<mn>1</mn>",a)+"</msup>"+endMathML;
 
     const m1=(values.b*jStat.gammafn(1+1/values.a)*jStat.gammafn(values.b))/jStat.gammafn(1+values.b+1/values.a);
     const m2=(values.b*jStat.gammafn(1+2/values.a)*jStat.gammafn(values.b))/jStat.gammafn(1+values.b+2/values.a);
     const meanValue=m1;
     const varianceValue=m2-m1**2;
+    const medianValue=Math.pow(1-Math.pow(2,-1/values.b),1/values.a);
+    let modeValue=null;
+    if (values.a>=1 && values.b>=1 && !(values.a==1 && values.b==1)) modeValue=Math.pow((values.a-1)/(values.a*values.b-1),1/values.a);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

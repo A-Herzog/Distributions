@@ -93,9 +93,8 @@ class CauchyDistribution extends ContinuousProbabilityDistribution {
   _calcDistribution(values) {
     /* Characteristics */
 
-    const t=variable("t");
-    const info=[[language.distributions.cauchy.parameterInfot+"&nbsp;",beginMathML+t+endMathML,"","","&approx;",formatNumber(values.t)]];
-    this._setContinuousCharacteristics(null,null,null,null,info);
+    const tFormula=beginMathML+variable("t")+endMathML;
+    this._setContinuousCharacteristics(null,null,null,null,tFormula,values.t,tFormula,values.t);
 
     /* Diagram */
 

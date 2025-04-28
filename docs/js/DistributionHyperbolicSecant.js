@@ -34,8 +34,8 @@ class HyperbolicSecantDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._addContinuousParameter("mu","&mu;",language.distributions.hyperbolicSecant.parameterInfoMu+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
-    this._addContinuousParameter("sigma","&sigma;",language.distributions.hyperbolicSecant.parameterInfoSigma+" (<i>b</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
+    this._addContinuousParameter("mu","&mu;",language.distributions.hyperbolicSecant.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,5);
+    this._addContinuousParameter("sigma","&sigma;",language.distributions.hyperbolicSecant.parameterInfoSigma+" (<i>&sigma;</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
 
     this._setCalcParameter("x",8);
   }
@@ -104,7 +104,7 @@ class HyperbolicSecantDistribution extends ContinuousProbabilityDistribution {
     const meanValue=values.mu;
     const varianceValue=values.sigma**2;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue,meanFormula,meanValue);
 
     /* Diagram */
 

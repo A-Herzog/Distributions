@@ -103,11 +103,15 @@ class FDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(n,n+minus+"<mn>2</mn>")+endMathML;
     const varianceFormula=beginMathML+frac("<mn>2</mn><msup>"+n+"<mn>2</mn></msup><ms>(</ms>"+m+plus+n+minus+"<mn>2</mn><ms>)</ms>",m+"<msup><mrow><ms>(</ms>"+n+minus+"<mn>2</mn><ms><ms>)</ms></mrow><mn>2</mn></msup><ms>(</ms>"+n+minus+"<mn>4</mn><ms>)</ms>")+endMathML;
+    let modeFormula=null;
+    if (values.m>2) modeFormula=beginMathML+frac(m+minus+"<mn>2</mn>",m)+mul+frac(n,n+plus+"<mn>2</mn>")+endMathML;
 
     const meanValue=(values.n>2)?(values.n/(values.n-2)):NaN;
     const varianceValue=(values.n>4)?(2*values.n**2*(values.m+values.n-2)/(values.m*(values.n-2)**2*(values.n-4))):NaN;
+    let modeValue=null;
+    if (values.m>2) modeValue=(values.m-2)/values.m*(values.n)/(values.n+2);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

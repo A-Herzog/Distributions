@@ -120,12 +120,14 @@ class JohnsonSUDistribution extends ContinuousProbabilityDistribution {
     const meanFormula=beginMathML+xi+minus+lambda+mul+defF("exp",frac("<mn>1</mn>","<mn>2</mn>"+mul+"<msup>"+delta+"<mn>2</mn></msup>"),false)+mul+defF("sinh",frac(gamma,delta),false)+endMathML;
     const exML=defF("exp",frac("<mn>1</mn>","<msup>"+delta+"<mn>2</mn></msup>"),false);
     const varianceFormula=beginMathML+frac("<msup>"+lambda+"<mn>2</mn></msup>","<mn>2</mn>")+mul+"<mo>(</mo>"+exML+minus+"<mn>1</mn><mo>)</mo>"+mul+"<mo>(</mo>"+exML+mul+defF("coth","<mn>2</mn>"+gamma+delta,false)+plus+"<mn>1</mn><mo>)</mo>"+endMathML;
+    const medianFormula=beginMathML+xi+plus+lambda+defF("sinh",minus+frac(gamma,delta),false)+endMathML;
 
     const meanValue=values.xi-values.lambda*Math.exp(1/(2*values.delta**2))*Math.sinh(values.gamma/values.delta);
     const ex=Math.exp(1/(values.delta**2));
     const varianceValue=values.lambda**2/2*(ex-1)*(ex*Math.cosh(2*values.gamma*values.delta)+1);
+    const medianValue=values.xi+values.lambda*Math.sinh(-values.gamma/values.delta);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue);
 
     /* Diagram */
 

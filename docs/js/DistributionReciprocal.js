@@ -109,11 +109,15 @@ class ReciprocalDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(b+minus+a,"<mo>log</mo><mo>(</mo>"+frac(b,a)+"<mo>)</mo>")+endMathML;
     const varianceFormula=beginMathML+frac("<msup>"+b+"<mn>2</mn></msup>"+minus+"<msup>"+a+"<mn>2</mn></msup>","<mo>log</mo>"+frac(b,a))+minus+"<msup><mrow><mo>(</mo>"+frac(b+minus+a,"<mo>log</mo>"+frac(b,a))+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+"<msqrt>"+a+b+"</msqrt>"+endMathML;
+    const modeFormula=beginMathML+a+endMathML;
 
     const meanValue=(values.b-values.a)/Math.log(values.b/values.a);
     const varianceValue=(values.b**2-values.a**2)/(2*Math.log(values.b/values.a))-((values.b-values.a)/Math.log(values.b/values.a))**2;
+    const medianValue=Math.sqrt(values.a*values.b);
+    const modeValue=values.a;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

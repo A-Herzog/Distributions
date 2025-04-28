@@ -18,7 +18,7 @@ export {MaxwellBoltzmannDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, isin, setRPlus0, setRPlus0HTML, setRPlusHTML, variable, frac, defF} from './MathMLTools.js';
+import {beginMathML, endMathML, isin, setRPlus0, setRPlus0HTML, setRPlusHTML, variable, frac, defF, mul} from './MathMLTools.js';
 import {erf} from './MathTools.js';
 
 
@@ -109,11 +109,13 @@ class MaxwellBoltzmannDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+"<mn>2</mn>"+a+"<msqrt>"+frac("<mn>2</mn>",pi)+"</msqrt>"+endMathML;
     const varianceFormula=beginMathML+frac("<msup>"+a+"<mn>2</mn></msup><mo>(</mo><mn>3</mn>"+pi+"<mo>-</mo><mn>8</mn><mo>)</mo>",pi)+endMathML;
+    const modeFormula=beginMathML+a+mul+"<msqrt><mn>2</mn></msqrt>"+endMathML;
 
     const meanValue=values.a*2*Math.sqrt(2/Math.PI);
     const varianceValue=values.a**2*(3*Math.PI-8)/Math.PI;
+    const modeValue=Math.SQRT2*values.a;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

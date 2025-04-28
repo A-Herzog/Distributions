@@ -63,12 +63,14 @@ class LogarithmicDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(p,"<mo>(</mo><mn>1</mn>"+minus+p+"<mo>)</mo>"+defF("log","<mn>1</mn>"+minus+p,false))+endMathML;
     const varianceFormula=beginMathML+minus+frac(p+mul+"<mo>(</mo>"+defF("log","<mn>1</mn>"+minus+p,false)+plus+p+"<mo>)</mo>","<msup><mrow><mo>(</mo><mn>1</mn>"+minus+p+"<mo>)</mo></mrow><mn>2</mn></msup><msup><mrow><mo>(</mo>"+defF("log","<mn>1</mn>"+minus+p,false)+"<mo>)</mo></mrow><mn>2</mn></msup>")+endMathML;
+    const modeFormula=beginMathML+"<mn>1</mn>"+endMathML;
 
     const ln1p=Math.log(1-values.p);
     const meanValue=-values.p/(1-values.p)/ln1p;
     const varianceValue=-values.p*(ln1p+values.p)/((1-values.p)**2*ln1p**2);
+    const modeValue=1;
 
-    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Count density */
 

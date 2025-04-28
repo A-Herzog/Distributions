@@ -108,11 +108,15 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
     info.push(["",beginMathML+"<msup>"+sigma+"<mn>2</mn></msub>"+endMathML,"=",beginMathML+sigma2Formula+endMathML,"&approx;",formatNumber(this.#sigma2)]);
     const meanFormula=beginMathML+muNorm+endMathML;
     const varianceFormula=beginMathML+"<msubsup>"+sigma+"<mi mathvariant='normal'>norm</mi><mn>2</mn></msubsup>"+endMathML;
+    const medianFormula=beginMathML+"<msup>"+variable("e")+mu+"</msup>"+endMathML;
+    const modeFormula=beginMathML+"<msup>"+variable("e")+"<mrow>"+mu+minus+"<msup>"+sigma+"<mn>2</mn></msup></mrow></msup>"+endMathML;
 
     const meanValue=values.mean;
     const varianceValue=values.std**2;
+    const medianValue=Math.exp(this.#mu);
+    const modeValue=Math.exp(this.#mu-this.#sigma2);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,info);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue,info);
 
     /* Diagram */
 

@@ -125,7 +125,7 @@ class UQuadraticDistribution extends ContinuousProbabilityDistribution {
     const meanValue=(values.a+values.b)/2;
     const varianceValue=3/20*(values.b-values.a)**2;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue);
 
     /* Diagram */
 

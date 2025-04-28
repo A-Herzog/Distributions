@@ -89,11 +89,13 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
     const varianceFormula=beginMathML+frac("<msup><mrow><mo>(</mo>"+b+minus+a+plus+"<mn>1</mn><mo>)</mo></mrow><mn>2</mn></msup>"+minus+"<mn>1</mn>","<mn>12</mn>")+endMathML;
+    const medianFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
 
     const meanValue=(values.a+values.b)/2;
     const varianceValue=((values.b-values.a+1)**2-1)/12;
+    const medianValue=(values.a+values.b)/2;
 
-    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue);
 
     /* Count density */
 

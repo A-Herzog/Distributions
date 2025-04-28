@@ -70,11 +70,13 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(defF(zeta,s+minus+"<mn>1</mn>",false),defF(zeta,s,false))+endMathML;
     const varianceFormula=beginMathML+frac(defF(zeta,s,false)+defF(zeta,s+minus+"<mn>2</mn>",false)+minus+"<msup><mrow>"+defF(zeta,s+minus+"<mn>1</mn>",false)+"</mrow><mn>2</mn></msup>","<msup><mrow>"+defF(zeta,s,false)+"</mrow><mn>2</mn></msup>")+endMathML;
+    const modeFormula=beginMathML+"<mn>1</mn>"+endMathML;
 
     const meanValue=(values.s>2)?(zetaSMinus1/this.#zetaS):NaN;
     const varianceValue=(values.s>3)?((this.#zetaS*zetaSMinus2-zetaSMinus1**2)/(this.#zetaS**2)):NaN;
+    const modeValue=1;
 
-    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Count density */
 

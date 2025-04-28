@@ -111,7 +111,7 @@ class UniformDistribution extends ContinuousProbabilityDistribution {
     const meanValue=(values.a+values.b)/2;
     const varianceValue=(values.b-values.a)**2/12;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue);
 
     /* Diagram */
 

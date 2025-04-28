@@ -69,8 +69,10 @@ class GaussKuzminDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+"&infin;"+endMathML;
     const varianceFormula=beginMathML+"&infin;"+endMathML;
+    const medianFormula=beginMathML+"<mn>2</mn>"+endMathML;
+    const modeFormula=beginMathML+"<mn>1</mn>"+endMathML;
 
-    this._setDiscreteCharacteristics(meanFormula,Number.POSITIVE_INFINITY,varianceFormula,Number.POSITIVE_INFINITY);
+    this._setDiscreteCharacteristics(meanFormula,Number.POSITIVE_INFINITY,varianceFormula,Number.POSITIVE_INFINITY,medianFormula,2,modeFormula,1);
 
     /* Count density */
 

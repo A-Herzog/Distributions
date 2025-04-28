@@ -120,11 +120,13 @@ class PowerDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+a+plus+frac("<mo>(</mo>"+b+minus+a+"<mo>)</mo>"+mul+c,c+plus+"<mn>1</mn>")+endMathML;
     const varianceFormula=beginMathML+frac("<msup><mrow><mo>(</mo>"+b+minus+a+"<mo>)</mo></mrow><mn>2</mn></msup>"+mul+c,"<msup><mrow><mo>(</mo>"+c+plus+"<mn>1</mn><mo>)</mo></mrow><mn>2</mn></msup>"+mul+"<mo>(</mo>"+c+plus+"<mn>2</mn><mo>)</mo>")+ endMathML;
+    const modeFormula=(values.c>1)?(beginMathML+b+endMathML):null;
 
     const meanValue=values.a+(values.b-values.a)*values.c/(values.c+1);
     const varianceValue=(values.b-values.a)*(values.b-values.a)*values.c/((values.c+1)*(values.c+1)*(values.c+2));
+    const modeValue=(values.c>1)?values.b:null;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

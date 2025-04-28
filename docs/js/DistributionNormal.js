@@ -112,11 +112,15 @@ class NormalDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+mu+endMathML;
     const varianceFormula=beginMathML+"<msup>"+sigma+"<mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+mu+endMathML;
+    const modeFormula=beginMathML+mu+endMathML;
 
     const meanValue=values.mu;
     const varianceValue=values.sigma**2;
+    const medianValue=values.mu;
+    const modeValue=values.mu;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

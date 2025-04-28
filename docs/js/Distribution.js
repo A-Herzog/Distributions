@@ -54,6 +54,7 @@ class ProbabilityDistribution {
   #calcResults;
   _checkBoxMean;
   _checkBoxStd;
+  _checkBoxMedian;
   _inputMinX;
   _inputMax;
   _checkAutoRange;
@@ -856,6 +857,32 @@ class ProbabilityDistribution {
   }
 
   /**
+   * Adds a show median in diagram checkbox
+   * @param {Object} parent Parent element
+   */
+  _addShowMedian(parent) {
+    const check=document.createElement("div");
+    parent.appendChild(check);
+    check.className="form-check small";
+    check.style.display="inline-block";
+
+    const checkbox=document.createElement("input")
+    check.appendChild(checkbox);
+    checkbox.type="checkbox";
+    this._checkBoxMedian=checkbox;
+    checkbox.className="form-check-input";
+    checkbox.id="showMedian"+this.constructor.name;
+    checkbox.onchange=e=>this._fireParameterUpdated();
+
+    const label=document.createElement("label");
+    check.appendChild(label);
+    label.innerHTML=language.distributions.showMedian;
+    label.className="form-check-label pe-3";
+    label.style.userSelect="none";
+    label.htmlFor="showMedian"+this.constructor.name;
+  }
+
+  /**
    * Adds x range input and checkboxes
    * @param {Object} parent Parent element
    */
@@ -866,7 +893,7 @@ class ProbabilityDistribution {
     /* Min X */
 
     parent.appendChild(div=document.createElement("div"));
-    div.className="input-group input-group-sm mb-3 ms-3";
+    div.className="input-group input-group-sm mb-3 mt-3";
     div.style.display="inline-flex";
     div.style.width="150px";
 
@@ -1105,6 +1132,11 @@ class ProbabilityDistribution {
     /* Show E[X]+-Std[X] in diagram */
     this._addShowStd(this.canvasInfo);
 
+    /* Show median in diagram */
+    this._addShowMedian(this.canvasInfo);
+
+    this.canvasInfo.appendChild(document.createElement("br"));
+
     this._addRangeSetup(this.canvasInfo);
 
     this.canvasInfo.appendChild(document.createElement("br"));
@@ -1156,6 +1188,8 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
   #diagramXValues;
   #mean;
   #variance;
+  #median;
+
   /**
    * Constructor
    * @param {string} name Name of the probability distribution
@@ -1219,10 +1253,23 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
    * @param {Number} meanValue Expected value to be displayed (null if no value is to be output)
    * @param {String} varianceFormula Variance formula to be displayed
    * @param {Number} varianceValue Variance to be displayed (null if no value is to be output)
+   * @param {String} medianFormula Median formula to be displayed (optional, defaults to null)
+   * @param {Number} medianValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
+   * @param {String} modeFormula Mode formula to be displayed (optional, defaults to null)
+   * @param {Number} modeValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
    */
-  _setDiscreteCharacteristics(meanFormula, meanValue, varianceFormula, varianceValue) {
+  _setDiscreteCharacteristics(meanFormula, meanValue, varianceFormula, varianceValue, medianFormula=null, medianValue=null, modeFormula=null, modeValue=null) {
     this.#mean=meanValue;
     this.#variance=varianceValue;
+    this.#median=medianValue;
+
+    const nameE="<a href='https://de.wikipedia.org/wiki/Erwartungswert' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsE+"</a>";
+    const nameVar="<a href='https://de.wikipedia.org/wiki/Varianz' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsVar+"</a>";
+    const nameStd="<a href='https://de.wikipedia.org/wiki/Standardabweichung' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsStd+"</a>";
+    const nameCV="<a href='https://de.wikipedia.org/wiki/Variationskoeffizient' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsCV+"</a>";
+    const nameSCV="<a href='https://de.wikipedia.org/wiki/Variationskoeffizient#Quadrierter_Variationskoeffizient_f%C3%BCr_eine_Zufallsvariable' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsSCV+"</a>";
+    const nameMedian="<a href='https://de.wikipedia.org/wiki/Median_(Stochastik)' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsMedian+"</a>";
+    const nameMode="<a href='https://de.wikipedia.org/wiki/Modus_(Stochastik)' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsMode+"</a>";
 
     const X=variable("X");
     const exprE=beginMathML+defE("E",X,false)+endMathML;
@@ -1230,19 +1277,27 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     const exprStd=beginMathML+defE("Std",X,false)+endMathML;
     const exprCV=beginMathML+defE("CV",X,false)+endMathML;
     const exprSCV=beginMathML+defE("SCV",X,false)+endMathML;
+    const exprMedian=beginMathML+"<mover><mi>x</mi><mi>~</mi></mover>"+endMathML;
+    const exprMode=beginMathML+"<msub>"+variable("x")+variable("mod")+"</msub>"+endMathML;
 
     const lines=[];
     if (meanValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
+      lines.push([nameE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
     }
     if (varianceValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
-      lines.push([language.distributions.infoCharacteristicsStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
+      lines.push([nameVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
+      lines.push([nameStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
     }
-    if (meanValue!==null && varianceValue!==null && meanValue>0) {
+    if (meanValue!==null && varianceValue!==null && meanValue>0 && isFinite(varianceValue) && isFinite(meanValue)) {
       const scv=varianceValue/(meanValue**2);
-      lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
-      lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
+      lines.push([nameCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
+      lines.push([nameSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
+    }
+    if (medianValue!==null) {
+      lines.push([nameMedian+"&nbsp;",exprMedian,"=",medianFormula,"&approx;",formatNumberWithTitle(medianValue)]);
+    }
+    if (modeValue!==null) {
+      lines.push([nameMode+"&nbsp;",exprMode,"=",modeFormula,"&approx;",formatNumberWithTitle(modeValue)]);
     }
 
     const heading="<caption class='visually-hidden'>Characteristics</caption><tr class='visually-hidden'><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristic+"</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicSymbol+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicFormula+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicValue+"</th></tr>";
@@ -1308,6 +1363,10 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
           this.#chartOptions.plugins.annotation.annotations.line3={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]+Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
         }
       }
+    }
+    if (isFinite(this.#median) && this.#median>=minX && this.#median<=maxX && this._checkBoxMedian && this._checkBoxMedian.checked) {
+      const x=this.#median+minX+paddingX;
+      this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: language.distributions.infoCharacteristicsMedian, display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
     }
     this._drawChart({
       data: {
@@ -1424,6 +1483,7 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
   #diagramXValues;
   #mean;
   #variance;
+  #median;
 
   /**
    * Constructor
@@ -1493,11 +1553,24 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
    * @param {Number} meanValue Expected value to be displayed (null if no value is to be output)
    * @param {String} varianceFormula Variance formula to be displayed
    * @param {Number} varianceValue Variance to be displayed (null if no value is to be output)
-   * @param {Object} infoLines Optional array of additional lines. Each line is an array of 6 strings.
+   * @param {String} medianFormula Median formula to be displayed (optional, defaults to null)
+   * @param {Number} medianValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
+   * @param {String} modeFormula Mode formula to be displayed (optional, defaults to null)
+   * @param {Number} modeValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
+   * @param {Object} infoLines Optional array of additional lines. Each line is an array of 6 strings (optional, defaults to null).
    */
-  _setContinuousCharacteristics(meanFormula, meanValue, varianceFormula, varianceValue, infoLines=null) {
+  _setContinuousCharacteristics(meanFormula, meanValue, varianceFormula, varianceValue, medianFormula=null, medianValue=null, modeFormula=null, modeValue=null, infoLines=null) {
     this.#mean=meanValue;
     this.#variance=varianceValue;
+    this.#median=medianValue;
+
+    const nameE="<a href='https://de.wikipedia.org/wiki/Erwartungswert' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsE+"</a>";
+    const nameVar="<a href='https://de.wikipedia.org/wiki/Varianz' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsVar+"</a>";
+    const nameStd="<a href='https://de.wikipedia.org/wiki/Standardabweichung' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsStd+"</a>";
+    const nameCV="<a href='https://de.wikipedia.org/wiki/Variationskoeffizient' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsCV+"</a>";
+    const nameSCV="<a href='https://de.wikipedia.org/wiki/Variationskoeffizient#Quadrierter_Variationskoeffizient_f%C3%BCr_eine_Zufallsvariable' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsSCV+"</a>";
+    const nameMedian="<a href='https://de.wikipedia.org/wiki/Median_(Stochastik)' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsMedian+"</a>";
+    const nameMode="<a href='https://de.wikipedia.org/wiki/Modus_(Stochastik)' title='"+language.distributions.infoCharacteristicsWikipedia+"' target='_blank'>"+language.distributions.infoCharacteristicsMode+"</a>";
 
     const X=variable("X");
     const exprE=beginMathML+defE("E",X,false)+endMathML;
@@ -1505,20 +1578,28 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     const exprStd=beginMathML+defE("Std",X,false)+endMathML;
     const exprCV=beginMathML+defE("CV",X,false)+endMathML;
     const exprSCV=beginMathML+defE("SCV",X,false)+endMathML;
+    const exprMedian=beginMathML+"<mover><mi>x</mi><mi>~</mi></mover>"+endMathML;
+    const exprMode=beginMathML+"<msub>"+variable("x")+variable("mod")+"</msub>"+endMathML;
 
     const lines=[];
     if (infoLines!=null) infoLines.forEach(line=>lines.push(line));
     if (meanValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
+      lines.push([nameE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
     }
     if (varianceValue!==null) {
-      lines.push([language.distributions.infoCharacteristicsVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
-      lines.push([language.distributions.infoCharacteristicsStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
+      lines.push([nameVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
+      lines.push([nameStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
     }
-    if (meanValue!==null && varianceValue!==null && meanValue>0) {
+    if (meanValue!==null && varianceValue!==null && meanValue>0 && isFinite(varianceValue) && isFinite(meanValue)) {
       const scv=varianceValue/(meanValue**2);
-      lines.push([language.distributions.infoCharacteristicsCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
-      lines.push([language.distributions.infoCharacteristicsSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
+      lines.push([nameCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
+      lines.push([nameSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
+    }
+    if (medianValue!==null) {
+      lines.push([nameMedian+"&nbsp;",exprMedian,"=",medianFormula,"&approx;",formatNumberWithTitle(medianValue)]);
+    }
+    if (modeValue!==null) {
+      lines.push([nameMode+"&nbsp;",exprMode,"=",modeFormula,"&approx;",formatNumberWithTitle(modeValue)]);
     }
 
     const heading="<caption class='visually-hidden'>Characteristics</caption><tr class='visually-hidden'><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristic+"</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicSymbol+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicFormula+"</th><th class='pb-3' scope='col'>-</th><th class='pb-3' scope='col'>"+language.distributions.infoCharacteristicValue+"</th></tr>";
@@ -1579,6 +1660,10 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
           this.#chartOptions.plugins.annotation.annotations.line3={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]+Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
         }
       }
+    }
+    if (isFinite(this.#median) && this.#median>=minX && this.#median<=maxX && this._checkBoxMedian && this._checkBoxMedian.checked) {
+      const x=(this.#median-minX)/(maxX-minX)*steps;
+      this.#chartOptions.plugins.annotation.annotations.line4={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [2,2], borderWidth: 2, label: {content: language.distributions.infoCharacteristicsMedian, display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
     }
     this._drawChart({
       data: {

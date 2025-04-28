@@ -99,11 +99,15 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+k+endMathML;
     const varianceFormula=beginMathML+"<mn>2</mn>"+k+endMathML;
+    const medianFormula=beginMathML+k+"<msup><mrow><mo>(</mo><mn>1</mn>"+minus+frac("<mn>2</mn>","<mn>9</mn>"+k)+"<mo>)</mo></mrow><mn>3</mn></msup>"+endMathML;
+    const modeFormula=beginMathML+defF("max",k+minus+"<mn>2</mn><mo>,</mo><mn>0</mn>",false)+endMathML;
 
     const meanValue=values.k;
     const varianceValue=2*values.k;
+    const medianValue=values.k*(1-2/9/values.k)**3;
+    const modeValue=Math.max(values.k-2,0);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

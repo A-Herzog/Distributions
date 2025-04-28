@@ -130,7 +130,20 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
       varianceValue=values.alpha*values.beta/((values.alpha+values.beta)**2*(values.alpha+values.beta+1))*(values.b-values.a);
     }
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    let medianFormula=null;
+    let medianValue=null;
+    let modeFormula=null;
+    let modeValue=null;
+    if (values.b>values.a && values.alpha>1 && values.beta>1) {
+      medianFormula=beginMathML+a+plus+"<ms>(</ms>"+b+minus+a+"<ms>)</ms>"+mul+frac(alpha+minus+frac("<mn>1</mn>","<mn>3</mn>"),alpha+plus+beta+minus+frac("<mn>2</mn>","<mn>3</mn>"));
+      modeFormula=beginMathML+a+plus+"<ms>(</ms>"+b+minus+a+"<ms>)</ms>"+mul+frac(alpha+minus+"<mn>1</mn>",alpha+plus+beta+minus+"<mn>2</mn>");
+      medianValue=(values.alpha-1/3)/(values.alpha+values.beta-2/3);
+      medianValue=(values.a+medianValue)*(values.b-values.a);
+      modeValue=(values.alpha-1)/(values.alpha+values.beta-2);
+      modeValue=(values.a+modeValue)*(values.b-values.a);
+    }
+
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

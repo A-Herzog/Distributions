@@ -18,7 +18,7 @@ export {HalfNormalDistribution};
 
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, setRPlus0, isin, setRHTML, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus} from './MathMLTools.js';
+import {beginMathML, endMathML, setRPlus0, isin, setRHTML, setRPlusHTML, setRPlus0HTML, variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
 import {erf} from './MathTools.js';
 import {formatNumber} from './NumberTools.js';
 
@@ -30,9 +30,12 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
   #pdfFactor1;
   #pdfFactor2;
   #cdfFactor;
+  #medianFactor;
 
   constructor() {
     super(language.distributions.halfNormal.name);
+
+    this.#medianFactor=0.674490; /* sqrt(pi)*erf^{-1}(1/2) */
 
     this.support=setRPlus0HTML;
     this.infoText=language.distributions.halfNormal.info;
@@ -123,11 +126,15 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac("<mn>1</mn>",theta)+plus+s+endMathML;
     const varianceFormula=beginMathML+frac(pi+minus+"<mn>2</mn>","<mn>2</mn><msup>"+theta+"<mn>2</mn></msup>")+endMathML;
+    const medianFormula=beginMathML+frac("<msqrt>"+pi+"</msqrt>",theta)+mul+"<msup><mi mathvariant='normal'>erf</mi><mrow>"+minus+"<mn>1</mn></mrow></msup><mo>(</mo>"+frac("<mn>1</mn>","<mn>2</mn>")+"<mo>)</mo>"+plus+s;
+    const modeFormula=beginMathML+s+endMathML;
 
     const meanValue=values.mu+values.s;
     const varianceValue=(Math.PI-2)/(2*this.#theta**2);
+    const modeValue=values.s;
+    const medianValue=values.mu*this.#medianFactor+values.s;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,info);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue,info);
 
     /* Diagram */
 

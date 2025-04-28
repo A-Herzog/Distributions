@@ -108,11 +108,17 @@ class FrechetDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+delta+plus+beta+mul+defF(Gamma,"<mn>1</mn>"+minus+frac("<mn>1</mn>",alpha),false)+endMathML;
     const varianceFormula=beginMathML+"<msup>"+beta+"<mn>2</mn></msup><mo>(</mo>"+defF(Gamma,"<mn>1</mn>"+minus+frac("<mn>2</mn>",alpha),false)+minus+defF(Gamma,"<mn>1</mn>"+minus+frac("<mn>1</mn>",alpha),false)+"<mo>)</mo>"+endMathML;
+    let medianFormula=null;
+    if (values.alpha>1) medianFormula=beginMathML+delta+plus+frac(beta,"<msqrt>"+alpha+"</msqrt>"+defF("log","<mn>2</mn>",false))+endMathML;
+    const modeFormula=beginMathML+delta+plus+beta+"<msup><mrow><mo>(</mo>"+frac(alpha,"<mn>1</mn>"+plus+alpha)+"<mo>)</mo></mrow><mrow><mn>1</mn><mo>/</mo>"+alpha+"</mrow></msup>"+endMathML;
 
     const meanValue=(values.alpha<=1)?Infinity:values.delta+values.beta*jStat.gammafn(1-1/values.alpha);
     const varianceValue=(values.alpha<=2)?Infinity:values.beta**2*(jStat.gammafn(1-2/values.alpha)-jStat.gammafn(1-1/values.alpha)**2);
+    let medianValue=null;
+    if (values.alpha>1) medianValue=values.delta+values.beta/(Math.sqrt(values.alpha)*Math.LN2);
+    const modeValue=values.delta+values.beta*Math.pow(values.alpha/(1+values.alpha),1/values.alpha);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

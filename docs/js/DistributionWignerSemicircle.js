@@ -115,7 +115,7 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     const meanValue=values.m;
     const varianceValue=values.R**2/4;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue,meanFormula,meanValue);
 
     /* Diagram */
 

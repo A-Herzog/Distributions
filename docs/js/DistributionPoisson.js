@@ -18,7 +18,7 @@ export {PoissonDistribution};
 
 import {DiscreteProbabilityDistribution, getDiscreteDefaultCDF} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, variable, minus, mul, equals, isin, defP, frac, setRPlusHTML, setN0HTML} from './MathMLTools.js';
+import {beginMathML, endMathML, variable, plus, minus, mul, equals, isin, defP, frac, setRPlusHTML, setN0HTML} from './MathMLTools.js';
 
 
 
@@ -64,11 +64,13 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
 
     const meanFormula=beginMathML+lambda+endMathML;
     const varianceFormula=beginMathML+lambda+endMathML;
+    const medianFormula=beginMathML+"<mo>&lfloor;</mo>"+lambda+plus+frac("<mn>1</mn>","<mn>3</mn>")+minus+frac("<mn>1</mn>","<mn>50</mn>"+lambda)+"<mo>&rfloor;</mo>"+endMathML;
 
     const meanValue=values.lambda;
     const varianceValue=values.lambda;
+    const medianValue=Math.floor(values.lambda+1/3-1/(50*values.lambda));
 
-    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue);
 
     /* Count density */
 

@@ -104,6 +104,8 @@ class LogLogisticDistribution extends ContinuousProbabilityDistribution {
     const b=frac(pi,beta);
     const sinb=defF("sin",b,false);
     const varianceFormula=beginMathML+"<msup>"+alpha+"<mn>2</mn></msup>"+mul+"<mo>(</mo>"+frac("<mn>2</mn>"+b,defF("sin","<mn>2</mn>"+b,false))+minus+frac("<msup><mrow><mo>(</mo>"+b+"<mo>)</mo></mrow><mn>2</mn></msup>","<msup><mrow><mo>(</mo>"+sinb+"<mo>)</mo></mrow><mn>2</mn></msup>")+"<mo>)</mo>"+endMathML;
+    const medianFormula=beginMathML+alpha+endMathML;
+    const modeFormula=(values.beta>1)?(beginMathML+alpha+"<msup><mrow><mo>(</mo>"+frac(beta+minus+"<mn>1</mn>",beta+plus+"<mn>1</mn>")+"<mo>)</mo></mrow>"+frac("<mn>1</mn>",beta)+"</msup>"+endMathML):(beginMathML+"<mn>0</mn>"+endMathML);
 
     const meanValue=values.alpha*Math.PI/values.beta/Math.sin(Math.PI/values.beta);
     let varianceValue=0;
@@ -112,8 +114,10 @@ class LogLogisticDistribution extends ContinuousProbabilityDistribution {
 		  const sinb=Math.sin(b);
 		  varianceValue=values.alpha**2*(2*b/Math.sin(2*b)-b**2/(sinb**2));
     }
+    const medianValue=values.alpha;
+    const modeValue=(values.beta>1)?(values.alpha*Math.pow((values.beta-1)/(values.beta+1),1/values.beta)):0;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue);
 
     /* Diagram */
 

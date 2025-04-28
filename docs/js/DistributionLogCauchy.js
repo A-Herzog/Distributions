@@ -94,7 +94,10 @@ class LogCauchyDistribution extends ContinuousProbabilityDistribution {
   _calcDistribution(values) {
     /* Characteristics */
 
-    this._setContinuousCharacteristics(beginMathML+"<mi>&infin;</mi>"+endMathML,Number.POSITIVE_INFINITY,beginMathML+"<mi>&infin;</mi>"+endMathML,Number.POSITIVE_INFINITY,null);
+    const inftyFormula=beginMathML+"<mi>&infin;</mi>"+endMathML;
+    const medianFormula=beginMathML+"<msup>"+variable("e")+variable("&mu;")+"</msup>"+endMathML;
+
+    this._setContinuousCharacteristics(inftyFormula,Number.POSITIVE_INFINITY,inftyFormula,Number.POSITIVE_INFINITY,medianFormula,Math.exp(values.mu));
 
     /* Diagram */
 

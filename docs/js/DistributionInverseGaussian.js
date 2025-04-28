@@ -104,11 +104,13 @@ class InverseGaussianDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+mu+endMathML;
     const varianceFormula=beginMathML+frac("<msup>"+mu+"<mn>3</mn></msup>",lambda)+endMathML;
+    const modeFormula=beginMathML+mu+"<mo>[</mo><msqrt><mn>1</mn>"+plus+frac("<mn>9</mn><msup>"+mu+"<mn>2</mn></msup>","<mn>4</mn><msup>"+lambda+"<mn>2</mn></msup>")+"</msqrt>"+minus+frac("<mn>3</mn>"+mu,"<mn>2</mn>"+lambda)+"<mo>]</mo>"+endMathML;
 
     const meanValue=values.mu;
     const varianceValue=values.mu**3/values.lambda;
+    const modeValue=values.mu*(Math.sqrt(1+9*values.mu**2/4/values.lambda**2)-3*values.mu/2/values.lambda);
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

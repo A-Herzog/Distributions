@@ -104,11 +104,13 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+alpha+mul+beta+endMathML;
     const varianceFormula=beginMathML+alpha+mul+"<msup>"+beta+"<mn>2</mn></msup>"+endMathML;
+    const modeFormula=(values.alpha>=1)?(beginMathML+"<mo>(</mo>"+alpha+minus+"<mn>1</mn><mo>)</mo>"+beta+endMathML):(beginMathML+"<mn>0</mn>"+endMathML);
 
     const meanValue=values.alpha*values.beta;
     const varianceValue=values.alpha*values.beta**2;
+    const modeValue=(values.alpha>=1)?((values.alpha-1)*values.beta):0;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,null,null,modeFormula,modeValue);
 
     /* Diagram */
 

@@ -115,11 +115,15 @@ class RayleighDistribution extends ContinuousProbabilityDistribution {
     info.push(["",beginMathML+sigma+endMathML,"=",beginMathML+m+mul+"<msqrt>"+pi+"<mo>/</mo><mn>2</mn></msqrt>"+endMathML,"&approx;",formatNumber(this.#sigma)]);
     const meanFormula=beginMathML+m+"<mo>=</mo>"+sigma+mul+"<msqrt>"+pi+"<mo>/</mo><mn>2</mn></msqrt>"+endMathML;
     const varianceFormula=beginMathML+frac("<mn>4</mn>"+minus+pi,"<mn>2</mn>")+mul+"<msup>"+sigma+"<mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+"<msqrt><mn>2</mn>"+defF("log","<mn>2</mn>",false)+"</msqrt>"+mul+sigma+endMathML;
+    const modeFormula=beginMathML+sigma+endMathML;
 
     const meanValue=values.m;
     const varianceValue=(4-Math.PI)/2*this.#sigma**2;
+    const medianValue=this.#sigma*Math.sqrt(2*Math.LOG2E);
+    const modeValue=this.#sigma;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,info);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,medianValue,modeFormula,modeValue,info);
 
     /* Diagram */
 

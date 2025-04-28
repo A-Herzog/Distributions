@@ -51,7 +51,7 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
     let pdf="";
     pdf+=beginMathML;
     pdf+=defF(f,x);
-    pdf+=frac("<mn>1</mn>",pi+"<msqrt>"+frac(x+minus+a,b+minus+a)+mul+frac("<mo>(</mo><mn>1</mn>"+minus+x+"<mo>)</mo>"+minus+a,b+minus+a)+"</msqrt>")
+    pdf+=frac("<mn>1</mn>",pi+"<msqrt>"+frac(x+minus+a,b+minus+a)+mul+"<mo>(</mo><mn>1</mn>"+minus+frac(x+minus+a,b+minus+a)+"<mo>)</mo></msqrt>")
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
@@ -92,7 +92,7 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
 
   #getPDF(values, x) {
     x=(x-values.a)/(values.b-values.a);
-    if (x<=0 || x>=1) return 0;
+    if (x<=0.01 || x>=0.99) return 0;
      return 1/(Math.PI*Math.sqrt(x*(1-x)));
   }
 
@@ -111,11 +111,13 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
 
     const meanFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
     const varianceFormula=beginMathML+frac("<mn>1</mn>","<mn>8</mn>")+"<msup><mrow><mo>(</mo>"+b+minus+a+"<mo>)</mo></mrow><mn>2</mn></msup>"+endMathML;
+    const medianFormula=beginMathML+frac(a+plus+b,"<mn>2</mn>")+endMathML;
 
     const meanValue=(values.a+values.b)/2;
     const varianceValue=1/8*(values.b-values.a)**2;
+    const medianValue=(values.a+values.b)/2;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,medianFormula,meanValue);
 
     /* Diagram */
 

@@ -103,7 +103,7 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     const meanValue=values.mu;
     const varianceValue=2*values.sigma**2;
 
-    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
+    this._setContinuousCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue,meanFormula,meanValue,meanFormula,meanValue);
 
     /* Diagram */
 
