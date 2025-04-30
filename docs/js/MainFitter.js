@@ -109,14 +109,24 @@ function calcHistogram(data) {
     i++;
   }
 
+  let isDiscrete=true;
+
   /* Calculate histogram */
   for (let value of data.values) {
+    if (isDiscrete && value%1!=0) isDiscrete=false;
     const index=Math.floor((value-x1)/step);
     data.histogram[index].n++;
   }
 
   /* Calculate probabilities */
   for (let i=0;i<data.histogram.length;i++) data.histogram[i].p=data.histogram[i].n/data.count;
+
+  /* Build histogram for discrete values */
+  if (isDiscrete) {
+    data.histogramDiscrete=Array.from({length: data.max-data.min+1},_=>0);
+    for (let value of data.values) data.histogramDiscrete[value-data.min]++;
+    for (let i=0;i<data.histogramDiscrete.length;i++) data.histogramDiscrete[i]/=data.count;
+  }
 }
 
 /**
@@ -180,14 +190,23 @@ function loadInputValues(values) {
         delta+=((cdf2-cdf1)-step.p)**2;
       } else {
         /* Discrete */
-        let cdf=0;
-        for (let i=Math.floor(step.x1);i<=Math.floor(step.x2);i++) {
-          let fraction=1;
-          if (i<step.x1) fraction=(i+1)-step.x1;
-          if (i+1>step.x2) fraction=step.x2-i;
-          cdf+=fit.distribution.calcProbability(fit.parameters,i)*fraction;
+        if (typeof(fitterInput.histogramDiscrete)!='undefined') {
+          /* Fit discrete values */
+          fitterInput.histogramDiscrete.forEach((y,i)=>{
+            const yDist=fit.distribution.calcProbability(fit.parameters,i-fitterInput.min);
+            delta+=(y-yDist)**2;
+          });
+        } else {
+          /* Fit general values to discrete distribution */
+          let cdf=0;
+          for (let i=Math.floor(step.x1);i<=Math.floor(step.x2);i++) {
+            let fraction=1;
+            if (i<step.x1) fraction=(i+1)-step.x1;
+            if (i+1>step.x2) fraction=step.x2-i;
+            cdf+=fit.distribution.calcProbability(fit.parameters,i)*fraction;
+          }
+          delta+=(cdf-step.p)**2;
         }
-        delta+=(cdf-step.p)**2;
       }
       fit.delta=delta;
     }
