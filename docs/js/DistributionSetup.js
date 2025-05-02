@@ -146,7 +146,7 @@ function getDistributionsByName(name) {
  * @returns Instance of the probability distribution matching the given class name (or null if no matching probability distribution object was found)
  */
 function getDistributionByClassName(name) {
-  const result=listDistributions.filter(dist=>dist.constructor.name==name);
+  const result=listDistributions.filter(dist=>dist.constructor.name.toLowerCase()==name.toLowerCase());
   return (result.length!=1)?null:result[0];
 }
 
