@@ -45,6 +45,9 @@ lang.GUI.permaLink="Permalink zu dieser Seite mit diesen Einstellungen";
 lang.GUI.downloadLabel="Diese Webapp steht auch als offline-nutzbare Windows-Anwendung zur Verfügung:";
 lang.GUI.downloadButton="Windows-Anwendung (exe)";
 lang.GUI.toolsLabel="Weitere Hilfsmittel:";
+lang.GUI.size={};
+lang.GUI.size.collapse="Platz sparen";
+lang.GUI.size.expand="Alles anzeigen";
 
 lang.distributions={};
 lang.distributions.typeDiscrete="diskret";
@@ -674,6 +677,9 @@ lang.GUI.permaLink="Permalink to this page with these settings";
 lang.GUI.downloadLabel="This webapp is also available as an offline usable Windows application:";
 lang.GUI.downloadButton="Windows application (exe)";
 lang.GUI.toolsLabel="More tools:";
+lang.GUI.size={};
+lang.GUI.size.collapse="Save space";
+lang.GUI.size.expand="Show all";
 
 lang.distributions={};
 lang.distributions.typeDiscrete="discrete";

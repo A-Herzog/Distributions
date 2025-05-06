@@ -120,14 +120,25 @@ class ProbabilityDistribution {
     return this.#parameters.map(parameter=>parameter.id);
   }
 
-  #addCard(parent, title) {
+  #addCard(parent, title, button) {
     const card=document.createElement("div");
     card.className="card mt-3";
 
     const header=document.createElement("div");
-    header.className="card-header";
-    header.innerHTML=title;
     card.appendChild(header);
+    header.className="card-header";
+
+    if (typeof(button)=='undefined') {
+      header.innerHTML=title;
+    } else {
+      const span=document.createElement("span");
+      header.appendChild(span);
+      span.innerHTML=title;
+      header.appendChild(button);
+      button.type="button";
+      button.classList.add("btn","btn-outline-secondary","btn-sm");
+      button.style="float: right;";
+    }
 
     const body=document.createElement("div");
     body.className="card-body";
@@ -259,6 +270,10 @@ class ProbabilityDistribution {
     let row, col;
     let card;
     let text;
+    let generalCard;
+    let infoLine;
+    let diagramZoomInfo
+    const that=this;
 
     /* Row */
     span.appendChild(row=document.createElement("div"));
@@ -294,6 +309,7 @@ class ProbabilityDistribution {
       link.style.cursor="pointer";
       link.classList.add("link-primary");
     }
+    generalCard=card;
 
     /* Input parameters */
     row.appendChild(col=document.createElement("div"));
@@ -308,22 +324,49 @@ class ProbabilityDistribution {
     }
 
     /* Visualization */
-    card=this.#addCard(span,this.#continuous?language.distributions.infoVisualizationContinuous:language.distributions.infoVisualizationDiscrete);
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="bi bi-arrows-collapse";
+    button.style="float: right;";
+    button.title=language.GUI.size.collapse;
+    button.onclick=()=>{
+      if (!infoLine) return;
+      const show=(infoLine.style.display=='none');
+      generalCard.classList.toggle("small",!show);
+      infoLine.style.display=(show)?'':'none';
+      diagramZoomInfo.style.display=(show)?'':'none';
+      that.#canvasInfo.style.display=(show)?'':'none';
+      button.title=(show)?language.GUI.size.collapse:language.GUI.size.expand;
+      button.classList.toggle("bi-arrows-collapse",show);
+      button.classList.toggle("bi-arrows-expand",!show);
+
+      let height=that.#canvas.style.height;
+      height=parseInt(height.substring(0,height.length-2));
+      if (show) {
+        that.#canvas.style.height=(height*2)+'px';
+        that.#canvas.height=that.#canvas.height*2;
+      } else {
+        that.#canvas.style.height=Math.round(height/2)+'px';
+        that.#canvas.height=Math.round(that.#canvas.height/2);
+      }
+    };
+
+    card=this.#addCard(span,this.#continuous?language.distributions.infoVisualizationContinuous:language.distributions.infoVisualizationDiscrete,button);
     if (this.#pdfText!=null || this.#cdfText!=null) {
-      const p=document.createElement("p");
+      infoLine=document.createElement("p");
       if (this.#pdfText!=null) {
-        p.innerHTML+=(this.#continuous?language.distributions.PDFContinuous:language.distributions.PDFDiscrete)+": "+this.#pdfText;
+        infoLine.innerHTML+=(this.#continuous?language.distributions.PDFContinuous:language.distributions.PDFDiscrete)+": "+this.#pdfText;
       }
-      if (this.#pdfText!=null && this.#cdfText!=null) p.innerHTML+=", ";
+      if (this.#pdfText!=null && this.#cdfText!=null) infoLine.innerHTML+=", ";
       if (this.#cdfText!=null) {
-        p.innerHTML+=language.distributions.CDF+": "+this.#cdfText;
+        infoLine.innerHTML+=language.distributions.CDF+": "+this.#cdfText;
       }
-      card.appendChild(p);
+      card.appendChild(infoLine);
     }
     this.#canvas=document.createElement("canvas");
     card.appendChild(this.#canvas);
 
-    const diagramZoomInfo=document.createElement("div");
+    diagramZoomInfo=document.createElement("div");
     card.appendChild(diagramZoomInfo);
     diagramZoomInfo.className="mt-3 small";
     diagramZoomInfo.innerHTML=language.distributions.infoDiagramZoomInfo;
