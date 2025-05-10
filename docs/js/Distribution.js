@@ -56,7 +56,7 @@ class ProbabilityDistribution {
   _checkBoxStd;
   _checkBoxMedian;
   _inputMinX;
-  _inputMax;
+  _inputMaxX;
   _checkAutoRange;
 
   /**
@@ -940,9 +940,10 @@ class ProbabilityDistribution {
     div.style.display="inline-flex";
     div.style.width="150px";
 
-    div.appendChild(span=document.createElement("span"));
+    div.appendChild(span=document.createElement("label"));
     span.className="input-group-text";
     span.innerHTML="x<sub>min</sub>:=";
+    span.htmlFor="minX"+this.constructor.name;
 
     div.appendChild(this._inputMinX=document.createElement("input"));
     this._inputMinX.type="text";
@@ -959,14 +960,15 @@ class ProbabilityDistribution {
     div.style.display="inline-flex";
     div.style.width="150px";
 
-    div.appendChild(span=document.createElement("span"));
+    div.appendChild(span=document.createElement("label"));
     span.className="input-group-text";
     span.innerHTML="x<sub>max</sub>:=";
+    span.htmlFor="maxX"+this.constructor.name;
 
     div.appendChild(this._inputMaxX=document.createElement("input"));
     this._inputMaxX.type="text";
     this._inputMaxX.className="form-control";
-    this._inputMaxX.id="minX"+this.constructor.name;
+    this._inputMaxX.id="maxX"+this.constructor.name;
     this._inputMaxX.disabled=true;
     this._inputMaxX.oninput=e=>{if (!this._inputMaxX.disabled) this._fireParameterUpdated();}
     this._inputMaxX.onkeyup=e=>{if (!this._inputMaxX.disabled) this._fireParameterUpdated();}
