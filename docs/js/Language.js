@@ -213,6 +213,9 @@ lang.fitter.outputNoFit="keine Anpassung an die Eingabedaten möglich";
 lang.fitter.histogram="Histogramm";
 lang.fitter.fittedDistribution="Angepasste Verteilung";
 lang.fitter.openInEditor="Verteilung in Editor laden";
+lang.fitter.infoDelta="Quadratische Abweichung zwischen Histogramm und Dichte. Je kleiner dieser Wert ist, desto besser beschreibt die Verteilungsfunktion die Werte des Histogramms.";
+lang.fitter.infoPValueKS="p-Value für den Kolmogorov-Smirnov-Anpassungstest. Je höher ein p-Wert ist, desto schwerer ist es, die Hypothese abzulehnen, dass der Messreihe die jeweilige Verteilung zugrunde liegt.";
+lang.fitter.infoPValueChiSqr="p-Value für den &chi;²-Anpassungstest. Je höher ein p-Wert ist, desto schwerer ist es, die Hypothese abzulehnen, dass der Messreihe die jeweilige Verteilung zugrunde liegt.";
 
 lang.lcg={};
 lang.lcg.title="Linearer Kongruenzgenerator";
@@ -845,6 +848,9 @@ lang.fitter.outputNoFit="no fit possible for the input data";
 lang.fitter.histogram="Histogram";
 lang.fitter.fittedDistribution="Fitted distribution";
 lang.fitter.openInEditor="Open in distribution editor";
+lang.fitter.infoDelta="Square discrepancy between histogram and density. The smaller this value is, the better the distribution function describes the values of the histogram.";
+lang.fitter.infoPValueKS="p-value for the Kolmogorov-Smirnov adjustment test. The higher the p-value, the more difficult it is to reject the hypothesis that the samples are based on the respective distribution.";
+lang.fitter.infoPValueChiSqr="p-value for the &chi;² adjustment test. The higher the p-value, the more difficult it is to reject the hypothesis that the samples are based on the respective distribution.";
 
 lang.lcg={};
 lang.lcg.title="Linear congruential generator";

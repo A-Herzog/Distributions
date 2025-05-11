@@ -22,6 +22,7 @@ import {getFloat} from './NumberTools.js';
 import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {listDistributions} from './DistributionSetup.js';
 import {loadSearchStringParameters} from "./StringTools.js";
+import {Chi2Distribution} from "./DistributionChi2.js";
 
 /**
  * Fills in the language strings to the GUI elements.
@@ -94,10 +95,11 @@ function inputValuesDrag(ev) {
  */
 function calcHistogram(data) {
   /* Calculate limits and step wide */
-  const x1=Math.floor(data.min);
+  let x1=Math.floor(data.min);
+  if (x1>0 && x1<5 && x2>10) x1=0;
   const x2=Math.ceil(data.max)+1;
   /* const step=(x2-x1<=100)?1:((x2-x1)/100); - makes nicer x-axis values but generates worse fits for small ranges */
-  const step=(x2-x1)/100;
+  const step=(x2-x1)/99;
 
   /* Prepare histogram object */
   data.histogram=[];
@@ -130,6 +132,94 @@ function calcHistogram(data) {
 }
 
 /**
+ * Performs a Kolmogorov-Smirnov adjustment test for sample values which are discrete values.
+ * @param {Object} distribution Distribution object to fit the sample values to
+ * @param {Object} parameters Parameters object for the parameters for the distribution
+ * @param {Array} histogram Histogram of the sample values
+ * @returns p-value
+ */
+function calcKCDiscrete(distribution, parameters, histogram) {
+let maxDiff=0;
+  let pdf=0;
+  for (let i=0;i<histogram.length;i++) {
+    pdf+=histogram[i];
+    const distPDF=distribution.calcProbability(parameters,i);
+    if (pdf>0.9999) break;
+    maxDiff=Math.max(maxDiff,Math.abs(pdf-distPDF));
+  }
+  return Math.min(1,2*Math.exp(-2*maxDiff**2));
+}
+
+/**
+ * Performs a Chi-squared adjustment test for sample values which are discrete values.
+ * @param {Object} distribution Distribution object to fit the sample values to
+ * @param {Object} parameters Parameters object for the parameters for the distribution
+ * @param {Array} histogram Histogram of the sample values
+ * @returns p-value
+ */
+function calcChiSqrDiscrete(distribution, parameters, histogram) {
+  let sumRelDif=0;
+	let steps=0;
+
+  for (let i=0;i<histogram.length;i++) {
+    const delta=distribution.calcProbability(parameters,i);
+		if (delta<=0) continue;
+		steps++;
+		sumRelDif+=histogram.length*(histogram[i]-delta)**2/delta;
+  }
+
+  const chiSquaredDistribution=new Chi2Distribution();
+  return 1-chiSquaredDistribution.calcProbability({k: Math.max(steps-1,1)},sumRelDif)[1];
+}
+
+/**
+ * Performs a Kolmogorov-Smirnov adjustment test for sample values.
+ * @param {Object} distribution Distribution object to fit the sample values to
+ * @param {Object} parameters Parameters object for the parameters for the distribution
+ * @param {Array} histogram Histogram of the sample values
+ * @returns p-value
+ */
+function calcKCContinuous(distribution, parameters, histogram) {
+  let maxDiff=0;
+  let cdf=0;
+  for (let step of histogram) {
+    cdf+=step.p;
+    const distCDF=distribution.calcProbability(parameters,step.x2)[1];
+    if (cdf>0.9999) break;
+    maxDiff=Math.max(maxDiff,Math.abs(cdf-distCDF));
+  }
+
+  return Math.min(1,2*Math.exp(-2*maxDiff**2));
+}
+
+/**
+ * Performs a Chi-squared adjustment test for sample values.
+ * @param {Object} distribution Distribution object to fit the sample values to
+ * @param {Object} parameters Parameters object for the parameters for the distribution
+ * @param {Array} histogram Histogram of the sample values
+ * @returns p-value
+ */
+function calcChiSqrContinuous(distribution, parameters, histogram) {
+  let sumRelDif=0;
+	let steps=0;
+
+  let d1=distribution.calcProbability(parameters,histogram[0].x1)[1];
+  const count=histogram.map(step=>step.n).reduce((a,b)=>a+b);
+  for (let step of histogram) {
+    const d2=distribution.calcProbability(parameters,step.x2)[1];
+    const delta=d2-d1;
+    if (d2>0.9999) break;
+		if (delta<=0) continue;
+		steps++;
+		sumRelDif+=count*(step.p-delta)**2/delta;
+    d1=d2;
+  }
+
+  const chiSquaredDistribution=new Chi2Distribution();
+  return 1-chiSquaredDistribution.calcProbability({k: Math.max(steps-1,1)},sumRelDif)[1];
+}
+
+/**
  * Loads input values into the fitter.
  * @param {String} values Input values as a string (loaded file)
  */
@@ -138,88 +228,99 @@ function loadInputValues(values) {
   outputCard.style.display="none";
   outputBody.innerHTML="";
 
-  /* Preprocess input values */
-  values=values.replaceAll("\r\n","\n");
-  values=values.replaceAll("\r","\n");
-  values=values.split("\n").map(v=>getFloat(v)).filter(v=>v!=null);
-  const count=values.length;
-  if (count==0) {inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError; return;}
+  setTimeout(()=>{
+    /* Preprocess input values */
+    values=values.replaceAll("\r\n","\n");
+    values=values.replaceAll("\r","\n");
+    values=values.split("\n").map(v=>getFloat(v)).filter(v=>v!=null);
+    const count=values.length;
+    if (count==0) {inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError; return;}
 
-  /* Calculate characteristics */
-  const min=values.reduce((a,b)=>Math.min(a,b));
-  const max=values.reduce((a,b)=>Math.max(a,b));
-  const sum=values.reduce((a,b)=>a+b);
-  const sum2=values.reduce((a,b)=>a+b**2);
-  const mean=sum/count;
-  const std=(count==1)?0:(Math.sqrt(sum2/(count-1)-(sum**2)/count/(count-1)));
+    /* Calculate characteristics */
+    const min=values.reduce((a,b)=>Math.min(a,b));
+    const max=values.reduce((a,b)=>Math.max(a,b));
+    const sum=values.reduce((a,b)=>a+b);
+    const sum2=values.reduce((a,b)=>a+b**2);
+    const mean=sum/count;
+    const std=(count==1)?0:(Math.sqrt(sum2/(count-1)-(sum**2)/count/(count-1)));
 
-  /* Display characteristics */
-  const info=[];
-  info.push("<strong>"+language.fitter.loadedValues+"</strong>");
-  info.push(language.fitter.loadedValuesCount+"="+values.length);
-  info.push(language.fitter.loadedValuesMinimum+"="+min.toLocaleString());
-  info.push(language.fitter.loadedValuesMaximum+"="+max.toLocaleString());
-  info.push(language.fitter.loadedValuesMean+"="+mean.toLocaleString());
-  info.push(language.fitter.loadedValuesStandardDeviation+"="+std.toLocaleString());
-  inputBodyValuesInfo.innerHTML=info.join("<br>");
+    /* Display characteristics */
+    const info=[];
+    info.push("<strong>"+language.fitter.loadedValues+"</strong>");
+    info.push(language.fitter.loadedValuesCount+"="+values.length);
+    info.push(language.fitter.loadedValuesMinimum+"="+min.toLocaleString());
+    info.push(language.fitter.loadedValuesMaximum+"="+max.toLocaleString());
+    info.push(language.fitter.loadedValuesMean+"="+mean.toLocaleString());
+    info.push(language.fitter.loadedValuesStandardDeviation+"="+std.toLocaleString());
+    inputBodyValuesInfo.innerHTML=info.join("<br>");
 
-  /* Build fitter input object */
-  const fitterInput={count: count, min: min, max: max, mean: mean, std: std, values: values};
-  calcHistogram(fitterInput);
+    /* Build fitter input object */
+    const fitterInput={count: count, min: min, max: max, mean: mean, std: std, values: values};
+    calcHistogram(fitterInput);
 
-  /* Calc fit */
-  let fits=[];
-  let fitsNotTheseValues=[];
-  for (let distribution of listDistributions) {
-    if (!distribution.canFit) continue;
-    const fitterResult=distribution.fitParameters(fitterInput);
-    if (fitterResult!=null) {
-      fits.push({distribution: distribution, parameters: fitterResult});
-    } else {
-      fitsNotTheseValues.push(distribution);
-    }
-  }
-  for (let fit of fits) {
-    fit.distribution.setParameters(fit.parameters);
-    let delta=0;
-    for (let step of fitterInput.histogram) {
-      if (fit.distribution instanceof ContinuousProbabilityDistribution) {
-        /* Continuous */
-        const cdf1=fit.distribution.calcProbability(fit.parameters,step.x1)[1];
-        const cdf2=fit.distribution.calcProbability(fit.parameters,step.x2)[1];
-        delta+=((cdf2-cdf1)-step.p)**2;
+    /* Calc fit */
+    let fits=[];
+    let fitsNotTheseValues=[];
+    for (let distribution of listDistributions) {
+      if (!distribution.canFit) continue;
+      const fitterResult=distribution.fitParameters(fitterInput);
+      if (fitterResult!=null) {
+        fits.push({distribution: distribution, parameters: fitterResult});
       } else {
-        /* Discrete */
-        if (typeof(fitterInput.histogramDiscrete)!='undefined') {
-          /* Fit discrete values */
-          fitterInput.histogramDiscrete.forEach((y,i)=>{
-            const yDist=fit.distribution.calcProbability(fit.parameters,i-fitterInput.min);
-            delta+=(y-yDist)**2;
-          });
+        fitsNotTheseValues.push(distribution);
+      }
+    }
+    for (let fit of fits) {
+      /* Calculate delta */
+      fit.distribution.setParameters(fit.parameters);
+      let delta=0;
+      for (let step of fitterInput.histogram) {
+        if (fit.distribution instanceof ContinuousProbabilityDistribution) {
+          /* Continuous */
+          const cdf1=fit.distribution.calcProbability(fit.parameters,step.x1)[1];
+          const cdf2=fit.distribution.calcProbability(fit.parameters,step.x2)[1];
+          delta+=((cdf2-cdf1)-step.p)**2;
         } else {
-          /* Fit general values to discrete distribution */
-          let cdf=0;
-          for (let i=Math.floor(step.x1);i<=Math.floor(step.x2);i++) {
-            let fraction=1;
-            if (i<step.x1) fraction=(i+1)-step.x1;
-            if (i+1>step.x2) fraction=step.x2-i;
-            cdf+=fit.distribution.calcProbability(fit.parameters,i)*fraction;
+          /* Discrete */
+          if (typeof(fitterInput.histogramDiscrete)!='undefined') {
+            /* Fit discrete values */
+            fitterInput.histogramDiscrete.forEach((y,i)=>{
+              const yDist=fit.distribution.calcProbability(fit.parameters,i-fitterInput.min);
+              delta+=(y-yDist)**2;
+            });
+          } else {
+            /* Fit general values to discrete distribution */
+            let cdf=0;
+            for (let i=Math.floor(step.x1);i<=Math.floor(step.x2);i++) {
+              let fraction=1;
+              if (i<step.x1) fraction=(i+1)-step.x1;
+              if (i+1>step.x2) fraction=step.x2-i;
+              cdf+=fit.distribution.calcProbability(fit.parameters,i)*fraction;
+            }
+            delta+=(cdf-step.p)**2;
           }
-          delta+=(cdf-step.p)**2;
         }
       }
       fit.delta=delta;
+      /* Calculate p value */
+      if (fit.distribution instanceof ContinuousProbabilityDistribution || typeof(fitterInput.histogramDiscrete)=='undefined') {
+        fit.pKS=calcKCContinuous(fit.distribution,fit.parameters,fitterInput.histogram);
+        fit.pChiSqr=calcChiSqrContinuous(fit.distribution,fit.parameters,fitterInput.histogram);
+      } else {
+        fit.pKS=calcKCDiscrete(fit.distribution,fit.parameters,fitterInput.histogramDiscrete);
+        fit.pChiSqr=calcChiSqrDiscrete(fit.distribution,fit.parameters,fitterInput.histogramDiscrete);
+      }
     }
-  }
-  fitsNotTheseValues.push(...fits.filter(f=>isNaN(f.delta) || f.delta>=1_000_000).map(fit=>fit.distribution));
-  fits=fits.filter(f=>!isNaN(f.delta) && f.delta<1_000_000);
-  fits.sort((f1,f2)=>f1.delta-f2.delta);
-  fitsNotTheseValues.sort((d1,d2)=>d1.name>d2.name);
+    fitsNotTheseValues.push(...fits.filter(f=>isNaN(f.delta) || f.delta>=1_000_000).map(fit=>fit.distribution));
+    fits=fits.filter(f=>!isNaN(f.delta) && f.delta<1_000_000);
+    fits.sort((f1,f2)=>f1.delta-f2.delta);
+    fitsNotTheseValues.sort((d1,d2)=>d1.name>d2.name);
 
-  /* Show results */
-  outputCard.style.display="";
-  for (let i=0;i<fits.length;i++) addFitOutput(fitterInput, fits[i],i+1);
-  for (let i=0;i<fitsNotTheseValues.length;i++) addNoFitOutput(fitsNotTheseValues[i],i+1+fits.length);
+    /* Show results */
+    outputCard.style.display="";
+    for (let i=0;i<fits.length;i++) addFitOutput(fitterInput, fits[i],i+1);
+    for (let i=0;i<fitsNotTheseValues.length;i++) addNoFitOutput(fitsNotTheseValues[i],i+1+fits.length);
+  },10);
 }
 
 let accordionItemCounter=0;
@@ -455,7 +556,25 @@ function getFitInfo(fit, hasFit=true) {
       if (firstParameter) firstParameter=false; else result+=", ";
       result+=parameter+"="+fit.parameters[parameter].toLocaleString();
     }
-    result+=")</small>: &Delta;="+fit.delta.toLocaleString(undefined, {minimumFractionDigits: 5});
+    result+=")</small>: &nbsp;<strong><abbr title='"+language.fitter.infoDelta+"'>&Delta;</abbr>="+fit.delta.toLocaleString(undefined, {minimumFractionDigits: 5})+"</strong>";
+    if ((typeof(fit.pKS)!='undefined' && fit.pKS>=0) || (typeof(fit.pChiSqr)!='undefined' && fit.pChiSqr>=0)) {
+      result+="<small>";
+      if (typeof(fit.pKS)!='undefined' && fit.pKS>=0) {
+        result+=", &nbsp;";
+        if (fit.pKS>=0.99) result+="<span style='color: green'>";
+        if (fit.pKS<=0.0) result+="<span style='color: red'>";
+        result+="<abbr title='"+language.fitter.infoPValueKS+"'>p(KS)</abbr>="+(fit.pKS*100).toLocaleString(undefined, {maximumFractionDigits: 1})+"%";
+        if (fit.pKS>=0.99 || fit.pKS<=0.0) result+="</span>";
+      }
+      if (typeof(fit.pChiSqr)!='undefined' && fit.pChiSqr>=0) {
+        result+=", &nbsp;";
+        if (fit.pChiSqr>=0.99) result+="<span style='color: green'>";
+        if (fit.pChiSqr<=0.0) result+="<span style='color: red'>";
+        result+="<abbr title='"+language.fitter.infoPValueChiSqr+"'>p(&chi;<sup>2</sup>)</abbr>="+(fit.pChiSqr*100).toLocaleString(undefined, {maximumFractionDigits: 1})+"%";
+        if (fit.pChiSqr>=0.99 || fit.pChiSqr<=0.0) result+="</span>";
+      }
+      result+="</small>";
+    }
   } else {
     result+="&thinsp;<small>("+language.fitter.outputNoFit+")</small>";
   }
