@@ -22,6 +22,8 @@ import {isDesktopApp} from './Main.js';
 import {getFloat, getInt, getPositiveInt, formatNumber, formatPercent} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 
+let tableData="";
+
 /**
  * Generates and adds a permalink.
  * @param {Object} parent Parent HTML node
@@ -117,6 +119,32 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
   playPauseButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlStart;
   playStepsButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlSteps;
   playStepsInput.title=language.distributions.infoDiagramLawOfLargeNumbersControlStepsInput;
+
+  /* Export buttons */
+  tableExport.innerHTML=" "+language.distributions.infoExportTabelle;
+  tableCopy.innerHTML=" "+language.distributions.infoDiagramCopyValues;
+  tableSave.innerHTML=" "+language.distributions.infoDiagramSaveValues;
+  tableCopy.onclick=()=>navigator.clipboard.writeText(tableData);
+  tableSave.onclick=()=>{
+    if (isDesktopApp) {
+      Neutralino.os.showSaveDialog(language.distributions.infoDiagramSaveValues, {defaultPath: 'table.txt', filters: [
+        {name: language.distributions.infoDiagramSaveValuesTextFiles+' (*.txt)', extensions: ['txt']}
+      ]}).then(file=>{
+        file=file.trim();
+        if (file=='') return;
+        if (!file.toLocaleLowerCase().endsWith(".txt")) file+=".txt";
+        Neutralino.filesystem.writeFile(file,tableData);
+      });
+    } else {
+      const element=document.createElement('a');
+      element.setAttribute('href','data:text/plain;charset=utf-8,'+encodeURIComponent(tableData));
+      element.setAttribute('download','table.txt');
+      element.style.display='none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+  };
 }
 
 /**
@@ -345,6 +373,7 @@ function doStepLawOfLargeNumbers(distribution, values) {
     }
   }
   if (values.dice) {
+    /* Display table */
     info.push("");
     const infoTable=[];
     infoTable.push("<div style='overflow-x: scroll;'>");
@@ -360,7 +389,15 @@ function doStepLawOfLargeNumbers(distribution, values) {
     infoTable.push("</table>");
     infoTable.push("</div>");
     info.push(infoTable.join(""));
+    /* Clipboard/Export data */
+    const lines=[];
+    lines.push(language.distributions.infoDiagramNumberOfDots+"\t"+histogram.filter((_,index)=>(index>0)).map((_,index)=>""+(index+1)).join("\t")+"\t"+language.distributions.infoDiagramLawOfLargeNumbersInfoSum);
+    lines.push(language.distributions.infoDiagramAbsoluteFrequency+"\t"+histogram.filter((_,index)=>(index>0)).map(value=>""+value).join("\t")+"\t"+count);
+    lines.push(language.distributions.infoDiagramRelativeFrequency+"\t"+histogram.filter((_,index)=>(index>0)).map(value=>formatPercent(value/count,5)).join("\t")+"\t100%");
+    lines.push(language.distributions.infoDiagramProbability+"\t"+histogram.filter((_,index)=>(index>0)).map(_=>formatPercent(1/6,5)).join("\t")+"\t100%");
+    tableData=lines.join("\n");
   } else if (distribution.discrete) {
+    /* Display table */
     const MAX_HISTOGRAM_VALUE=15;
     info.push("");
     const infoTable=[];
@@ -389,6 +426,18 @@ function doStepLawOfLargeNumbers(distribution, values) {
     infoTable.push("</table>");
     infoTable.push("</div>");
     info.push(infoTable.join(""));
+    /* Clipboard/Export data */
+    const lines=[];
+    let s="";
+    if (histogram.length>MAX_HISTOGRAM_VALUE) s="\t>="+(MAX_HISTOGRAM_VALUE+1);
+    lines.push(language.distributions.infoCharacteristicValue+"\t"+histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map((_,index)=>""+index).join("\t")+s+"\t"+language.distributions.infoDiagramLawOfLargeNumbersInfoSum);
+    if (histogram.length>MAX_HISTOGRAM_VALUE) s="\t"+histogram.filter((_,index)=>(index>MAX_HISTOGRAM_VALUE)).reduce((a,b)=>a+b);
+    lines.push(language.distributions.infoDiagramAbsoluteFrequency+"\t"+histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map(value=>""+value).join("\t")+s+"\t"+count);
+    if (histogram.length>MAX_HISTOGRAM_VALUE) s="\t"+formatPercent(histogram.filter((_,index)=>(index>MAX_HISTOGRAM_VALUE)).reduce((a,b)=>a+b)/count,5);
+    lines.push(language.distributions.infoDiagramRelativeFrequency+"\t"+histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map(value=>formatPercent(value/count,5)).join("\t")+s+"\t100%");
+    if (histogram.length>MAX_HISTOGRAM_VALUE) s="\t"+formatPercent(1-histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map((_,index)=>distribution.calcProbability(values,index)).reduce((a,b)=>a+b),5);
+    lines.push(language.distributions.infoDiagramProbability+"\t"+histogram.filter((_,index)=>(index<=MAX_HISTOGRAM_VALUE)).map((_,index)=>formatPercent(distribution.calcProbability(values,index),5)).join("\t")+s+"\t100%");
+    tableData=lines.join("\n");
   }
   return info.join("<br>");
 }
@@ -472,6 +521,7 @@ function doStep(distribution, values, mode) {
   }
 
   infoLine.innerHTML=info;
+  if (distribution.discrete) tableExportLine.style.display="block";
 }
 
 /**
@@ -563,6 +613,7 @@ function initCharts(distribution, values, mode, chart1data, chart1options, chart
     if (running) doStartStop(distribution,values,mode);
     resetCallback();
     infoLine.innerHTML="";
+    tableExportLine.style.display="none";
   };
   stepButton.onclick=()=>{
     if (!running) doStep(distribution,values,mode);

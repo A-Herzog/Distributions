@@ -121,6 +121,15 @@
       <canvas id="dice_canvas" width="150" height="150" style="border: 1px solid black; border-radius: 5px; margin-right: 20px; float: left; display: none;"></canvas>
       <span id="infoLine"></span>
     </div>
+    <div class="mt-3" id="tableExportLine" style="display: none;">
+      <div class="dropdown" style="display: inline-block">
+        <button type="button" class="btn btn-primary btn-sm bi-table me-2 dropdown-toggle" data-bs-toggle="dropdown" id="tableExport"></button>
+        <ul class="dropdown-menu">
+          <li><button type="button" class="bi-clipboard dropdown-item" id="tableCopy"></button></li>
+          <li><button type="button" class="bi-download dropdown-item" id="tableSave"></button></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 
