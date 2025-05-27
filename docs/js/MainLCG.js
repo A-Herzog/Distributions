@@ -172,8 +172,10 @@ function update() {
   if (mul==null || add==null || mod==null || a0==null) return;
 
   /* Update permalink */
-  const url=document.location.protocol+"//"+document.location.host+document.location.pathname+"?mul="+mul+"&add="+add+"&mod="+mod+"&a0="+a0;
-  permaLink.href=url;
+  if (permaLink) {
+    const url=document.location.protocol+"//"+document.location.host+document.location.pathname+"?mul="+mul+"&add="+add+"&mod="+mod+"&a0="+a0;
+    permaLink.href=url;
+  }
 
   /* Start processing */
   outputAreaTable.innerHTML=language.lcg.processing;

@@ -10,9 +10,10 @@ To use distributions just go to
 
 ![Website status](https://img.shields.io/website?url=https%3A%2F%2Fa-herzog.github.io%2FDistributions%2F)
 
-You can also download the distributions viewer as an offline usable Windows application:
+You can also download the distributions viewer as an offline usable application:
 
-**[Distributions.exe](https://github.com/A-Herzog/Distributions/releases/latest/download/Distributions.exe)**
+* **[Distributions.exe](https://github.com/A-Herzog/Distributions/releases/latest/download/Distributions.exe)**
+* **[Distributions_Linux_MacOS.zip](https://github.com/A-Herzog/Distributions/releases/latest/download/Distributions_Linux_MacOS.zip)**
 
 ## Supported probability distributions
 
