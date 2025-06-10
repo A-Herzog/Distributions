@@ -69,6 +69,7 @@ import {BernoulliDistribution} from './DistributionBernoulli.js';
 import {GaussKuzminDistribution} from './DistributionGaussKuzmin.js';
 import {SawtoothLeftDistribution} from './DistributionSawtoothLeft.js';
 import {SawtoothRightDistribution} from './DistributionSawtoothRight.js';
+import {CosineDistribution} from './DistributionCosine.js';
 
 /**
  * List of an instance of each supported probability distribution function
@@ -129,6 +130,7 @@ listDistributions.push(new BernoulliDistribution());
 listDistributions.push(new GaussKuzminDistribution());
 listDistributions.push(new SawtoothLeftDistribution());
 listDistributions.push(new SawtoothRightDistribution());
+listDistributions.push(new CosineDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

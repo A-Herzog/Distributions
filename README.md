@@ -27,6 +27,7 @@ You can also download the distributions viewer as an offline usable application:
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Cauchy" target="_blank">Cauchy</a> | Continous | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Chi" target="_blank">Chi</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Chi2" target="_blank">Chi2</a> | Continous | Show & fit |
+| <a href="https://a-herzog.github.io/Distributions/?distribution=Cosine" target="_blank">Cosine</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=DiscreteUniform" target="_blank">DiscreteUniform</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Erlang" target="_blank">Erlang</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Exponential" target="_blank">Exponential</a> | Continous | Show & fit |

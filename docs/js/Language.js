@@ -640,6 +640,14 @@ lang.distributions.gaussKuzmin.name="Gauss-Kuzmin-Verteilung";
 lang.distributions.gaussKuzmin.info="Die Gauss-Kuzmin-Verteilung tritt als Grenzverteilung für die Koeffizienten von Kettenbrüchen auf.";
 lang.distributions.gaussKuzmin.wikipedia="https://en.wikipedia.org/wiki/Gauss%E2%80%93Kuzmin_distribution"; /* No German Wikipedia page */
 
+lang.distributions.cosine={};
+lang.distributions.cosine.name="Cosinus-Verteilung";
+lang.distributions.cosine.info="Die Cosinus-Verteilung ist eine symmetrische Verteilungsfunktion auf einem abgeschlossenen Intervall. Sie weist der Intervallmitte die hohe Wahrscheinlichkeiten und den Rändern niedrige Wahrscheinlichkeiten zu.";
+lang.distributions.cosine.wikipedia="https://en.wikipedia.org/wiki/Raised_cosine_distribution"; /* No German Wikipedia page */
+lang.distributions.cosine.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.cosine.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.cosine.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1276,6 +1284,14 @@ lang.distributions.gaussKuzmin={};
 lang.distributions.gaussKuzmin.name="Gauss-Kuzmin distribution";
 lang.distributions.gaussKuzmin.info="The Gauss-Kuzmin distribution occurs as a limit distribution for the coefficients of continued fractions.";
 lang.distributions.gaussKuzmin.wikipedia="https://en.wikipedia.org/wiki/Gauss%E2%80%93Kuzmin_distribution";
+
+lang.distributions.cosine={};
+lang.distributions.cosine.name="Cosine distribution";
+lang.distributions.cosine.info="The cosine distribution is a symmetrical distribution function on a closed interval. It assigns high probabilities to the center of the interval and low probabilities to the edges.";
+lang.distributions.cosine.wikipedia="https://en.wikipedia.org/wiki/Raised_cosine_distribution";
+lang.distributions.cosine.parameterInfoa="Lower bound";
+lang.distributions.cosine.parameterInfob="Upper bound";
+lang.distributions.cosine.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
