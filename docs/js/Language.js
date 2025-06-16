@@ -354,7 +354,7 @@ lang.distributions.erlang.name="Erlang-Verteilung";
 lang.distributions.erlang.info="Werden die Werte von <b>n</b> Exponentialverteilungen mit Parameter <math style='font-size: 120%'><mrow><mfrac><mn>1</mn><mi><b>&lambda;</b></mi></mfrac></mrow></math> addiert, so ergibt sich die Erlangverteilung. Damit ergibt sich die Erlangverteilung z.B. für die Wartezeit eines Kunden in einer Warteschlange bekannter Länge und exponentiell verteilten Bediendauern.";
 lang.distributions.erlang.wikipedia="https://de.wikipedia.org/wiki/Erlang-Verteilung";
 lang.distributions.erlang.parameterInfon="Form";
-lang.distributions.erlang.parameterInfoLambda="Rate";
+lang.distributions.erlang.parameterInfoLambda="Skalierung";
 
 lang.distributions.beta={};
 lang.distributions.beta.name="Beta-Verteilung";
@@ -999,7 +999,7 @@ lang.distributions.erlang.name="Erlang distribution";
 lang.distributions.erlang.info="If the values of <b>n</b> exponential distributions with parameter <math style='font-size: 120%'><mrow><mfrac><mn>1</mn><mi><b>&lambda;</b></mi></mfrac></mrow></math> are added, the Erlang distribution is obtained. Thus, the Erlang distribution results e.g. for the waiting time of a customer in a queue of known length and exponentially distributed service times.";
 lang.distributions.erlang.wikipedia="https://en.wikipedia.org/wiki/Erlang_distribution";
 lang.distributions.erlang.parameterInfon="Shape";
-lang.distributions.erlang.parameterInfoLambda="Rate";
+lang.distributions.erlang.parameterInfoLambda="Scale";
 
 lang.distributions.beta={};
 lang.distributions.beta.name="Beta distribution";

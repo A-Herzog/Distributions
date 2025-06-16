@@ -74,7 +74,7 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
     cdf+=defF(F,x);
     cdf+=frac("<mi mathvariant='normal'>&gamma;</mi><mo>(</mo>"+n+","+frac(x,lambda)+"<mo>)</mo>","<mo>(</mo>"+n+minus+"<mn>1</mn><mo>)</mo><mo>!</mo>");
     cdf+="<mo>=</mo>";
-    cdf+="<msubsup><mo>&sum;</mo><mrow>"+k+"<mo>=</mo><mn>0</mn></mrow><mrow>"+n+minus+"<mn>1</mn></mrow></msubsup>";
+    cdf+="<mn>1</mn>"+minus+"<msubsup><mo>&sum;</mo><mrow>"+k+"<mo>=</mo><mn>0</mn></mrow><mrow>"+n+minus+"<mn>1</mn></mrow></msubsup>";
     cdf+=frac("<mn>1</mn>",k+"<mo>!</mo>");
     cdf+="<msup><mi mathvariant='normal'>e</mi><mrow>"+minus+frac(x,lambda)+"</mrow></msup>";
     cdf+="<msup><mrow><mo>(</mo>"+frac(x,lambda)+"<mo>)</mo></mrow><mn>"+k+"</mn></msup>";
