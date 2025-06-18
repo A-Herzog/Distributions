@@ -50,6 +50,7 @@ You can also download the distributions viewer as an offline usable application:
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Logarithmic" target="_blank">Logarithmic</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Logistic" target="_blank">Logistic</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=LogCauchy" target="_blank">LogCauchy</a> | Continous | Show |
+| <a href="https://a-herzog.github.io/Distributions/?distribution=LogGamma" target="_blank">LogGamma</a> | Continous | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=LogLogistic" target="_blank">LogLogistic</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=LogNormal" target="_blank">LogNormal</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=MaxwellBoltzmann" target="_blank">MaxwellBoltzmann</a> | Continous | Show & fit |

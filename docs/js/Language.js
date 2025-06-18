@@ -498,8 +498,8 @@ lang.distributions.kumaraswamy={};
 lang.distributions.kumaraswamy.name="Kumaraswamy-Verteilung";
 lang.distributions.kumaraswamy.info="Die Kumaraswamy-Verteilung eignet sich, ähnlich wie die Beta-Verteilung, zur Modellierung von Prozessen, die nur Werte in einem endlichen Bereich annehmen können. Im Gegensatz zur Beta-Verteilung können jedoch Dichte und Verteilungsfunktion durch elementare Formeln ausgedrückt werden.";
 lang.distributions.kumaraswamy.wikipedia="https://en.wikipedia.org/wiki/Kumaraswamy_distribution"; /* Leider keine deutsche Seite vorhanden */
-lang.distributions.kumaraswamy.parameterInfoA="Form";
-lang.distributions.kumaraswamy.parameterInfoB="Form";
+lang.distributions.kumaraswamy.parameterInfoA="Formparameter";
+lang.distributions.kumaraswamy.parameterInfoB="Formparameter";
 
 lang.distributions.sine={}
 lang.distributions.sine.name="Sinus-Verteilung";
@@ -647,6 +647,13 @@ lang.distributions.cosine.wikipedia="https://en.wikipedia.org/wiki/Raised_cosine
 lang.distributions.cosine.parameterInfoa="Untere Bereichsgrenze";
 lang.distributions.cosine.parameterInfob="Obere Bereichsgrenze";
 lang.distributions.cosine.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+
+lang.distributions.logGamma={};
+lang.distributions.logGamma.name="Logarithmische Gammaverteilung";
+lang.distributions.logGamma.info="Die logarithmische Gammaverteilung ist eine Verteilung mit schweren Rändern. Sie wird zur Modellierung der Schadensdaten von extremen Großschäden verwendet.";
+lang.distributions.logGamma.wikipedia="https://de.wikipedia.org/wiki/Logarithmische_Gammaverteilung";
+lang.distributions.logGamma.parameterInfoa="Parameter a";
+lang.distributions.logGamma.parameterInfob="Parameter b";
 
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
@@ -1292,6 +1299,13 @@ lang.distributions.cosine.wikipedia="https://en.wikipedia.org/wiki/Raised_cosine
 lang.distributions.cosine.parameterInfoa="Lower bound";
 lang.distributions.cosine.parameterInfob="Upper bound";
 lang.distributions.cosine.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+
+lang.distributions.logGamma={};
+lang.distributions.logGamma.name="Logarithmic gamma distribution";
+lang.distributions.logGamma.info="The logarithmic gamma distribution is a heavy-tailed distribution. It is used to model the damage data of extreme major damages.";
+lang.distributions.logGamma.wikipedia="https://de.wikipedia.org/wiki/Logarithmische_Gammaverteilung"; /* No English Wikipedia page */
+lang.distributions.logGamma.parameterInfoa="Parameter a";
+lang.distributions.logGamma.parameterInfob="Parameter b";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
