@@ -42,6 +42,7 @@ You can also download the distributions viewer as an offline usable application:
 | <a href="https://a-herzog.github.io/Distributions/?distribution=HyperbolicSecant" target="_blank">HyperbolicSecant</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Hypergeometric" target="_blank">Hypergeometric</a> | Discrete | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=InverseGaussian" target="_blank">InverseGaussian</a> | Continous | Show & fit |
+| <a href="https://a-herzog.github.io/Distributions/?distribution=InverseGamma" target="_blank">InverseGamma</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=IrwinHall" target="_blank">IrwinHall</a> | Continous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=JohnsonSU" target="_blank">JohnsonSU</a> | Continous | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Kumaraswamy" target="_blank">Kumaraswamy</a> | Continous | Show |

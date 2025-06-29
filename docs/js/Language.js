@@ -655,6 +655,13 @@ lang.distributions.logGamma.wikipedia="https://de.wikipedia.org/wiki/Logarithmis
 lang.distributions.logGamma.parameterInfoa="Parameter a";
 lang.distributions.logGamma.parameterInfob="Parameter b";
 
+lang.distributions.inverseGamma={};
+lang.distributions.inverseGamma.name="Inverse Gammaverteilung";
+lang.distributions.inverseGamma.info="Die inverse Gammaverteilung liefert den reziproken Wert einer gammaverteilten Zufallsvariable. Die inverse Gammaverteilung wird vor allem in der Bayes-Statistik verwendet.";
+lang.distributions.inverseGamma.wikipedia="https://en.wikipedia.org/wiki/Inverse-gamma_distribution"; /* No German Wikipedia page */
+lang.distributions.inverseGamma.parameterInfoAlpha="Form";
+lang.distributions.inverseGamma.parameterInfoBeta="Skalierung";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -665,6 +672,7 @@ lang.numbers.RPlus0="Nichtnegative reelle Zahlen";
 
 lang.functions={};
 lang.functions.Gamma="Gammafunktion";
+lang.functions.inGamma="Unvollständige obere Gammafunktion";
 lang.functions.gamma="Unvollständige untere Gammafunktion";
 lang.functions.Beta="Betafunktion";
 lang.functions.I="Regularisierte unvollständige Betafunktion";
@@ -1307,6 +1315,13 @@ lang.distributions.logGamma.wikipedia="https://de.wikipedia.org/wiki/Logarithmis
 lang.distributions.logGamma.parameterInfoa="Parameter a";
 lang.distributions.logGamma.parameterInfob="Parameter b";
 
+lang.distributions.inverseGamma={};
+lang.distributions.inverseGamma.name="Inverse gamma distribution";
+lang.distributions.inverseGamma.info="The inverse gamma distribution provides the reciprocal value of a gamma-distributed random variable. The inverse gamma distribution is mainly used in Bayesian statistics.";
+lang.distributions.inverseGamma.wikipedia="https://en.wikipedia.org/wiki/Inverse-gamma_distribution";
+lang.distributions.inverseGamma.parameterInfoAlpha="Shape";
+lang.distributions.inverseGamma.parameterInfoBeta="Scale";
+
 lang.numbers={};
 lang.numbers.N="Natural numbers";
 lang.numbers.N0="Natural numbers and zero";
@@ -1317,6 +1332,7 @@ lang.numbers.RPlus0="Non-negative real numbers";
 
 lang.functions={};
 lang.functions.Gamma="gamma function";
+lang.functions.inGamma="upper incomplete gamma function";
 lang.functions.gamma="lower incomplete gamma function";
 lang.functions.Beta="beta function";
 lang.functions.I="regularized incomplete beta function";
