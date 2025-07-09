@@ -662,6 +662,15 @@ lang.distributions.inverseGamma.wikipedia="https://en.wikipedia.org/wiki/Inverse
 lang.distributions.inverseGamma.parameterInfoAlpha="Form";
 lang.distributions.inverseGamma.parameterInfoBeta="Skalierung";
 
+lang.distributions.continuousBernoulli={};
+lang.distributions.continuousBernoulli.name="Kontinuierliche Bernoulli-Verteilung";
+lang.distributions.continuousBernoulli.info="Die kontinuierliche Bernoulli-Verteilung wird beim Deep Learning und in der Bilderkennung zur Modellierung von Intensitäten verwendet.";
+lang.distributions.continuousBernoulli.wikipedia="https://en.wikipedia.org/wiki/Continuous_Bernoulli_distribution"; /* No German Wikipedia page */
+lang.distributions.continuousBernoulli.parameterInfoa="Untere Bereichsgrenze";
+lang.distributions.continuousBernoulli.parameterInfob="Obere Bereichsgrenze";
+lang.distributions.continuousBernoulli.parameterInfoLambda="Verteilungsparameter";
+lang.distributions.continuousBernoulli.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1321,6 +1330,15 @@ lang.distributions.inverseGamma.info="The inverse gamma distribution provides th
 lang.distributions.inverseGamma.wikipedia="https://en.wikipedia.org/wiki/Inverse-gamma_distribution";
 lang.distributions.inverseGamma.parameterInfoAlpha="Shape";
 lang.distributions.inverseGamma.parameterInfoBeta="Scale";
+
+lang.distributions.continuousBernoulli={};
+lang.distributions.continuousBernoulli.name="Continuous Bernoulli distribution";
+lang.distributions.continuousBernoulli.info="The continuous Bernoulli distribution is used in deep learning and computer vision to model intensities.";
+lang.distributions.continuousBernoulli.wikipedia="https://en.wikipedia.org/wiki/Continuous_Bernoulli_distribution";
+lang.distributions.continuousBernoulli.parameterInfoa="Lower bound";
+lang.distributions.continuousBernoulli.parameterInfob="Upper bound";
+lang.distributions.continuousBernoulli.parameterInfoLambda="Distribution parameter";
+lang.distributions.continuousBernoulli.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
