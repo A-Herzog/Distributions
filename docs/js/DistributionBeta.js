@@ -37,10 +37,10 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
-    this._addContinuousParameter("alpha","&alpha;",language.distributions.beta.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,1.5);
+    this._addContinuousParameter("alpha","&alpha;",language.distributions.beta.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
     this._addContinuousParameter("beta","&beta;",language.distributions.beta.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,1.5);
-    this._addContinuousParameter("a","a",language.distributions.beta.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,0);
-    this._addContinuousParameter("b","b",language.distributions.beta.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,1);
+    this._addContinuousParameter("a","a",language.distributions.beta.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
+    this._addContinuousParameter("b","b",language.distributions.beta.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
 
     this._setCalcParameter("x",0.5);
   }
@@ -96,7 +96,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     if (x<values.a || x>values.b) return 0;
     if (values.a==values.b) return (x==values.a)?Infinity:0;
     x=(x-values.a)/(values.b-values.a);
-    return x**(values.alpha-1)*(1-x)**(values.beta-1)*this.#pdfFactor;
+    return x**(values.alpha-1)*(1-x)**(values.beta-1)*this.#pdfFactor/(values.b-values.a);
   }
 
   #getCDF(values, x) {
@@ -118,7 +118,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     const b=variable("b");
 
     const meanFormula=beginMathML+frac(alpha,alpha+plus+beta)+mul+"<ms>(</ms>"+b+minus+a+"<ms>)</ms>"+plus+a+endMathML;
-    const varianceFormula=beginMathML+frac(alpha+beta,"<msup><mrow><mo>(</mo>"+alpha+plus+beta+"<mo>)</mo></mrow><mn>2</mn></msup><mo>(</mo>"+alpha+plus+beta+plus+"<mn>1</mn><mo>)</mo>")+mul+"<ms>(</ms>"+b+minus+a+"<ms>)</ms>"+endMathML;
+    const varianceFormula=beginMathML+frac(alpha+beta,"<msup><mrow><mo>(</mo>"+alpha+plus+beta+"<mo>)</mo></mrow><mn>2</mn></msup><mo>(</mo>"+alpha+plus+beta+plus+"<mn>1</mn><mo>)</mo>")+mul+"<msup><mrow><ms>(</ms>"+b+minus+a+"<ms>)</ms></mrow><mn>2</mn></msup>"+endMathML;
 
     let meanValue;
     let varianceValue;
@@ -127,7 +127,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
       varianceValue=0;
     } else {
       meanValue=values.alpha/(values.alpha+values.beta)*(values.b-values.a)+values.a;
-      varianceValue=values.alpha*values.beta/((values.alpha+values.beta)**2*(values.alpha+values.beta+1))*(values.b-values.a);
+      varianceValue=values.alpha*values.beta/((values.alpha+values.beta)**2*(values.alpha+values.beta+1))*(values.b-values.a)**2;
     }
 
     let medianFormula=null;
@@ -148,8 +148,8 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     /* Diagram */
 
     const that=this;
-    const minX=Math.min(0,values.a);
-    const maxX=Math.max(2,meanValue+3*Math.sqrt(varianceValue));
+    const minX=Math.min(0,values.a-1);
+    const maxX=Math.max(2,values.b+1);
     this._setContinuousDiagram(minX,maxX,x=>that.#getPDF(values,x),x=>that.#getCDF(values,x));
   }
 

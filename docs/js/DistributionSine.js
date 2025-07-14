@@ -51,7 +51,7 @@ class SineDistribution extends ContinuousProbabilityDistribution {
     let pdf="";
     pdf+=beginMathML;
     pdf+=defF(f,x);
-    pdf+=frac(pi,"<mn>2</mn>");
+    pdf+=frac(pi,"<mn>2</mn><mo>(</mo>"+b+minus+a+"<mo>)</mo>");
     pdf+=defF("<mi>sin</mi>",pi+frac(x+minus+a,b+minus+a),false);
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
@@ -92,12 +92,14 @@ class SineDistribution extends ContinuousProbabilityDistribution {
   }
 
   #getPDF(values, x) {
+    if (values.a==values.b) return (x==values.a)?Infinity:0;
     x=(x-values.a)/(values.b-values.a);
     if (x<=0 || x>=1) return 0;
-    return Math.PI/2*Math.sin(Math.PI*x);
+    return Math.PI/2*Math.sin(Math.PI*x)/(values.b-values.a);
   }
 
   #getCDF(values, x) {
+    if (values.a==values.b) return (x<values.a)?0:1;
     x=(x-values.a)/(values.b-values.a);
     if (x<=0) return 0;
     if (x>=1) return 1;

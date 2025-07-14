@@ -89,10 +89,10 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
     const R=variable("R");
 
     const meanFormula=beginMathML+n+mul+frac(R,N)+endMathML;
-    const varianceFormula=beginMathML+n+mul+frac(R,N)+"<mo>(</mo><mn>1</mn>"+minus+frac(R,N)+"<mo>)</mo>"+endMathML;
+    const varianceFormula=beginMathML+n+mul+frac(R,N)+"<mo>(</mo><mn>1</mn>"+minus+frac(R,N)+"<mo>)</mo>"+frac(N+minus+N,N+minus+"<mn>1</mn>")+endMathML;
 
     const meanValue=values.n*values.R/values.N;
-    const varianceValue=values.n*values.R/values.N*(1-values.R/values.N);
+    const varianceValue=values.n*values.R/values.N*(1-values.R/values.N)*(values.N-values.n)/(values.N-1);
 
     this._setDiscreteCharacteristics(meanFormula,meanValue,varianceFormula,varianceValue);
 

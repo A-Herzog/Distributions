@@ -112,7 +112,7 @@ class RayleighDistribution extends ContinuousProbabilityDistribution {
     const sigma=variable("&sigma;");
     const m=variable("m");
     const info=[];
-    info.push(["",beginMathML+sigma+endMathML,"=",beginMathML+m+mul+"<msqrt>"+pi+"<mo>/</mo><mn>2</mn></msqrt>"+endMathML,"&approx;",formatNumber(this.#sigma)]);
+    info.push(["",beginMathML+sigma+endMathML,"=",beginMathML+m+mul+"<msqrt><mn>2</mn><mo>/</mo>"+pi+"</msqrt>"+endMathML,"&approx;",formatNumber(this.#sigma)]);
     const meanFormula=beginMathML+m+"<mo>=</mo>"+sigma+mul+"<msqrt>"+pi+"<mo>/</mo><mn>2</mn></msqrt>"+endMathML;
     const varianceFormula=beginMathML+frac("<mn>4</mn>"+minus+pi,"<mn>2</mn>")+mul+"<msup>"+sigma+"<mn>2</mn></msup>"+endMathML;
     const medianFormula=beginMathML+"<msqrt><mn>2</mn>"+defF("log","<mn>2</mn>",false)+"</msqrt>"+mul+sigma+endMathML;

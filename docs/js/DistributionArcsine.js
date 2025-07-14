@@ -51,7 +51,7 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
     let pdf="";
     pdf+=beginMathML;
     pdf+=defF(f,x);
-    pdf+=frac("<mn>1</mn>",pi+"<msqrt>"+frac(x+minus+a,b+minus+a)+mul+"<mo>(</mo><mn>1</mn>"+minus+frac(x+minus+a,b+minus+a)+"<mo>)</mo></msqrt>")
+    pdf+=frac("<mn>1</mn>",pi+"<mo>(</mo>"+b+minus+a+"<mo>)</mo><msqrt>"+frac(x+minus+a,b+minus+a)+mul+"<mo>(</mo><mn>1</mn>"+minus+frac(x+minus+a,b+minus+a)+"<mo>)</mo></msqrt>")
     pdf+=endMathML;
     pdf+=" "+language.distributions.for+" ";
     pdf+=beginMathML;
@@ -91,12 +91,14 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
   }
 
   #getPDF(values, x) {
+    if (values.a==values.b) return (x==values.a)?Infinity:0;
     x=(x-values.a)/(values.b-values.a);
     if (x<=0.01 || x>=0.99) return 0;
-     return 1/(Math.PI*Math.sqrt(x*(1-x)));
+     return 1/(Math.PI*Math.sqrt(x*(1-x)))/(values.b-values.a);
   }
 
   #getCDF(values, x) {
+    if (values.a==values.b) return (x<values.a)?0:1;
     x=(x-values.a)/(values.b-values.a);
     if (x<=0) return 0;
     if (x>=1) return 1;
