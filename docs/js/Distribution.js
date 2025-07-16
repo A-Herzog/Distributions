@@ -52,6 +52,7 @@ class ProbabilityDistribution {
   #calcInput;
   #calcError;
   #calcResults;
+  #isSmallMode;
   _checkBoxMean;
   _checkBoxStd;
   _checkBoxMedian;
@@ -332,6 +333,7 @@ class ProbabilityDistribution {
     button.onclick=()=>{
       if (!infoLine) return;
       const show=(infoLine.style.display=='none');
+      this.#isSmallMode=!show;
       generalCard.classList.toggle("small",!show);
       infoLine.style.display=(show)?'':'none';
       diagramZoomInfo.style.display=(show)?'':'none';
@@ -658,7 +660,13 @@ class ProbabilityDistribution {
         this.#canvasInfo.style.display="none";
       } else {
         this.#chart=new Chart(this.#canvas,setup);
-        this.#canvasInfo.style.display="block";
+        this.#canvasInfo.style.display=(this.#isSmallMode)?"none":"";
+        if (this.#isSmallMode) {
+          let height=this.#canvas.style.height;
+          height=parseInt(height.substring(0,height.length-2));
+          this.#canvas.style.height=Math.round(height/2)+'px';
+          this.#canvas.height=Math.round(this.#canvas.height/2);
+        }
       }
     }
   }
