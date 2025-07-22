@@ -23,7 +23,7 @@ import {beginMathML, endMathML, isin, setRHTML, setRPlusHTML, variable, frac, de
 
 
 /**
- * Frechet distribution
+ * Fréchet distribution
  */
 class FrechetDistribution extends ContinuousProbabilityDistribution {
   constructor() {
@@ -34,6 +34,7 @@ class FrechetDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.frechet.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("delta","&delta;",language.distributions.frechet.parameterInfoDelta+" (<i>&delta;</i>"+isin+setRHTML+")",null,false,null,false,1);
     this._addContinuousParameter("beta","&beta;",language.distributions.frechet.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
@@ -82,6 +83,37 @@ class FrechetDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&gt;</mo>"+delta;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+      from scipy.special import gamma as sp_gamma
+
+      # Set parameters delta, beta and alpha here
+
+      # Translate to scipy parameters
+      c = alpha
+      scale = beta
+      loc = delta
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.invweibull.mean(c, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.invweibull.var(c, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.invweibull.std(c, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(delta + beta * sp_gamma(1 - 1 / alpha), 3))
+      print("variance =", np.round(beta**2 * (sp_gamma(1 - 2 / alpha) - (sp_gamma(1 - 1 / alpha))**2), 3))
+      print("standard deviation =", np.round(sqrt(beta**2 * (sp_gamma(1 - 2 / alpha) - (sp_gamma(1 - 1 / alpha))**2)), 3))
+
+      # Probability density function
+      x = np.linspace(delta, delta + 40, 500)
+      pdf = stats.invweibull.pdf(x, c, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

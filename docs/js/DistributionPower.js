@@ -37,6 +37,7 @@ class PowerDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.power.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.power.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("b","b",language.distributions.power.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
@@ -81,6 +82,39 @@ class PowerDistribution extends ContinuousProbabilityDistribution {
     cdf+=a+"<mo>&le;</mo>"+x+"<mo>&le;</mo>"+b;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a, b and c here
+
+      # Translate to scipy parameters
+      shape = c
+      loc = a
+      scale = b - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.powerlaw.mean(shape, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.powerlaw.var(shape, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.powerlaw.std(shape, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      mean = np.round(a + (b - a) * shape / (shape + 1), 3)
+      variance = np.round((b - a)**2 * shape / ((shape + 2) * (shape + 1)**2), 3)
+      std = np.round(sqrt((b - a)**2 * shape / ((shape + 2) * (shape + 1)**2)), 3)
+      print("mean =", mean)
+      print("variance =", variance)
+      print("standard deviation =", std)
+
+      # Probability density function
+      x = np.linspace(a - 2, b + 2, 500)
+      pdf = stats.powerlaw.pdf(x, shape, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

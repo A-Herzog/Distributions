@@ -40,6 +40,7 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.binomial.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("n","n",language.distributions.binomial.parameterInfon+"  (<i>n</i>"+isin+setNHTML+")",1,8);
     this._addContinuousParameter("p","p",language.distributions.binomial.parameterInfop+" (<i>p</i>"+isin+"[0;1]"+")",0,true,1,true,0.25);
@@ -62,6 +63,31 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters n and p here
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.binom.mean(n, p), 3))
+      print("variance =", np.round(stats.binom.var(n, p), 3))
+      print("standard deviation =", np.round(stats.binom.std(n, p), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(n * p, 3))
+      print("variance =", np.round(n * p * (1 - p), 3))
+      print("standard deviation =", np.round(sqrt(n * p * (1 - p)), 3))
+
+      # Probability mass function
+      k = np.arange(0, n + 1)
+      pmf = stats.binom.pmf(k, n, p)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

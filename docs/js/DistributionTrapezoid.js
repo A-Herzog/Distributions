@@ -38,6 +38,7 @@ class TrapezoidDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.trapezoid.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.trapezoid.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,3);
     this._addContinuousParameter("b","b",language.distributions.trapezoid.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,5);
@@ -133,6 +134,40 @@ class TrapezoidDistribution extends ContinuousProbabilityDistribution {
     cdf+=endMathML;
 
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a, b, c and d here
+
+      # Translate to scipy parameters
+      c_shape = (b - a) / (d - a)
+      d_shape = (c - a) / (d - a)
+      loc = a
+      scale = d - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.trapezoid.mean(c_shape, d_shape, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.trapezoid.var(c_shape, d_shape, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.trapezoid.std(c_shape, d_shape, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      mean = np.round((a + b + c + d) / 4, 3)
+      variance = np.round(((d - a)**2 + (c - b)**2 + (d - c)**2 + (b - a)**2) / 24, 3)
+      std = np.round(sqrt(variance), 3)
+      print("mean =", mean)
+      print("variance =", variance)
+      print("standard deviation =", std)
+
+      # Probability density function
+      x = np.linspace(a - 2, d + 2, 500)
+      pdf = stats.trapezoid.pdf(x, c_shape, d_shape, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

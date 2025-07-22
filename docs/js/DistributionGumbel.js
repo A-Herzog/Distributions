@@ -46,6 +46,7 @@ class GumbelDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.gumbel.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mean","mean",language.distributions.gumbel.parameterInfoMean+" (<i>mean</i>"+isin+setRPlusHTML+")",null,false,null,false,5);
     this._addContinuousParameter("std","std",language.distributions.gumbel.parameterInfoStd+" (<i>std</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
@@ -89,6 +90,30 @@ class GumbelDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, exp
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mean and std here
+
+      # Translate to scipy parameters
+      scale = std * sqrt(6) / np.pi  # beta
+      loc = mean - scale * pi / 2 / exp(1)  # mu (pi/2/e is a approximation of the Euler-Mascheroni constant)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.gumbel_r.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.gumbel_r.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.gumbel_r.std(loc=loc, scale=scale), 3))
+
+      # Probability density function
+      x = np.linspace(mean - 4 * std, mean + 4 * std, 500)
+      pdf = stats.gumbel_r.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

@@ -34,6 +34,7 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.weibull.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("beta","&beta;",language.distributions.weibull.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
     this._addContinuousParameter("lambda","&lambda;",language.distributions.weibull.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,0.2);
@@ -75,6 +76,39 @@ class WeibullDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+    #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+      from scipy.special import gamma as sp_gamma
+
+      # Set parameters beta and lmbda here
+
+      # Translate to scipy parameters
+      c = beta
+      scale = 1 / lmbda
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.weibull_min.mean(c, scale=scale), 3))
+      print("variance =", np.round(stats.weibull_min.var(c, scale=scale), 3))
+      print("standard deviation =", np.round(stats.weibull_min.std(c, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      mean = np.round(sp_gamma(1 + 1 / beta) / lmbda, 3)
+      variance = np.round((sp_gamma(1 + 2 / beta) - (sp_gamma(1 + 1 / beta))**2) / lmbda**2, 3)
+      std = np.round(sqrt(variance), 3)
+      print("mean =", mean)
+      print("variance =", variance)
+      print("standard deviation =", std)
+
+      # Probability density function
+      x = np.linspace(0, scale * 5, 500)
+      pdf = stats.weibull_min.pdf(x, c, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

@@ -34,6 +34,7 @@ class KumaraswamyDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.kumaraswamy.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    /* not implemented in SciPy - this.scipyText=this.#getScipyText(); */
 
     this._addContinuousParameter("a","a",language.distributions.kumaraswamy.parameterInfoA+" (<i>a</i>"+isin+setRPlusHTML+")",0,false,null,false,4);
     this._addContinuousParameter("b","b",language.distributions.kumaraswamy.parameterInfoB+" (<i>b</i>"+isin+setRPlusHTML+")",0,false,null,false,2.5);

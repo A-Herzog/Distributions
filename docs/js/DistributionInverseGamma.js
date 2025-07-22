@@ -36,6 +36,7 @@ class InverseGammaDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.inverseGamma.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("alpha","&alpha;",language.distributions.inverseGamma.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
     this._addContinuousParameter("beta","&beta;",language.distributions.inverseGamma.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,200);
@@ -80,6 +81,35 @@ class InverseGammaDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters alpha and beta here
+
+      # Translate to scipy parameters
+      a = alpha
+      scale = beta
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.invgamma.mean(a, scale=scale), 3))
+      print("variance =", np.round(stats.invgamma.var(a, scale=scale), 3))
+      print("standard deviation =", np.round(stats.invgamma.std(a, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(beta / (alpha - 1), 3) if alpha > 1 else "undefined")
+      print("variance =", np.round(beta**2 / ((alpha - 1)**2 * (alpha - 2)), 3) if alpha > 2 else "undefined")
+      print("standard deviation =", np.round(beta / (alpha - 1) / sqrt(alpha - 2), 3) if alpha > 2 else "undefined")
+
+      # Probability density function
+      x = np.linspace(0, 300, 500)
+      pdf = stats.invgamma.pdf(x, a, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

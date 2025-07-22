@@ -36,6 +36,7 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.laplace.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mu","&mu;",language.distributions.laplace.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,0);
     this._addContinuousParameter("sigma","&sigma;",language.distributions.laplace.parameterInfoSigma+" (<i>&sigma;</i>"+isin+setRPlusHTML+")",0,false,null,false,1);
@@ -79,6 +80,35 @@ class LaplaceDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mu and sigma here
+
+      # Translate to scipy parameters
+      loc = a
+      scale = b - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.laplace.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.laplace.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.laplace.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(mu, 3))
+      print("variance =", np.round(2 * sigma**2, 3))
+      print("standard deviation =", np.round(sqrt(2) * sigma, 3))
+
+      # Probability density function
+      x = np.linspace(mu - 5 * sigma, mu + 5 * sigma, 500)
+      pdf = stats.laplace.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

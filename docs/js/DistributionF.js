@@ -36,6 +36,7 @@ class FDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.f.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("m","m",language.distributions.f.parameterInfom+" (<i>m</i>"+isin+setRPlusHTML+")",0,false,null,false,10);
     this._addContinuousParameter("n","n",language.distributions.f.parameterInfon+" (<i>n</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
@@ -81,6 +82,35 @@ class FDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters m and n here
+
+      # Translate to scipy parameters
+      dfn = m
+      dfd = n
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.f.mean(dfn, dfd), 3))
+      print("variance =", np.round(stats.f.var(dfn, dfd), 3))
+      print("standard deviation =", np.round(stats.f.std(dfn, dfd), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(n / (n - 2), 3) if n > 2 else "undefined")
+      print("variance =", np.round((2 * n**2 * (m + n - 2)) / (m * (n - 2)**2 * (n - 4)), 3) if n > 4 else "undefined")
+      print("standard deviation =", np.round(sqrt((2 * n**2 * (m + n - 2)) / (m * (n - 2)**2 * (n - 4))), 3) if n > 4 else "undefined")
+
+      # Probability density function
+      x = np.linspace(0, 5, 500)
+      pdf = stats.f.pdf(x, dfn, dfd)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

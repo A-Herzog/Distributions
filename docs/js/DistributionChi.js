@@ -34,6 +34,7 @@ class ChiDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.chi.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("k","k",language.distributions.chi.parameterInfok+" (<i>k</i>"+isin+setNHTML+")",1,3);
 
@@ -76,6 +77,35 @@ class ChiDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+      from scipy.special import gamma as sp_gamma
+
+      # Set parameter k here
+
+      # Translate to scipy parameters
+      df = k
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.chi.mean(df), 3))
+      print("variance =", np.round(stats.chi.var(df), 3))
+      print("standard deviation =", np.round(stats.chi.std(df), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(sqrt(2) * (sp_gamma((k + 1) / 2) / sp_gamma(k / 2)), 3))
+      print("variance =", np.round(k - 2 * (sp_gamma((k + 1) / 2) / sp_gamma(k / 2))**2, 3))
+      print("standard deviation =", np.round(sqrt(k - 2 * (sp_gamma((k + 1) / 2) / sp_gamma(k / 2))**2), 3))
+
+      # Probability density function
+      x = np.linspace(0, 10, 500)
+      pdf = stats.chi.pdf(x, df)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

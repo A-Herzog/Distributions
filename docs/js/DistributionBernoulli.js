@@ -34,6 +34,7 @@ class BernoulliDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.bernoulli.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("p","p",language.distributions.bernoulli.parameterInfoP+" (<i>p</i>"+isin+"(0;1)])",0,false,1,false,0.25);
 
@@ -55,6 +56,31 @@ class BernoulliDistribution extends DiscreteProbabilityDistribution {
     pdf+=p;
     pdf+=endMathML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter p here
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.bernoulli.mean(p), 3))
+      print("variance =", np.round(stats.bernoulli.var(p), 3))
+      print("standard deviation =", np.round(stats.bernoulli.std(p), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(p, 3))
+      print("variance =", np.round(p * (1 - p), 3))
+      print("standard deviation =", np.round(sqrt(p * (1 - p)), 3))
+
+      # Probability mass function
+      k = [0, 1]
+      pmf = stats.bernoulli.pmf(k, p)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

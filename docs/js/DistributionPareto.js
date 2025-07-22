@@ -34,6 +34,7 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.pareto.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("xm","x<sub>m</sub>",language.distributions.pareto.parameterInfoxm+" (<i>x<sub>m</sub></i>"+isin+setRPlusHTML+")",0,false,null,false,1);
     this._addContinuousParameter("alpha","&alpha;",language.distributions.pareto.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
@@ -75,6 +76,35 @@ class ParetoDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&ge;</mo>"+xm;
     cdf+=endMathML;
     return cdf;
+  }
+
+#getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters xm and alpha here
+
+      # Translate to scipy parameters
+      b = alpha
+      scale = xm
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.pareto.mean(b, scale=scale), 3) if alpha > 1 else "undefined")
+      print("variance =", np.round(stats.pareto.var(b, scale=scale), 3) if alpha > 2 else "undefined")
+      print("standard deviation =", np.round(stats.pareto.std(b, scale=scale), 3) if alpha > 2 else "undefined")
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(alpha * xm / (alpha - 1), 3) if alpha > 1 else "undefined")
+      print("variance =", np.round((xm**2 * alpha) / ((alpha - 1)**2 * (alpha - 2)), 3) if alpha > 2 else "undefined")
+      print("standard deviation =", np.round(sqrt((xm**2 * alpha) / ((alpha - 1)**2 * (alpha - 2))), 3) if alpha > 2 else "undefined")
+
+      # Probability density function
+      x = np.linspace(xm - 1, xm + 10, 500)
+      pdf = stats.pareto.pdf(x, b, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

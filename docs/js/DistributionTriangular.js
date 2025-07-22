@@ -40,6 +40,7 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.triangular.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.triangular.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("c","c",language.distributions.triangular.parameterInfoc+" (<i>c</i>"+isin+setRHTML+")",null,false,null,false,7);
@@ -103,6 +104,36 @@ class TriangularDistribution extends ContinuousProbabilityDistribution {
     cdf+=c+"<mo>&lt;</mo>"+x+"<mo>&le;</mo>"+b;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a, b and c here
+
+      # Translate to scipy parameters
+      c_param = (c - a) / (b - a)
+      loc = a
+      scale = b - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.triang.mean(c_param, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.triang.var(c_param, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.triang.std(c_param, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round((a + b + c) / 3, 3))
+      print("variance =", np.round((a**2 + b**2 + c**2 - a * b - a * c - b * c) / 18, 3))
+      print("standard deviation =", np.round(sqrt((a**2 + b**2 + c**2 - a * b - a * c - b * c) / 18), 3))
+
+      # Probability density function
+      x = np.linspace(a - 2, b + 2, 500)
+      pdf = stats.triang.pdf(x, c_param, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

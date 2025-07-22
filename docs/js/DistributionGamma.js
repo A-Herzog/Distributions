@@ -37,6 +37,7 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.gamma.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("alpha","&alpha;",language.distributions.gamma.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,4);
     this._addContinuousParameter("beta","&beta;",language.distributions.gamma.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,2.5);
@@ -82,6 +83,36 @@ class GammaDistribution extends ContinuousProbabilityDistribution {
     cdf+=endMathML;
     return cdf;
   }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters alpha and beta here
+
+      # Translate to scipy parameters
+      a = alpha
+      scale = beta
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.gamma.mean(a, scale=scale), 3))
+      print("variance =", np.round(stats.gamma.var(a, scale=scale), 3))
+      print("standard deviation =", np.round(stats.gamma.std(a, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(alpha * beta, 3))
+      print("variance =", np.round(alpha * (beta ** 2), 3))
+      print("standard deviation =", np.round(sqrt(alpha) * beta, 3))
+
+      # Probability density function
+      x = np.linspace(0, 50, 500)
+      pdf = stats.gamma.pdf(x, a, scale=scale)
+      plt.plot(x, pdf)`;
+  }
+
 
   #getPDF(values, x) {
     if (x<=0) return 0;

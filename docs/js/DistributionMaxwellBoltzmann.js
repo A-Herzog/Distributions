@@ -39,6 +39,7 @@ class MaxwellBoltzmannDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.maxwellBoltzmann.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.maxwellBoltzmann.parameterInfoA+" (<i>a</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
 
@@ -86,6 +87,37 @@ class MaxwellBoltzmannDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+isin+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, pi
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter a here
+
+      # Translate to scipy parameters
+      scale = a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.maxwell.mean(scale=scale), 3))
+      print("variance =", np.round(stats.maxwell.var(scale=scale), 3))
+      print("standard deviation =", np.round(stats.maxwell.std(scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      mean = np.round(2 * a * sqrt(2 / pi), 3)
+      variance = np.round((3 * pi - 8) / pi * a**2, 3)
+      std = np.round(sqrt((3 * pi - 8) / pi) * a, 3)
+      print("mean =", mean)
+      print("variance =", variance)
+      print("standard deviation =", std)
+
+      # Probability density function
+      x = np.linspace(0, 5 * a, 500)
+      pdf = stats.maxwell.pdf(x, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

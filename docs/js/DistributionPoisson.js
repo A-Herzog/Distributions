@@ -36,6 +36,7 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.poisson.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("lambda","&lambda;",language.distributions.poisson.parameterInfolambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
 
@@ -55,6 +56,34 @@ class PoissonDistribution extends DiscreteProbabilityDistribution {
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML;
     return pdf;
+  }
+
+    #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter lmbda here
+
+      # Translate to scipy parameters
+      mu = lmbda
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.poisson.mean(mu), 3))
+      print("variance =", np.round(stats.poisson.var(mu), 3))
+      print("standard deviation =", np.round(stats.poisson.std(mu), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(lmbda, 3))
+      print("variance =", np.round(lmbda, 3))
+      print("standard deviation =", np.round(sqrt(lmbda), 3))
+
+      # Probability mass function
+      k = np.arange(0, lmbda + 5 * round(sqrt(lmbda)))
+      pmf = stats.poisson.pmf(k, mu)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

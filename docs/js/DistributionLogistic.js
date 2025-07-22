@@ -34,6 +34,7 @@ class LogisticDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.logistic.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mu","&mu;",language.distributions.logistic.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("s","s",language.distributions.logistic.parameterInfoS+" (<i>s</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
@@ -76,6 +77,35 @@ class LogisticDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+isin+setR;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mu and s here
+
+      # Translate to scipy parameters
+      loc = mu
+      scale = s
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.logistic.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.logistic.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.logistic.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(mu, 3))
+      print("variance =", np.round((s**2 * pi**2) / 3, 3))
+      print("standard deviation =", np.round(s * pi / sqrt(3), 3))
+
+      # Probability density function
+      x = np.linspace(mu - 5 * s, mu + 5 * s, 500)
+      pdf = stats.logistic.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

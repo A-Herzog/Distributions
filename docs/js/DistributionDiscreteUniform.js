@@ -34,6 +34,7 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.discreteUniform.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("a","a",language.distributions.discreteUniform.parameterInfoa+" (<i>a</i>"+isin+setZHTML+")",null,5);
     this._addDiscreteParameter("b","b",language.distributions.discreteUniform.parameterInfob+" (<i>b</i>"+isin+setZHTML+")",null,10);
@@ -56,7 +57,7 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     return pdf;
   }
 
-    #getCDFText() {
+  #getCDFText() {
     const a=variable("a");
     const b=variable("b");
     const k=variable("k");
@@ -69,6 +70,36 @@ class DiscreteUniformDistribution extends DiscreteProbabilityDistribution {
     cdf+=endMathML;
     cdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML+",&nbsp;&nbsp;&nbsp;"+a+"<mo>&le;</mo>"+k+"<mo>&le;</mo>"+b;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a and b here
+
+      # Translate to scipy parameters
+      low = a
+      high = b + 1  # randint is [low, high)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.randint.mean(low, high), 3))
+      print("variance =", np.round(stats.randint.var(low, high), 3))
+      print("standard deviation =", np.round(stats.randint.std(low, high), 3))
+
+      # Characterstics (direct calculation)
+      n = b - a + 1
+      print("mean =", np.round((a + b) / 2, 3))
+      print("variance =", np.round((n**2 - 1) / 12, 3))
+      print("standard deviation =", np.round(sqrt((n**2 - 1) / 12), 3))
+
+      # Probability mass function
+      k = np.arange(a - 2, b + 3)
+      pmf = stats.randint.pmf(k, low, high)
+      plt.bar(k, pmf)`;
   }
 
   _checkParameters(values) {

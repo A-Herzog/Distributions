@@ -34,6 +34,7 @@ class CosineDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.cosine.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.cosine.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("b","b",language.distributions.cosine.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
@@ -79,6 +80,35 @@ class CosineDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo><ms>[</ms>"+a+"<mo>;</mo>"+b+"<ms>]</ms>";
     cdf+=endMathML;
     return cdf;
+  }
+
+    #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a and b here
+
+      # Translate to scipy parameters
+      loc = (a + b) / 2
+      scale = 1 / 2 / pi * (b - a)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.cosine.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.cosine.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.cosine.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round((a + b) / 2, 3))
+      print("variance =", np.round((pi**2 - 6) * (b - a) ** 2 / 12 / pi**2, 3))
+      print("standard deviation =", np.round(sqrt((pi**2 - 6) * (b - a) ** 2 / 12 / pi**2), 3))
+
+      # Probability density function
+      x = np.linspace(a - 2, b + 2, 500)
+      pdf = stats.cosine.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

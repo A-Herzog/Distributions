@@ -34,6 +34,7 @@ class SineDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.sine.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    /* not implemented in SciPy - this.scipyText=this.#getScipyText(); */
 
     this._addContinuousParameter("a","a",language.distributions.uniform.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("b","b",language.distributions.uniform.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);

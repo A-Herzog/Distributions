@@ -37,6 +37,7 @@ class SawtoothRightDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.sawtoothRight.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.sawtoothRight.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("b","b",language.distributions.sawtoothRight.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
@@ -78,6 +79,36 @@ class SawtoothRightDistribution extends ContinuousProbabilityDistribution {
     cdf+=a+"<mo>&le;</mo>"+x+"<mo>&le;</mo>"+b;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a and b here
+
+      # Translate to scipy parameters
+      c = 1
+      loc = a
+      scale = b - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.triang.mean(c, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.triang.var(c, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.triang.std(c, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round((a + b + c) / 3, 3))
+      print("variance =", np.round((a**2 + b**2 + c**2 - a * b - a * c - b * c) / 18, 3))
+      print("standard deviation =", np.round(sqrt((a**2 + b**2 + c**2 - a * b - a * c - b * c) / 18), 3))
+
+      # Probability density function
+      x = np.linspace(a - 2, b + 2, 500)
+      pdf = stats.triang.pdf(x, c, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

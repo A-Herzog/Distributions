@@ -38,6 +38,7 @@ class RayleighDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.rayleigh.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("m","m",language.distributions.rayleigh.parameterInfom+" (<i>m</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
 
@@ -88,6 +89,35 @@ class RayleighDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+isin+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, pi
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter m here
+
+      # Translate to scipy parameters
+      sigma = m * sqrt(2 / pi)
+      scale = scale
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.rayleigh.mean(scale=scale), 3))
+      print("variance =", np.round(stats.rayleigh.var(scale=scale), 3))
+      print("standard deviation =", np.round(stats.rayleigh.std(scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(m, 3))
+      print("variance =", np.round((4 - pi) / 2 * sigma**2, 3))
+      print("standard deviation =", np.round(sqrt((4 - pi) / 2) * sigma, 3))
+
+      # Probability density function
+      x = np.linspace(0, 5 * m, 500)
+      pdf = stats.rayleigh.pdf(x, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

@@ -35,6 +35,7 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.wignerSemicircle.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("m","m",language.distributions.wignerSemicircle.parameterInfoM+" (<i>m</i>"+isin+setRHTML+")",null,false,null,false,0);
     this._addContinuousParameter("R","R",language.distributions.wignerSemicircle.parameterInfoR+" (<i>R</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
@@ -81,6 +82,34 @@ class WignerSemicircleDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo><mo>[</mo><mo>-</mo>"+R+plus+m+"<mo>;</mo>"+R+plus+m+"<mo>]</mo>";
     cdf+=endMathML;
     return cdf;
+  }
+
+    #getScipyText() {
+    return `
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters m and R here
+
+      # Translate to scipy parameters
+      loc = m
+      scale = R
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.semicircular.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.semicircular.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.semicircular.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(m, 3))
+      print("variance =", np.round(R**2 / 4, 3))
+      print("standard deviation =", np.round(R / 2, 3))
+
+      # Probability density function
+      x = np.linspace(m - R - 1, m + R + 1, 500)
+      pdf = stats.semicircular.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

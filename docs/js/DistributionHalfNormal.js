@@ -42,6 +42,7 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.halfNormal.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("s","s",language.distributions.halfNormal.parameterInfoS+" (<i>s</i>"+isin+setRHTML+")",null,false,null,false,0);
     this._addContinuousParameter("mu","&mu;",language.distributions.halfNormal.parameterInfoMu+" (<i>&mu;</i>"+isin+setRPlusHTML+")",0,false,null,false,10);
@@ -92,6 +93,35 @@ class HalfNormalDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, pi
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters s and mu here
+
+      # Translate to scipy parameters
+      loc = s
+      scale = mu * sqrt(pi / 2)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.halfnorm.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.halfnorm.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.halfnorm.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(s + mu, 3))
+      print("variance =", np.round(mu**2 * (pi - 2) / 2, 3))
+      print("standard deviation =", np.round(mu * sqrt((pi - 2) / 2), 3))
+
+      # Probability density function
+      x = np.linspace(s - 2, 4 * mu, 500)
+      pdf = stats.halfnorm.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

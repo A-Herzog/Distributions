@@ -36,6 +36,7 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.studentT.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("nu","&nu;",language.distributions.studentT.parameterInfoNu+" (<i>&nu;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
     this._addContinuousParameter("mu","&mu;",language.distributions.studentT.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,0);
@@ -83,6 +84,35 @@ class StudentTDistribution extends ContinuousProbabilityDistribution {
     cdf+=endMathML;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters nu and mu here
+
+      # Translate to scipy parameters
+      df = nu
+      loc = mu
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.t.mean(df, loc=loc), 3) if df > 1 else "undefined")
+      print("variance =", np.round(stats.t.var(df, loc=loc), 3) if df > 2 else "undefined")
+      print("standard deviation =", np.round(stats.t.std(df, loc=loc), 3) if df > 2 else "undefined")
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(mu, 3) if nu > 1 else "undefined")
+      print("variance =", np.round(nu / (nu - 2), 3) if nu > 2 else "undefined")
+      print("standard deviation =", np.round(sqrt(nu / (nu - 2)), 3) if nu > 2 else "undefined")
+
+      # Probability density function
+      x = np.linspace(mu - 5 * sqrt(nu / (nu - 2)), mu + 5 * sqrt(nu / (nu - 2)), 500)
+      pdf = stats.t.pdf(x, df, loc=loc)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

@@ -41,6 +41,7 @@ class NegativeHypergeometricDistribution extends DiscreteProbabilityDistribution
     this.wikipediaURL=language.distributions.negativeHypergeometric.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("N","N",language.distributions.negativeHypergeometric.parameterInfoN+" (<i>N</i>"+isin+setNHTML+")",1,50);
     this._addDiscreteParameter("R","R",language.distributions.negativeHypergeometric.parameterInfoR+" (<i>R</i>"+isin+setNHTML+")",1,20);
@@ -63,6 +64,41 @@ class NegativeHypergeometricDistribution extends DiscreteProbabilityDistribution
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters N, R and n here
+
+      # Translate to scipy parameters
+      M = N
+      K = N - R
+      r = n
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.nhypergeom.mean(M, K, r) + n, 3))  # type: ignore
+      print("variance =", np.round(stats.nhypergeom.var(M, K, r), 3))
+      print("standard deviation =", np.round(stats.nhypergeom.std(M, K, r), 3))
+
+      # Characterstics (direct calculation)
+      mean = n * (N + 1) / (R + 1)
+      var = n * (R + 1 - n) * (N - R) * (N + 1) / ((R + 1)**2 * (R + 2))
+      print("mean =", np.round(mean, 3))
+      print("variance =", np.round(var, 3))
+      print("standard deviation =", np.round(sqrt(var), 3))
+
+      # Probability mass function
+      k = np.arange(0, K + 1)
+      pmf = stats.nhypergeom.pmf(k, M, K, r)
+      # Note: The distribution is shifted by adding n since SciPy is only counting the number of failures
+      pmf = np.insert(pmf, 0, [0, 0, 0, 0, 0])
+      k = np.append(k, list(range(K, K + n)))
+      plt.bar(k, pmf)`;
   }
 
   _checkParameters(values) {

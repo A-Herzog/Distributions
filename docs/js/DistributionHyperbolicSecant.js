@@ -33,6 +33,7 @@ class HyperbolicSecantDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.hyperbolicSecant.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mu","&mu;",language.distributions.hyperbolicSecant.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("sigma","&sigma;",language.distributions.hyperbolicSecant.parameterInfoSigma+" (<i>&sigma;</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
@@ -74,6 +75,35 @@ class HyperbolicSecantDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mu and sigma here
+
+      # Translate to scipy parameters
+      loc = mu
+      scale = sigma / sqrt(pi**2 / 4)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.hypsecant.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.hypsecant.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.hypsecant.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(mu, 3))
+      print("variance =", np.round(sigma**2, 3))
+      print("standard deviation =", np.round(sigma, 3))
+
+      # Probability density function
+      x = np.linspace(mu - 4 * sigma, mu + 4 * sigma, 500)
+      pdf = stats.hypsecant.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

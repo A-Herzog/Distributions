@@ -41,6 +41,7 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.hypergeometric.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("N","N",language.distributions.hypergeometric.parameterInfoN+" (<i>N</i>"+isin+setNHTML+")",1,50);
     this._addDiscreteParameter("R","R",language.distributions.hypergeometric.parameterInfoR+" (<i>R</i>"+isin+setN0HTML+")",0,20);
@@ -63,6 +64,38 @@ class HypergeometricDistribution extends DiscreteProbabilityDistribution {
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters N, R and n here
+
+      # Translate to scipy parameters
+      M = N
+      ngood = R
+      nsample = n
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.hypergeom.mean(M, ngood, nsample), 3))
+      print("variance =", np.round(stats.hypergeom.var(M, ngood, nsample), 3))
+      print("standard deviation =", np.round(stats.hypergeom.std(M, ngood, nsample), 3))
+
+      # Characterstics (direct calculation)
+      mean = n * R / N
+      var = n * R * (N - R) * (N - n) / (N**2 * (N - 1))
+      print("mean =", np.round(mean, 3))
+      print("variance =", np.round(var, 3))
+      print("standard deviation =", np.round(sqrt(var), 3))
+
+      # Probability mass function
+      k = np.arange(-1, min(n, R) + 1)
+      pmf = stats.hypergeom.pmf(k, M, ngood, nsample)
+      plt.bar(k, pmf)`;
   }
 
   _checkParameters(values) {

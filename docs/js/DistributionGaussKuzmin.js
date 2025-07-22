@@ -34,6 +34,7 @@ class GaussKuzminDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.gaussKuzmin.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    /* not implemented in SciPy - this.scipyText=this.#getScipyText(); */
 
     this._setCalcParameter("k",3);
   }

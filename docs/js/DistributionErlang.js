@@ -37,6 +37,7 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.erlang.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("n","n",language.distributions.erlang.parameterInfon+" (<i>n</i>"+isin+setNHTML+")",1,4);
     this._addContinuousParameter("lambda","&lambda;",language.distributions.erlang.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,2.5);
@@ -84,6 +85,35 @@ class ErlangDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters n and lmbda here
+
+      # Translate to scipy parameters
+      a = n
+      scale = lmbda
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.erlang.mean(a, scale=scale), 3))
+      print("variance =", np.round(stats.erlang.var(a, scale=scale), 3))
+      print("standard deviation =", np.round(stats.erlang.std(a, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(n * lmbda, 3))
+      print("variance =", np.round(n * (lmbda ** 2), 3))
+      print("standard deviation =", np.round(sqrt(n) * lmbda, 3))
+
+      # Probability density function
+      x = np.linspace(0, 50, 500)
+      pdf = stats.erlang.pdf(x, a, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

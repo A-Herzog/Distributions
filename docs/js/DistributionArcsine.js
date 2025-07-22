@@ -34,6 +34,7 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.arcsine.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.uniform.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("b","b",language.distributions.uniform.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
@@ -78,6 +79,35 @@ class ArcsineDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+isin+"<ms>(</ms>"+a+";"+b+"<ms>)</ms>";
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a and b here
+
+      # Translate to scipy parameters
+      loc = a
+      scale = b - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.arcsine.mean(loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.arcsine.var(loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.arcsine.std(loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round((a + b) / 2, 3))
+      print("variance =", np.round(((b - a) ** 2) / 8, 3))
+      print("standard deviation =", np.round(sqrt(((b - a) ** 2) / 8), 3))
+
+      # Probability density function
+      x = np.linspace(a - 2, b + 2, 500)
+      pdf = stats.arcsine.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

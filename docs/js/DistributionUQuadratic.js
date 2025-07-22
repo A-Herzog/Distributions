@@ -33,6 +33,7 @@ class UQuadraticDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.uQuadratic.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    /* not implemented in SciPy - this.scipyText=this.#getScipyText(); */
 
     this._addContinuousParameter("a","a",language.distributions.uQuadratic.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,2);
     this._addContinuousParameter("b","b",language.distributions.uQuadratic.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);

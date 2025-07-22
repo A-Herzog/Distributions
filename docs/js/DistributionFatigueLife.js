@@ -37,6 +37,7 @@ class FatigueLifeDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.fatigueLife.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mu","&mu;",language.distributions.fatigueLife.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,3);
     this._addContinuousParameter("beta","&beta;",language.distributions.fatigueLife.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
@@ -90,6 +91,36 @@ class FatigueLifeDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&ge;</mo>"+mu;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mu, beta and gamma here
+
+      # Translate to scipy parameters
+      c = gamma
+      scale = beta
+      loc = mu
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.fatiguelife.mean(c, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.fatiguelife.var(c, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.fatiguelife.std(c, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(mu + beta * (1 + gamma**2 / 2), 3))
+      print("variance =", np.round(beta**2 * (gamma**2) * (1 + 5 * gamma**2 / 4), 3))
+      print("standard deviation =", np.round(sqrt(beta**2 * (gamma**2) * (1 + 5 * gamma**2 / 4)), 3))
+
+      # Probability density function
+      x = np.linspace(mu - 1, mu + 40, 500)
+      pdf = stats.fatiguelife.pdf(x, c, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #stdNormPDFFactor=1/Math.sqrt(2*Math.PI);

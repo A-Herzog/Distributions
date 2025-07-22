@@ -35,6 +35,7 @@ class JohnsonSUDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.johnson.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("gamma","&gamma;",language.distributions.johnson.parameterInfoGamma+" (<i>&gamma;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
     this._addContinuousParameter("xi","&xi;",language.distributions.johnson.parameterInfoXi+" (<i>&xi;</i>"+isin+setRPlusHTML+")",0,false,null,false,100);
@@ -89,6 +90,40 @@ class JohnsonSUDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, exp, sinh, cosh
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters gamma, xi, delta and lmbda here
+
+      # Translate to scipy parameters
+      a = gamma
+      b = delta
+      loc = xi
+      scale = lmbda
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.johnsonsu.mean(a, b, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.johnsonsu.var(a, b, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.johnsonsu.std(a, b, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(xi - lmbda * exp(1 / (2 * delta**2)) * sinh(gamma / delta), 3))
+      print("variance =", np.round(lmbda**2 / 2 * (exp(1 / (delta**2)) - 1) * (exp(1 / (delta**2)) * cosh(2 * gamma * delta) + 1), 3))
+      print("standard deviation =", np.round(sqrt(lmbda**2 / 2 * (exp(1 / (delta**2)) - 1) * (exp(1 / (delta**2)) * cosh(2 * gamma * delta) + 1)), 3))
+
+      # Probability density function
+      mean = xi - lmbda * exp(1 / (2 * delta**2)) * sinh(gamma / delta)
+      ex = exp(1 / (delta**2))
+      variance = lmbda**2 / 2 * (ex - 1) * (ex * cosh(2 * gamma * delta) + 1)
+      x = np.linspace(mean - 2 * sqrt(variance), mean + 2 * sqrt(variance), 500)
+      pdf = stats.johnsonsu.pdf(x, a, b, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

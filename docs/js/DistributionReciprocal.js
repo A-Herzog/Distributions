@@ -33,6 +33,7 @@ class ReciprocalDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.reciprocal.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("a","a",language.distributions.reciprocal.parameterInfoa+" (<i>a</i>"+isin+setRHTML+")",null,false,null,false,2);
     this._addContinuousParameter("b","b",language.distributions.reciprocal.parameterInfob+" (<i>b</i>"+isin+setRHTML+")",null,false,null,false,10);
@@ -74,6 +75,38 @@ class ReciprocalDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo><ms>[</ms>"+a+"<mo>;</mo>"+b+"<ms>]</ms>";
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, log
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters a and b here
+
+      # Translate to scipy parameters
+      loc = a
+      scale = b
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.loguniform.mean(a, b), 3))
+      print("variance =", np.round(stats.loguniform.var(a, b), 3))
+      print("standard deviation =", np.round(stats.loguniform.std(a, b), 3))
+
+      # Characterstics (direct calculation)
+      mean = np.round((b - a) / log(b / a), 3)
+      variance = np.round((b**2 - a**2) / (2 * log(b / a)) - ((b - a) / log(b / a))**2, 3)
+      std = np.round(sqrt(variance), 3)
+      print("mean =", mean)
+      print("variance =", variance)
+      print("standard deviation =", std)
+
+      # Probability density function
+      x = np.linspace(a - 1, b + 1, 500)
+      pdf = stats.loguniform.pdf(x, a, b)
+      plt.plot(x, pdf)`;
   }
 
   _checkParameters(values) {

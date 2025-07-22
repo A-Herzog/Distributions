@@ -34,6 +34,7 @@ class InverseGaussianDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.inverseGaussian.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("lambda","&lambda;",language.distributions.inverseGaussian.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,4);
     this._addContinuousParameter("mu","&mu;",language.distributions.inverseGaussian.parameterInfoMu+" (<i>&mu;</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
@@ -80,6 +81,35 @@ class InverseGaussianDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters lmbda and mu here
+
+      # Translate to scipy parameters
+      shape = mu / lmbda
+      scale = lmbda
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.invgauss.mean(shape, scale=scale), 3))
+      print("variance =", np.round(stats.invgauss.var(shape, scale=scale), 3))
+      print("standard deviation =", np.round(stats.invgauss.std(shape, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(mu, 3))
+      print("variance =", np.round(mu**3 / lmbda, 3))
+      print("standard deviation =", np.round(np.sqrt(mu**3 / lmbda), 3))
+
+      # Probability density function
+      x = np.linspace(0, 15, 500)
+      pdf = stats.invgauss.pdf(x, shape, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

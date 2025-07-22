@@ -36,6 +36,7 @@ class NegativeBinomialDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.negativeBinomial.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("r","r",language.distributions.negativeBinomial.parameterInfor+"  (<i>r</i>"+isin+setNHTML+")",1,8);
     this._addContinuousParameter("p","p",language.distributions.negativeBinomial.parameterInfop+" (<i>p</i>"+isin+"[0;1]"+")",0,true,1,true,0.25);
@@ -58,6 +59,34 @@ class NegativeBinomialDistribution extends DiscreteProbabilityDistribution {
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters r and p here
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.nbinom.mean(n, p), 3))
+      print("variance =", np.round(stats.nbinom.var(n, p), 3))
+      print("standard deviation =", np.round(stats.nbinom.std(n, p), 3))
+
+      # Characterstics (direct calculation)
+      mean = n * (1 - p) / p
+      var = n * (1 - p) / (p ** 2)
+      std = sqrt(var)
+      print("mean =", np.round(mean, 3))
+      print("variance =", np.round(var, 3))
+      print("standard deviation =", np.round(std, 3))
+
+      # Probability mass function
+      k = np.arange(0, mean + 4 * std)
+      pmf = stats.nbinom.pmf(k, n, p)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

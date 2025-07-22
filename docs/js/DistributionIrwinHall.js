@@ -38,6 +38,7 @@ class IrwinHallDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.irwinhall.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameterMinMax("n","n",language.distributions.irwinhall.parameterInfon+" (<i>n</i>"+isin+setNHTML+")",1,25,8);
 
@@ -94,6 +95,31 @@ class IrwinHallDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo><mo>[</mo><mn>0</mn><mo>;</mo>"+n+"<mo>]</mo>";
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter n here
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.irwinhall.mean(n), 3))
+      print("variance =", np.round(stats.irwinhall.var(n), 3))
+      print("standard deviation =", np.round(stats.irwinhall.std(n), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(n / 2, 3))
+      print("variance =", np.round(n / 12, 3))
+      print("standard deviation =", np.round(sqrt(n / 12), 3))
+
+      # Probability density function
+      x = np.linspace(0, n, 500)
+      pdf = stats.irwinhall.pdf(x, n)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

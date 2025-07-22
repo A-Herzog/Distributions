@@ -39,6 +39,8 @@ class ProbabilityDistribution {
   #wikipediaURL=null;
   #pdfText=null;
   #cdfText=null;
+  #scipyText=null;
+  #scipyBlock;
   #parameters=[];
   #allParameterOk;
   _currentParameterValues;
@@ -338,6 +340,7 @@ class ProbabilityDistribution {
       infoLine.style.display=(show)?'':'none';
       diagramZoomInfo.style.display=(show)?'':'none';
       that.#canvasInfo.style.display=(show)?'':'none';
+      if (this.#scipyBlock && !show) this.#scipyBlock.style.display="none";
       button.title=(show)?language.GUI.size.collapse:language.GUI.size.expand;
       button.classList.toggle("bi-arrows-collapse",show);
       button.classList.toggle("bi-arrows-expand",!show);
@@ -363,7 +366,24 @@ class ProbabilityDistribution {
       if (this.#cdfText!=null) {
         infoLine.innerHTML+=language.distributions.CDF+": "+this.#cdfText;
       }
+      if (this.#scipyText!=null) {
+        const scipyButton=document.createElement("button");
+        scipyButton.type="button";
+        scipyButton.className="btn btn-outline-secondary btn-sm bi bi-code-slash ms-3";
+        scipyButton.title=language.distributions.scipyTooltip;
+        scipyButton.onclick=()=>{
+          this.#scipyBlock.style.display=(this.#scipyBlock.style.display=='none')?'':'none';
+        }
+        infoLine.appendChild(scipyButton);
+      }
       card.appendChild(infoLine);
+      if (this.#scipyText!=null) {
+        this.#scipyBlock=document.createElement("div");
+        this.#scipyBlock.style.display='none';
+        this.#scipyBlock.className="mt-2 mb-3 border border-success rounded p-2";
+        this.#scipyBlock.innerHTML="<pre style='margin-bottom: 0;'>"+this.#scipyText.split("\n").map(line=>(line.length>6)?line.substring(6):line).join("\n")+"</pre>";
+        card.appendChild(this.#scipyBlock);
+      }
     }
     this.#canvas=document.createElement("canvas");
     card.appendChild(this.#canvas);
@@ -754,6 +774,16 @@ class ProbabilityDistribution {
    */
   set cdfText(cdfText) {
     this.#cdfText=cdfText;
+  }
+
+  /**
+   * Sets the text for the SciPy implementation of the probability distribution
+   * @param {String}  scipyText Text for the SciPy implementation of the probability distribution
+   * @description The text should be a Python code block that can be used to create the distribution in SciPy
+   * @see https://docs.scipy.org/doc/scipy/reference/stats.html for more information about the SciPy distributions.
+   */
+  set scipyText(scipyText) {
+    this.#scipyText=scipyText;
   }
 
   /**

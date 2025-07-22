@@ -19,7 +19,6 @@ export {CauchyDistribution};
 import {ContinuousProbabilityDistribution} from "./Distribution.js";
 import {language} from "./Language.js";
 import {beginMathML, endMathML, isin, setR, setRHTML, setRPlusHTML, variable, frac, defF, plus, minus, mul} from './MathMLTools.js';
-import {formatNumber} from './NumberTools.js';
 
 
 
@@ -35,6 +34,7 @@ class CauchyDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.cauchy.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("t","t",language.distributions.cauchy.parameterInfot+" (<i>t</i>"+isin+setRHTML+")",null,false,null,false,0);
     this._addContinuousParameter("s","s",language.distributions.cauchy.parameterInfos+" (<i>s</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
@@ -80,6 +80,24 @@ class CauchyDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setR;
     cdf+=endMathML;
     return cdf;
+  }
+
+    #getScipyText() {
+    return `
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters t and s here
+
+      # Translate to scipy parameters
+      loc = t
+      scale = s
+
+      # Probability density function
+      x = np.linspace(t - 15, t + 15, 500)
+      pdf = stats.cauchy.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

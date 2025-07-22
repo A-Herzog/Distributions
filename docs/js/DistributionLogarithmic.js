@@ -36,6 +36,7 @@ class LogarithmicDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.logarithmic.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("p","p",language.distributions.logarithmic.parameterInfoP+" (<i>p</i>"+isin+"[0;1])",0,false,1,false,0.8);
 
@@ -54,6 +55,34 @@ class LogarithmicDistribution extends DiscreteProbabilityDistribution {
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setNHTML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter p here
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.logser.mean(p), 3))
+      print("variance =", np.round(stats.logser.var(p), 3))
+      print("standard deviation =", np.round(stats.logser.std(p), 3))
+
+      # Characterstics (direct calculation)
+      mean = -p / ((1 - p) * np.log(1 - p))
+      var = -p * (p + np.log(1 - p)) / ((1 - p)**2 * (np.log(1 - p))**2)
+      std = np.sqrt(var)
+      print("mean =", np.round(mean, 3))
+      print("variance =", np.round(var, 3))
+      print("standard deviation =", np.round(std, 3))
+
+      # Probability mass function
+      k = np.arange(0, 15)
+      pmf = stats.logser.pmf(k, p)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

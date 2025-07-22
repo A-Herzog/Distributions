@@ -34,6 +34,7 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.chi2.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addDiscreteParameter("k","k",language.distributions.chi2.parameterInfok+" (<i>k</i>"+isin+setNHTML+")",1,3);
 
@@ -78,6 +79,34 @@ class Chi2Distribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo>"+setRPlus0;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter k here
+
+      # Translate to scipy parameters
+      df = k
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.chi2.mean(df), 3))
+      print("variance =", np.round(stats.chi2.var(df), 3))
+      print("standard deviation =", np.round(stats.chi2.std(df), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(k, 3))
+      print("variance =", np.round(2 * k, 3))
+      print("standard deviation =", np.round(sqrt(2 * k), 3))
+
+      # Probability density function
+      x = np.linspace(0, 15, 500)
+      pdf = stats.chi2.pdf(x, df)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

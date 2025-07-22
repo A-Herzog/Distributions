@@ -37,6 +37,7 @@ class LogGammaDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.logGamma.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    /* SciPy implementation if another distribution - this.scipyText=this.#getScipyText(); */
 
     this._addContinuousParameter("a","a",language.distributions.logGamma.parameterInfoa+" (<i>a</i>"+isin+setRPlusHTML+")",0,false,null,false,5);
     this._addContinuousParameter("b","b",language.distributions.logGamma.parameterInfob+" (<i>b</i>"+isin+setRPlusHTML+")",0,false,null,false,4);

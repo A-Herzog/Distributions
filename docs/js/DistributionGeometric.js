@@ -35,6 +35,7 @@ class GeometricDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.geometric.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("p","p",language.distributions.geometric.parameterInfop+" (<i>p</i>"+isin+"[0;1]"+")",0,true,1,true,0.25);
 
@@ -67,6 +68,34 @@ class GeometricDistribution extends DiscreteProbabilityDistribution {
     cdf+=endMathML;
     cdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setN0HTML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter p here
+
+      # Translate to scipy parameters
+      loc = -1  # location parameter (default is 0, but we use -1 for the first success at k=1)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.geom.mean(p, loc=loc), 3))
+      print("variance =", np.round(stats.geom.var(p, loc=loc), 3))
+      print("standard deviation =", np.round(stats.geom.std(p, loc=loc), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round((1 - p) / p, 3))
+      print("variance =", np.round((1 - p) / p**2, 3))
+      print("standard deviation =", np.round(sqrt((1 - p) / p**2), 3))
+
+      # Probability mass function
+      k = np.arange(-1, 20)
+      pmf = stats.geom.pmf(k, p, loc=loc)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

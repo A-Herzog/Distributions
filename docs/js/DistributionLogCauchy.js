@@ -34,6 +34,7 @@ class LogCauchyDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.logCauchy.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    /* not implemented in SciPy - this.scipyText=this.#getScipyText(); */
 
     this._addContinuousParameter("mu","&mu;",language.distributions.logCauchy.parameterInfoMu+" (<i>t</i>"+isin+setRHTML+")",null,false,null,false,4);
     this._addContinuousParameter("sigma","&sigma;",language.distributions.logCauchy.parameterInfoSigma+" (<i>s</i>"+isin+setRPlusHTML+")",0,false,null,false,0.5);

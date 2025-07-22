@@ -34,6 +34,7 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.exponential.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("lambda","&lambda;",language.distributions.exponential.parameterInfoLambda+" (<i>&lambda;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
 
@@ -73,6 +74,33 @@ class ExponentialDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&ge;</mo><mn>0</mn>";
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameter lmbda here
+
+      # Translate to scipy parameters
+      scale = 1 / lmbda
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.expon.mean(scale=scale), 3))
+      print("variance =", np.round(stats.expon.var(scale=scale), 3))
+      print("standard deviation =", np.round(stats.expon.std(scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(1 / lmbda, 3))
+      print("variance =", np.round(1 / (lmbda ** 2), 3))
+      print("standard deviation =", np.round(1 / lmbda, 3))
+
+      # Probability density function
+      x = np.linspace(0, 10, 500)
+      pdf = stats.expon.pdf(x, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   _calcDistribution(values) {

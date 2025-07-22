@@ -23,7 +23,7 @@ import {beginMathML, endMathML, isin, setR, setRPlusHTML, setRHTML, variable, fr
 
 
 /**
- * Levy distribution
+ * Lévy distribution
  */
 class LevyDistribution extends ContinuousProbabilityDistribution {
   #pdfFactor;
@@ -36,6 +36,7 @@ class LevyDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.levy.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mu","&mu;",language.distributions.levy.parameterInfoMu+" (<i>&mu;</i>"+isin+setRHTML+")",null,false,null,false,5);
     this._addContinuousParameter("gamma","&gamma;",language.distributions.levy.parameterInfoGamma+" (<i>&gamma;</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
@@ -81,6 +82,24 @@ class LevyDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&gt;</mo>"+mu;
     cdf+=endMathML;
     return cdf;
+  }
+
+  #getScipyText() {
+    return `
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mu and gamma here
+
+      # Translate to scipy parameters
+      loc = mu
+      scale = gamma
+
+      # Probability density function
+      x = np.linspace(mu - 2, mu + gamma * 10, 500)
+      pdf = stats.levy.pdf(x, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

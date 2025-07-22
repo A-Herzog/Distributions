@@ -37,6 +37,7 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
     this.wikipediaURL=language.distributions.zeta.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getDiscreteDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("s","s",language.distributions.zeta.parameterInfos+" (<i>s</i>&gt;1)",1,false,null,false,3);
 
@@ -56,6 +57,35 @@ class ZetaDistribution extends DiscreteProbabilityDistribution {
     pdf+=endMathML;
     pdf+=",&nbsp;&nbsp;&nbsp;"+k+isin+setNHTML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+      from scipy.special import zeta as sp_zeta
+
+      # Set parameter s here
+
+      # Translate to scipy parameters
+      a = s
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.zipf.mean(a), 3) if s >= 3 else "inf")
+      print("variance =", np.round(stats.zipf.var(a), 3) if s >= 4 else "inf")
+      print("standard deviation =", np.round(stats.zipf.std(a), 3) if s >= 4 else "inf")
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(sp_zeta(s - 1) / sp_zeta(s), 3) if s >= 3 else "inf")
+      print("variance =", np.round((sp_zeta(s) * sp_zeta(s - 2) - (sp_zeta(s - 1))**2) / ((sp_zeta(s))**2), 3) if s >= 4 else "inf")
+      print("standard deviation =", np.round(sqrt((sp_zeta(s) * sp_zeta(s - 2) - (sp_zeta(s - 1))**2) / ((sp_zeta(s))**2)), 3) if s >= 4 else "inf")
+
+      # Probability mass function
+      k = np.arange(0, 10)
+      pmf = stats.zipf.pmf(k, a)
+      plt.bar(k, pmf)`;
   }
 
   _calcDistribution(values) {

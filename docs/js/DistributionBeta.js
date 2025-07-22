@@ -36,6 +36,7 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.beta.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("alpha","&alpha;",language.distributions.beta.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,2);
     this._addContinuousParameter("beta","&beta;",language.distributions.beta.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,1.5);
@@ -90,6 +91,35 @@ class BetaDistribution extends ContinuousProbabilityDistribution {
     cdf+=x+"<mo>&isin;</mo><ms>[</ms><mn>0</mn>;<mn>1</mn><ms>]</ms>";
     cdf+=endMathML;
     return cdf;
+  }
+
+#getScipyText() {
+    return `
+      from math import sqrt
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters alpha, beta, a and b here
+
+      # Translate to scipy parameters
+      loc = a
+      scale = b - a
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.beta.mean(alpha, beta, loc=loc, scale=scale), 3))
+      print("variance =", np.round(stats.beta.var(alpha, beta, loc=loc, scale=scale), 3))
+      print("standard deviation =", np.round(stats.beta.std(alpha, beta, loc=loc, scale=scale), 3))
+
+      # Characterstics (direct calculation)
+      print("mean =", np.round(a + (b - a) * alpha / (alpha + beta), 3))
+      print("variance =", np.round(((b - a) ** 2) * (alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1)), 3))
+      print("standard deviation =", np.round(sqrt(((b - a) ** 2) * (alpha * beta) / ((alpha + beta) ** 2 * (alpha + beta + 1))), 3))
+
+      # Probability density function
+      x = np.linspace(a - 2, b + 2, 500)
+      pdf = stats.beta.pdf(x, alpha, beta, loc=loc, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

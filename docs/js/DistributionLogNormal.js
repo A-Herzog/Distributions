@@ -41,6 +41,7 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
     this.wikipediaURL=language.distributions.logNormal.wikipedia;
     this.pdfText=this.#getPDFText();
     this.cdfText=getContinousDefaultCDF();
+    this.scipyText=this.#getScipyText();
 
     this._addContinuousParameter("mean","&mu;<sub>norm</sub>",language.distributions.logNormal.parameterInfoMu+" (<i>&mu;<sub>norm</sub></i>"+isin+setRPlusHTML+")",0,false,null,false,5);
     this._addContinuousParameter("std","&sigma;<sub>norm</sub>",language.distributions.logNormal.parameterInfoSigma+" (<i>&sigma;<sub>norm</sub></i>"+isin+setRPlus0HTML+")",0,true,null,false,3);
@@ -69,6 +70,32 @@ class LogNormalDistribution extends ContinuousProbabilityDistribution {
     pdf+=x+"<mo>&isin;</mo>"+setRPlus;
     pdf+=endMathML;
     return pdf;
+  }
+
+  #getScipyText() {
+    return `
+      from math import sqrt, exp, log
+      import numpy as np
+      import matplotlib.pyplot as plt
+      import scipy.stats as stats
+
+      # Set parameters mean and std here
+
+      # Translate to scipy parameters
+      sigma = sqrt(log(std**2 / mean**2 + 1))
+      mu = log(mean) - sigma**2 / 2
+      s = sigma
+      scale = exp(mu)
+
+      # Characterstics (via scipy)
+      print("mean =", np.round(stats.lognorm.mean(s, scale=scale), 3))
+      print("variance =", np.round(stats.lognorm.var(s, scale=scale), 3))
+      print("standard deviation =", np.round(stats.lognorm.std(s, scale=scale), 3))
+
+      # Probability density function
+      x = np.linspace(0, 20, 500)
+      pdf = stats.lognorm.pdf(x, s, scale=scale)
+      plt.plot(x, pdf)`;
   }
 
   #getPDF(values, x) {

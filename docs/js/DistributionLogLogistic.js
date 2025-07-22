@@ -37,6 +37,7 @@ class LogLogisticDistribution extends ContinuousProbabilityDistribution {
     this.pdfText=this.#getPDFText();
     this.cdfText=this.#getCDFText();
 
+
     this._addContinuousParameter("alpha","&alpha;",language.distributions.logLogistic.parameterInfoAlpha+" (<i>&alpha;</i>"+isin+setRPlusHTML+")",0,false,null,false,1);
     this._addContinuousParameter("beta","&beta;",language.distributions.logLogistic.parameterInfoBeta+" (<i>&beta;</i>"+isin+setRPlusHTML+")",0,false,null,false,3);
 
