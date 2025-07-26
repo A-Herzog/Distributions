@@ -672,6 +672,13 @@ lang.distributions.continuousBernoulli.parameterInfob="Obere Bereichsgrenze";
 lang.distributions.continuousBernoulli.parameterInfoLambda="Verteilungsparameter";
 lang.distributions.continuousBernoulli.parameterInfobError="Die obere Bereichsgrenze <i>b</i> muss größer oder gleich der unteren Bereichsgrenze <i>a</i> sein.";
 
+lang.distributions.halfCauchy={};
+lang.distributions.halfCauchy.name="Halbe Cauchy-Verteilung";
+lang.distributions.halfCauchy.info="";
+lang.distributions.halfCauchy.wikipedia=""; /* No Wikipedia page available */
+lang.distributions.halfCauchy.parameterInfoMu="Lage";
+lang.distributions.halfCauchy.parameterInfoSigma="Skalierung";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1341,6 +1348,13 @@ lang.distributions.continuousBernoulli.parameterInfoa="Lower bound";
 lang.distributions.continuousBernoulli.parameterInfob="Upper bound";
 lang.distributions.continuousBernoulli.parameterInfoLambda="Distribution parameter";
 lang.distributions.continuousBernoulli.parameterInfobError="The upper bound <i>b</i> has to be equal or larger than the lower bound <i>a</i>.";
+
+lang.distributions.halfCauchy={};
+lang.distributions.halfCauchy.name="Half Cauchy distribution";
+lang.distributions.halfCauchy.info="";
+lang.distributions.halfCauchy.wikipedia=""; /* No Wikipedia page available */
+lang.distributions.halfCauchy.parameterInfoMu="Location";
+lang.distributions.halfCauchy.parameterInfoSigma="Scale";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

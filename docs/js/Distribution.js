@@ -837,9 +837,9 @@ class ProbabilityDistribution {
    * @param {String} id Internal id for the parameter
    * @param {String} shortName Name to be displayed left to the parameter input field
    * @param {String} fullName Name to be displayed above the parameter input field
-   * @param {Number} minValue Minimum value (can be null for no minimum)
+   * @param {Number|null} minValue Minimum value (can be null for no minimum)
    * @param {Boolean} minValueInclusive Is the specified minimum a valid value?
-   * @param {Number} maxValue Maximum value (can be null for no maximum)
+   * @param {Number|null} maxValue Maximum value (can be null for no maximum)
    * @param {Boolean} maxValueInclusive Is the specified maximum a valid value?
    * @param {Number} defaultValue Default value in the editor for the parameter
    */
@@ -1632,15 +1632,15 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
 
   /**
    * Outputs the characteristics of a continuous probability distribution
-   * @param {String} meanFormula Expected value formula to be displayed
-   * @param {Number} meanValue Expected value to be displayed (null if no value is to be output)
-   * @param {String} varianceFormula Variance formula to be displayed
-   * @param {Number} varianceValue Variance to be displayed (null if no value is to be output)
-   * @param {String} medianFormula Median formula to be displayed (optional, defaults to null)
-   * @param {Number} medianValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
-   * @param {String} modeFormula Mode formula to be displayed (optional, defaults to null)
-   * @param {Number} modeValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
-   * @param {Object} infoLines Optional array of additional lines. Each line is an array of 6 strings (optional, defaults to null).
+   * @param {String|null} meanFormula Expected value formula to be displayed
+   * @param {Number|null} meanValue Expected value to be displayed (null if no value is to be output)
+   * @param {String|null} varianceFormula Variance formula to be displayed
+   * @param {Number|null} varianceValue Variance to be displayed (null if no value is to be output)
+   * @param {String|null} medianFormula Median formula to be displayed (optional, defaults to null)
+   * @param {Number|null} medianValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
+   * @param {String|null} modeFormula Mode formula to be displayed (optional, defaults to null)
+   * @param {Number|null} modeValue Median to be displayed (null if no value is to be output) (optional, defaults to null)
+   * @param {Object|null} infoLines Optional array of additional lines. Each line is an array of 6 strings (optional, defaults to null).
    */
   _setContinuousCharacteristics(meanFormula, meanValue, varianceFormula, varianceValue, medianFormula=null, medianValue=null, modeFormula=null, modeValue=null, infoLines=null) {
     this.#mean=meanValue;

@@ -73,6 +73,7 @@ import {CosineDistribution} from './DistributionCosine.js';
 import {LogGammaDistribution} from './DistributionLogGamma.js';
 import {InverseGammaDistribution} from './DistributionInverseGamma.js';
 import {ContinuousBernoulliDistribution} from './DistributionContinuousBernoulli.js';
+import {HalfCauchyDistribution} from './DistributionHalfCauchy.js';
 
 /**
  * List of an instance of each supported probability distribution function
@@ -137,6 +138,7 @@ listDistributions.push(new CosineDistribution());
 listDistributions.push(new LogGammaDistribution());
 listDistributions.push(new InverseGammaDistribution());
 listDistributions.push(new ContinuousBernoulliDistribution());
+listDistributions.push(new HalfCauchyDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name
