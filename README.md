@@ -2,6 +2,8 @@
 
 Distributions is a web service for showing graphs of different probability distributions.
 
+[![Screenshot showing the user-interface of Distributions](ScreenshotDistributions.png)](https://a-herzog.github.io/Distributions/)
+
 ## Usage
 
 To use distributions just go to
@@ -39,6 +41,7 @@ You can also download the distributions viewer as an offline usable application:
 | <a href="https://a-herzog.github.io/Distributions/?distribution=GaussKuzmin" target="_blank">GaussKuzmin</a> | Discrete | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Geometric" target="_blank">Geometric</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Gumbel" target="_blank">Gumbel</a> | Continuous | Show & fit |
+| <a href="https://a-herzog.github.io/Distributions/?distribution=HalfCauchy" target="_blank">HalfCauchy</a> | Continuous | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=HalfNormal" target="_blank">HalfNormal</a> | Continuous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=HyperbolicSecant" target="_blank">HyperbolicSecant</a> | Continuous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Hypergeometric" target="_blank">Hypergeometric</a> | Discrete | Show |
