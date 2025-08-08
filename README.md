@@ -64,6 +64,7 @@ You can also download the distributions viewer as an offline usable application:
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Normal" target="_blank">Normal</a> | Continuous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Pareto" target="_blank">Pareto</a> | Continuous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Pert" target="_blank">Pert</a> | Continuous | Show & fit |
+| <a href="https://a-herzog.github.io/Distributions/?distribution=Planck" target="_blank">Planck</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Poisson" target="_blank">Poisson</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Power" target="_blank">Power</a> | Continuous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Rademacher" target="_blank">Rademacher</a> | Discrete | Show & fit |

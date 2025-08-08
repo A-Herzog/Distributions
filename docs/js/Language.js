@@ -679,6 +679,12 @@ lang.distributions.halfCauchy.wikipedia=""; /* No Wikipedia page available */
 lang.distributions.halfCauchy.parameterInfoMu="Lage";
 lang.distributions.halfCauchy.parameterInfoSigma="Skalierung";
 
+lang.distributions.planck={};
+lang.distributions.planck.name="Planck-Verteilung";
+lang.distributions.planck.info="";
+lang.distributions.planck.wikipedia="";  /* No Wikipedia page available */
+lang.distributions.planck.parameterInfolambda="Form";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1355,6 +1361,12 @@ lang.distributions.halfCauchy.info="";
 lang.distributions.halfCauchy.wikipedia=""; /* No Wikipedia page available */
 lang.distributions.halfCauchy.parameterInfoMu="Location";
 lang.distributions.halfCauchy.parameterInfoSigma="Scale";
+
+lang.distributions.planck={};
+lang.distributions.planck.name="Planck distribution";
+lang.distributions.planck.info="";
+lang.distributions.planck.wikipedia="";  /* No Wikipedia page available */
+lang.distributions.planck.parameterInfolambda="Form";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
