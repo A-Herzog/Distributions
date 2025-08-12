@@ -75,6 +75,7 @@ import {InverseGammaDistribution} from './DistributionInverseGamma.js';
 import {ContinuousBernoulliDistribution} from './DistributionContinuousBernoulli.js';
 import {HalfCauchyDistribution} from './DistributionHalfCauchy.js';
 import {PlanckDistribution} from './DistributionPlanck.js';
+import {LogLaplaceDistribution} from './DistributionLogLaplace.js';
 
 /**
  * List of an instance of each supported probability distribution function
@@ -141,6 +142,7 @@ listDistributions.push(new InverseGammaDistribution());
 listDistributions.push(new ContinuousBernoulliDistribution());
 listDistributions.push(new HalfCauchyDistribution());
 listDistributions.push(new PlanckDistribution());
+listDistributions.push(new LogLaplaceDistribution());
 
 /**
  * Returns the probability distribution object for a probability distribution name

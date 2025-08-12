@@ -685,6 +685,13 @@ lang.distributions.planck.info="";
 lang.distributions.planck.wikipedia="";  /* No Wikipedia page available */
 lang.distributions.planck.parameterInfolambda="Form";
 
+lang.distributions.logLaplace={};
+lang.distributions.logLaplace.name="Log-Laplace-Verteilung";
+lang.distributions.logLaplace.info="";
+lang.distributions.logLaplace.wikipedia="";  /* No Wikipedia page available */
+lang.distributions.logLaplace.parameterInfoC="Form";
+lang.distributions.logLaplace.parameterInfoS="Verschiebung";
+
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
 lang.numbers.N0="Natürliche Zahlen zzgl. der Null";
@@ -1367,6 +1374,13 @@ lang.distributions.planck.name="Planck distribution";
 lang.distributions.planck.info="";
 lang.distributions.planck.wikipedia="";  /* No Wikipedia page available */
 lang.distributions.planck.parameterInfolambda="Form";
+
+lang.distributions.logLaplace={};
+lang.distributions.logLaplace.name="Log-Laplace distribution";
+lang.distributions.logLaplace.info="";
+lang.distributions.logLaplace.wikipedia="";  /* No Wikipedia page available */
+lang.distributions.logLaplace.parameterInfoC="Form";
+lang.distributions.logLaplace.parameterInfoS="Shifting";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";
