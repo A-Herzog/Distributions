@@ -18,7 +18,7 @@ export {BinomialDistribution};
 
 import {DiscreteProbabilityDistribution, getDiscreteDefaultCDF} from "./Distribution.js";
 import {language} from "./Language.js";
-import {beginMathML, endMathML, variable, minus, mul, equals, isin, defP, frac, binom, setNHTML, setN0HTML} from './MathMLTools.js';
+import {beginMathML, endMathML, variable, minus, mul, equals, isin, defP, binom, setNHTML, setN0HTML} from './MathMLTools.js';
 import {binom as mathBinom} from './MathTools.js';
 
 
@@ -42,7 +42,7 @@ class BinomialDistribution extends DiscreteProbabilityDistribution {
     this.cdfText=getDiscreteDefaultCDF();
     this.scipyText=this.#getScipyText();
 
-    this._addDiscreteParameter("n","n",language.distributions.binomial.parameterInfon+"  (<i>n</i>"+isin+setNHTML+")",1,8);
+    this._addDiscreteParameter("n","n",language.distributions.binomial.parameterInfon+" (<i>n</i>"+isin+setNHTML+")",1,8);
     this._addContinuousParameter("p","p",language.distributions.binomial.parameterInfop+" (<i>p</i>"+isin+"[0;1]"+")",0,true,1,true,0.25);
 
     this._setCalcParameter("k",5);

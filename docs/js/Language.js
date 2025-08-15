@@ -682,15 +682,22 @@ lang.distributions.halfCauchy.parameterInfoSigma="Skalierung";
 lang.distributions.planck={};
 lang.distributions.planck.name="Planck-Verteilung";
 lang.distributions.planck.info="";
-lang.distributions.planck.wikipedia="";  /* No Wikipedia page available */
+lang.distributions.planck.wikipedia=""; /* No Wikipedia page available */
 lang.distributions.planck.parameterInfolambda="Form";
 
 lang.distributions.logLaplace={};
 lang.distributions.logLaplace.name="Log-Laplace-Verteilung";
 lang.distributions.logLaplace.info="";
-lang.distributions.logLaplace.wikipedia="";  /* No Wikipedia page available */
+lang.distributions.logLaplace.wikipedia=""; /* No Wikipedia page available */
 lang.distributions.logLaplace.parameterInfoC="Form";
 lang.distributions.logLaplace.parameterInfoS="Verschiebung";
+
+lang.distributions.boltzmann={};
+lang.distributions.boltzmann.name="Boltzmann-Verteilung";
+lang.distributions.boltzmann.info="";
+lang.distributions.boltzmann.wikipedia=""; /* No Wikipedia page available */
+lang.distributions.boltzmann.parameterInfoLambda="Form";
+lang.distributions.boltzmann.parameterInfoN="Form";
 
 lang.numbers={};
 lang.numbers.N="Natürliche Zahlen";
@@ -1381,6 +1388,13 @@ lang.distributions.logLaplace.info="";
 lang.distributions.logLaplace.wikipedia="";  /* No Wikipedia page available */
 lang.distributions.logLaplace.parameterInfoC="Form";
 lang.distributions.logLaplace.parameterInfoS="Shifting";
+
+lang.distributions.boltzmann={};
+lang.distributions.boltzmann.name="Boltzmann distribution";
+lang.distributions.boltzmann.info="";
+lang.distributions.boltzmann.wikipedia=""; /* No Wikipedia page available */
+lang.distributions.boltzmann.parameterInfoLambda="Form";
+lang.distributions.boltzmann.parameterInfoN="Form";
 
 lang.numbers={};
 lang.numbers.N="Natural numbers";

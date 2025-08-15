@@ -25,6 +25,7 @@ You can also download the distributions viewer as an offline usable application:
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Beta" target="_blank">Beta</a> | Continuous | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Bernoulli" target="_blank">Bernoulli</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Binomial" target="_blank">Binomial</a> | Discrete | Show & fit |
+| <a href="https://a-herzog.github.io/Distributions/?distribution=Boltzmann" target="_blank">Boltzmann</a> | Discrete | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Borel" target="_blank">Borel</a> | Discrete | Show & fit |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Cauchy" target="_blank">Cauchy</a> | Continuous | Show |
 | <a href="https://a-herzog.github.io/Distributions/?distribution=Chi" target="_blank">Chi</a> | Continuous | Show & fit |
