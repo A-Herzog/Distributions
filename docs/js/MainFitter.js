@@ -96,8 +96,8 @@ function inputValuesDrag(ev) {
 function calcHistogram(data) {
   /* Calculate limits and step wide */
   let x1=Math.floor(data.min);
-  if (x1>0 && x1<5 && x2>10) x1=0;
   const x2=Math.ceil(data.max)+1;
+  if (x1>0 && x1<5 && x2>10) x1=0;
   /* const step=(x2-x1<=100)?1:((x2-x1)/100); - makes nicer x-axis values but generates worse fits for small ranges */
   const step=(x2-x1)/99;
 
@@ -232,7 +232,7 @@ function loadInputValues(values) {
     /* Preprocess input values */
     values=values.replaceAll("\r\n","\n");
     values=values.replaceAll("\r","\n");
-    values=values.split("\n").map(v=>getFloat(v)).filter(v=>v!=null);
+    values=values.split(/[;\n]/).map(v=>getFloat(v)).filter(v=>v!=null);
     const count=values.length;
     if (count==0) {inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError; return;}
 
@@ -285,7 +285,7 @@ function loadInputValues(values) {
           if (typeof(fitterInput.histogramDiscrete)!='undefined') {
             /* Fit discrete values */
             fitterInput.histogramDiscrete.forEach((y,i)=>{
-              const yDist=fit.distribution.calcProbability(fit.parameters,i-fitterInput.min);
+              const yDist=fit.distribution.calcProbability(fit.parameters,i+fitterInput.min);
               delta+=(y-yDist)**2;
             });
           } else {
