@@ -642,7 +642,7 @@ function generateContinuousRandomNumbers(distribution, values, count, infoArea, 
     if (rnd<min) min=rnd;
     if (rnd>max) max=rnd;
     randomNumbers.push(rnd);
-    addSimpleRow(tbody,rnd,true);
+    addSimpleRow(tbody,rnd,false);
     sum+=rnd;
     sum2+=rnd**2;
   }
