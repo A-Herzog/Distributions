@@ -41,6 +41,7 @@ class ProbabilityDistribution {
   #cdfText=null;
   #scipyText=null;
   #scipyBlock;
+  #scipyInfoLine;
   #parameters=[];
   #allParameterOk;
   _currentParameterValues;
@@ -340,7 +341,10 @@ class ProbabilityDistribution {
       infoLine.style.display=(show)?'':'none';
       diagramZoomInfo.style.display=(show)?'':'none';
       that.#canvasInfo.style.display=(show)?'':'none';
-      if (this.#scipyBlock && !show) this.#scipyBlock.style.display="none";
+      if (this.#scipyBlock && !show) {
+        this.#scipyBlock.style.display="none";
+        this.#scipyInfoLine.style.display="none";
+      }
       button.title=(show)?language.GUI.size.collapse:language.GUI.size.expand;
       button.classList.toggle("bi-arrows-collapse",show);
       button.classList.toggle("bi-arrows-expand",!show);
@@ -373,15 +377,56 @@ class ProbabilityDistribution {
         scipyButton.title=language.distributions.scipyTooltip;
         scipyButton.onclick=()=>{
           this.#scipyBlock.style.display=(this.#scipyBlock.style.display=='none')?'':'none';
+          this.#scipyInfoLine.style.display=this.#scipyBlock.style.display;
         }
         infoLine.appendChild(scipyButton);
       }
       card.appendChild(infoLine);
       if (this.#scipyText!=null) {
+        const text=this.#scipyText.split("\n").map(line=>(line.length>6)?line.substring(6):line).join("\n");
+        const exportText="# "+this.name+" in Python using SciPy\n\n"+text.trim();
+
+        this.#scipyInfoLine=document.createElement("div");
+        this.#scipyInfoLine.style.display='none';
+        card.appendChild(this.#scipyInfoLine);
+
+        const scipyCopyButton=document.createElement("button");
+        scipyCopyButton.className="btn btn-sm btn-outline-primary bi bi-clipboard me-2";
+        scipyCopyButton.innerHTML=" "+language.distributions.scipyCopy;
+        this.#scipyInfoLine.appendChild(scipyCopyButton);
+        scipyCopyButton.onclick=()=>{
+          navigator.clipboard.writeText(exportText);
+        };
+
+        const scipySaveButton=document.createElement("button");
+        scipySaveButton.className="btn btn-sm btn-outline-primary bi bi-download";
+        scipySaveButton.innerHTML=" "+language.distributions.scipySave;
+        this.#scipyInfoLine.appendChild(scipySaveButton);
+        scipySaveButton.onclick=()=>{
+          if (isDesktopApp) {
+            Neutralino.os.showSaveDialog(language.distributions.infoDiagramSaveValues, {defaultPath: 'script.py', filters: [
+              {name: language.distributions.scipySaveFileType+' (*.py)', extensions: ['py']}
+            ]}).then(file=>{
+              file=file.trim();
+              if (file=='') return;
+              if (!file.toLocaleLowerCase().endsWith(".py")) file+=".py";
+              Neutralino.filesystem.writeFile(file,exportText);
+            });
+          } else {
+            const element=document.createElement('a');
+            element.setAttribute('href','data:text/x-python;charset=utf-8,'+encodeURIComponent(exportText));
+            element.setAttribute('download','script.py');
+            element.style.display='none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+          }
+        };
+
         this.#scipyBlock=document.createElement("div");
         this.#scipyBlock.style.display='none';
         this.#scipyBlock.className="mt-2 mb-3 border border-success rounded p-2";
-        this.#scipyBlock.innerHTML="<pre style='margin-bottom: 0;'>"+this.#scipyText.split("\n").map(line=>(line.length>6)?line.substring(6):line).join("\n")+"</pre>";
+        this.#scipyBlock.innerHTML="<pre style='margin-bottom: 0;'>"+text+"</pre>";
         card.appendChild(this.#scipyBlock);
       }
     }
