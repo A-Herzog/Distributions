@@ -18,7 +18,7 @@ export {initSim}
 
 import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
-import {isDesktopApp} from './Main.js';
+import {isDesktopApp} from "./AppTools.js";
 import {getFloat, getInt, getPositiveInt, formatNumber, formatPercent} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 

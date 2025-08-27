@@ -17,7 +17,7 @@ limitations under the License.
 export {initLCG}
 
 import {language} from "./Language.js";
-import {isDesktopApp} from './Main.js';
+import {isDesktopApp} from "./AppTools.js";
 import {formatNumber, getNotNegativeInt, getPositiveInt} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 

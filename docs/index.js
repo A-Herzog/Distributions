@@ -16,7 +16,8 @@ limitations under the License.
 
 import {selectLanguage} from './js/LanguageTools.js';
 import {language} from "./js/Language.js";
-import {initApp, isDesktopApp, selectDistribution} from './js/Main.js';
+import {isDesktopApp} from "./js/AppTools.js";
+import {initApp, selectDistribution} from './js/Main.js';
 import {loadSearchStringParameters} from "./js/StringTools.js";
 import {getDistributionByClassName, getAllDistributionParameterIds, getDistributionsByName} from "./js/DistributionSetup.js";
 import {getFloat} from "./js/NumberTools.js";

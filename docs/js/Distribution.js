@@ -20,7 +20,7 @@ import {language} from "./Language.js";
 import {getInt, getFloat, formatNumber, formatNumberWithTitle, formatPercent} from './NumberTools.js';
 import {format} from './StringTools.js';
 import {beginMathML, endMathML, defE, frac, variable, equals, minus, setR, defF, defP} from "./MathMLTools.js";
-import {isDesktopApp} from "./Main.js";
+import {isDesktopApp} from "./AppTools.js";
 
 
 

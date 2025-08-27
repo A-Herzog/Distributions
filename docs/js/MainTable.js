@@ -19,7 +19,7 @@ export {initTable}
 import {language} from "./Language.js";
 import {getDistributionByClassName, getAllDistributionParameterIds} from "./DistributionSetup.js";
 import {ContinuousProbabilityDistribution} from './Distribution.js';
-import {isDesktopApp} from './Main.js';
+import {isDesktopApp} from "./AppTools.js";
 import {getFloat, getPositiveInt, formatNumber} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
 

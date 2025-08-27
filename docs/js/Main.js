@@ -14,19 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export {isDesktopApp, initApp, selectDistribution};
+export {initApp, selectDistribution};
 
 import {language} from "./Language.js";
 import {listDistributions, getDistributionsByName} from "./DistributionSetup.js";
+import {isDesktopApp} from "./AppTools.js";
 
-/**
- * Is the system running as Neutralions desktop app (true) or as a web page (false)?
- */
-const isDesktopApp=(typeof(NL_OS)!='undefined');
-if (isDesktopApp) {
-  Neutralino.init();
-  Neutralino.events.on("windowClose",()=>Neutralino.app.exit());
-}
 
 /**
  * Fills in the language strings to the GUI elements.

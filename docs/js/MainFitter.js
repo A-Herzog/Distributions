@@ -17,7 +17,7 @@ limitations under the License.
 export {initFitter}
 
 import {language} from "./Language.js";
-import {isDesktopApp} from './Main.js';
+import {isDesktopApp} from './AppTools.js';
 import {getFloat} from './NumberTools.js';
 import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {listDistributions} from './DistributionSetup.js';
