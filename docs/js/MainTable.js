@@ -112,14 +112,14 @@ function openFitter() {
  * Returns data on the information to be displayed based on the url search string values
  * @returns Array containing: Distribution object, object of distribution parameter values, generate pseudo-random numbers (true) or show pdf/cdf (false), number of pseudo-random numbers to be generated
  */
-function getDistributionFromSearchString() {
+async function getDistributionFromSearchString() {
   const validKeys=["distribution","random","count"];
   getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
 
   const data=loadSearchStringParameters(validKeys);
 
   if (typeof(data.distribution)!='string') return null;
-  const distribution=getDistributionByClassName(data.distribution+"Distribution");
+  const distribution=await getDistributionByClassName(data.distribution+"Distribution");
   if (distribution==null) return null;
 
   const values={};
@@ -679,9 +679,9 @@ function startTable() {
 /**
  * Initializes the complete web app.
  */
-function initTable() {
+async function initTable() {
   let distribution, values, rndMode, rndCount;
-  [distribution,values,rndMode,rndCount]=getDistributionFromSearchString();
+  [distribution,values,rndMode,rndCount]=await getDistributionFromSearchString();
   if (distribution==null) return;
 
   /* Select color mode */

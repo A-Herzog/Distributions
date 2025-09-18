@@ -39,22 +39,21 @@ function start() {
   getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
   const data=loadSearchStringParameters(validKeys);
   if (typeof(data.distribution)=='string') {
-    const distribution=getDistributionByClassName(data.distribution+"Distribution");
-    if (distribution!=null) {
-      const values={};
-      for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
-      distribution.setParmeterExtern(values);
-      for (let group of distSelect.childNodes) for (let item of group.childNodes) if (item.label==distribution.name) {
-        item.selected=true;
-        const dist=getDistributionsByName(distSelect.value);
-        if (dist!=null) selectDistribution(dist,distributionArea);
+    getDistributionByClassName(data.distribution+"Distribution").then(distribution=>{
+      if (distribution!=null) {
+        const values={};
+        for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
+        distribution.setParmeterExtern(values);
+        distSelect.value=distribution.name;
+        setTimeout(()=>selectDistribution(distribution,distributionArea),0);
       }
-    }
+  });
   } else {
     /* Select binomial distribution if no parameters are specified */
     distSelect.value=language.distributions.binomial.name;
-    const dist=getDistributionsByName(distSelect.value);
-    if (dist!=null) selectDistribution(dist,distributionArea);
+    getDistributionsByName(distSelect.value).then(dist=>{
+      if (dist!=null) setTimeout(()=>selectDistribution(dist,distributionArea),0);
+    });
   }
 
   /* More tools & download buttons */

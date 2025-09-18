@@ -16,4 +16,4 @@ limitations under the License.
 
 /* Init app */
 import {initFitter} from './js/MainFitter.js';
-initFitter();
+await initFitter();

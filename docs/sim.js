@@ -16,4 +16,4 @@ limitations under the License.
 
 /* Init app */
 import {initSim} from './js/MainSim.js';
-initSim();
+await initSim();

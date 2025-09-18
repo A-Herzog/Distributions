@@ -16,4 +16,4 @@ limitations under the License.
 
 /* Init app */
 import {initTable} from './js/MainTable.js';
-initTable();
+await initTable();

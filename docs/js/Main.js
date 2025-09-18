@@ -17,7 +17,7 @@ limitations under the License.
 export {initApp, selectDistribution};
 
 import {language} from "./Language.js";
-import {listDistributions, getDistributionsByName} from "./DistributionSetup.js";
+import {getDistributionNames, getDistributionsByName} from "./DistributionSetup.js";
 import {isDesktopApp} from "./AppTools.js";
 
 
@@ -79,7 +79,7 @@ function initDistributionsSelector(distSelect, distributionArea) {
 
   distSelect.appendChild(optgroup=document.createElement("optgroup"));
   optgroup.label=language.distributions.typeDiscreteFull;
-  for (let name of listDistributions.filter(dist=>dist.discrete).map(dist=>dist.name).sort()) {
+  for (let name of getDistributionNames(true)) {
     countDiscrete++;
     const option=document.createElement("option");
     option.innerHTML=name;
@@ -89,7 +89,7 @@ function initDistributionsSelector(distSelect, distributionArea) {
 
   distSelect.appendChild(optgroup=document.createElement("optgroup"));
   optgroup.label=language.distributions.typeContinuousFull;
-  for (let name of listDistributions.filter(dist=>!dist.discrete).map(dist=>dist.name).sort()) {
+  for (let name of getDistributionNames(false)) {
     countContinuous++;
     const option=document.createElement("option");
     option.innerHTML=name;
@@ -100,11 +100,14 @@ function initDistributionsSelector(distSelect, distributionArea) {
   distSelect.title=countDiscrete+" "+language.distributions.countDiscrete+" + "+countContinuous+" "+language.distributions.countContinuous+" = "+(countDiscrete+countContinuous)+" "+language.distributions.countSum;
 
   distSelect.onchange=()=>{
-    const dist=getDistributionsByName(distSelect.value);
-    if (dist!=null) selectDistribution(dist,distributionArea);
+    getDistributionsByName(distSelect.value).then(dist=>{
+      if (dist!=null) selectDistribution(dist,distributionArea);
+    });
   }
 
-  selectDistribution(getDistributionsByName(distSelect.value),distributionArea);
+  getDistributionsByName(distSelect.value).then(dist=>{
+    selectDistribution(dist,distributionArea);
+  });
 }
 
 /**

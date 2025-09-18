@@ -151,7 +151,7 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
  * Returns data on the information to be displayed based on the url search string values
  * @returns Array containing: Distribution object, object of distribution parameter values, generate pseudo-random numbers (true) or show pdf/cdf (false), number of pseudo-random numbers to be generated
  */
-function getDistributionFromSearchString() {
+async function getDistributionFromSearchString() {
   const globalValidKeys=["distribution","mode"];
   const validKeys=[...globalValidKeys];
   getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
@@ -159,7 +159,7 @@ function getDistributionFromSearchString() {
   const data=loadSearchStringParameters(validKeys);
 
   if (typeof(data.distribution)!='string') return [null, null, 0];
-  const distribution=getDistributionByClassName(data.distribution+"Distribution");
+  const distribution=await getDistributionByClassName(data.distribution+"Distribution");
   if (distribution==null) return [null, null, 0];
 
   let mode=0;
@@ -826,7 +826,7 @@ function initCentralLimitTheorem(distribution, values) {
 /**
  * Initializes the complete web app.
  */
-function initSim() {
+async function initSim() {
   let distribution, values;
   let mode=-1;
 
@@ -834,16 +834,16 @@ function initSim() {
   const special=loadSearchStringParameters(["dice"]);
   if (typeof(special.dice)!='undefined') {
     mode=0;
-    distribution=getDistributionByClassName("DiscreteUniformDistribution");
+    distribution=await getDistributionByClassName("DiscreteUniformDistribution");
     values={a: 1, b: 6, dice: true};
     distribution.setParmeterExtern(values);
   }
 
   /* Distribution depending default modes */
   if (mode==-1) {
-    [distribution, values, mode]=getDistributionFromSearchString();
+    [distribution, values, mode]=await getDistributionFromSearchString();
     if (distribution==null) {
-      mainContent.innerHTML="No simulation parameter specified.";
+      mainContent.innerHTML="No simulation parameters specified.";
       startSim();
       return;
     }
