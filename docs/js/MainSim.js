@@ -186,6 +186,8 @@ function startSim() {
   }});
 }
 
+startSim();
+
 /**
  * Generates an options object for Chart.js with basic settings.
  * @returns Basic chart options object
@@ -844,7 +846,6 @@ async function initSim() {
     [distribution, values, mode]=await getDistributionFromSearchString();
     if (distribution==null) {
       mainContent.innerHTML="No simulation parameters specified.";
-      startSim();
       return;
     }
   }
@@ -863,7 +864,4 @@ async function initSim() {
       initCentralLimitTheorem(distribution,values);
       break;
   }
-
-  /* Start */
-  startSim();
 }

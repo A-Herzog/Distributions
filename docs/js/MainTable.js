@@ -669,12 +669,16 @@ let whenReadyCallback=null;
  * and replace it with the app content.
  */
 function startTable() {
-  document.addEventListener('readystatechange',event=>{if (event.target.readyState=="complete") {
+  if (whenReadyCallback!=null) {
     mainContent.style.display="";
     infoLoading.style.display="none";
-    if (whenReadyCallback!=null) setTimeout(whenReadyCallback,100);
-  }});
+    setTimeout(whenReadyCallback,100);
+  } else {
+    setTimeout(startTable,100);
+  }
 }
+
+document.addEventListener('readystatechange',event=>{if (event.target.readyState=="complete") startTable();});
 
 /**
  * Initializes the complete web app.
@@ -726,5 +730,4 @@ async function initTable() {
       rangeChanged(distribution,values,tableArea);
     }
   }
-  startTable();
 }
