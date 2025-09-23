@@ -18,7 +18,7 @@ export {initFitter}
 
 import {language} from "./Language.js";
 import {isDesktopApp} from './AppTools.js';
-import {getFloat} from './NumberTools.js';
+import {getFloat, formatNumberMax} from './NumberTools.js';
 import {ContinuousProbabilityDistribution} from './Distribution.js';
 import {getFitableDistributionCount, getFitableDistributions} from './DistributionSetup.js';
 import {loadSearchStringParameters} from "./StringTools.js";
@@ -219,12 +219,16 @@ function calcChiSqrContinuous(distribution, parameters, histogram) {
   return 1-chiSquaredDistribution.calcProbability({k: Math.max(steps-1,1)},sumRelDif)[1];
 }
 
+let loadedValues=[];
+
 /**
  * Loads input values into the fitter.
  * @param {String} values Input values as a string (loaded file)
  */
 function loadInputValues(values) {
   /* Remove old results */
+  inputBodyValuesShowArea.innerHTML="";
+  inputBodyValuesShowArea.style.display="none";
   outputCard.style.display="none";
   outputBody.innerHTML="";
 
@@ -234,7 +238,12 @@ function loadInputValues(values) {
     values=values.replaceAll("\r","\n");
     values=values.split(/[;\n]/).map(v=>getFloat(v)).filter(v=>v!=null);
     const count=values.length;
-    if (count==0) {inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError; return;}
+    if (count==0) {
+      inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError;
+      inputBodyValuesShowButtonArea.style.display="none";
+      return;
+    }
+    loadedValues=values;
 
     /* Calculate characteristics */
     const min=values.reduce((a,b)=>Math.min(a,b));
@@ -253,6 +262,11 @@ function loadInputValues(values) {
     info.push(language.fitter.loadedValuesMean+"="+mean.toLocaleString());
     info.push(language.fitter.loadedValuesStandardDeviation+"="+std.toLocaleString());
     inputBodyValuesInfo.innerHTML=info.join("<br>");
+
+    /* Option to show input values */
+    inputBodyValuesShowButton.innerHTML=language.fitter.inputValuesShow;
+    inputBodyValuesShowButtonArea.style.display="";
+    inputBodyValuesShowButtonArea.onclick=toggleInputValuesView;
 
     /* Build fitter input object */
     const fitterInput={count: count, min: min, max: max, mean: mean, std: std, values: values};
@@ -322,6 +336,86 @@ function loadInputValues(values) {
       for (let i=0;i<fitsNotTheseValues.length;i++) addNoFitOutput(fitsNotTheseValues[i],i+1+fits.length);
     });
   },10);
+}
+
+/**
+ * Toggles the input values visibility.
+ */
+function toggleInputValuesView() {
+  const show=inputBodyValuesShowArea.style.display=="none";
+
+  if (show) {
+    /* Show values */
+    inputBodyValuesShowButton.innerHTML=language.fitter.inputValuesHide;
+    inputBodyValuesShowArea.style.display="";
+    /* Build values table */
+    if (inputBodyValuesShowArea.innerHTML=="") {
+      inputBodyValuesShowArea.innerHTML=language.fitter.inputValuesBuildingTable;
+      setTimeout(()=>{
+        /* Copy and save buttons */
+        const valuesButtons=document.createElement("div");
+        let button;
+        valuesButtons.appendChild(button=document.createElement("button"));
+        button.className="btn btn-sm btn-outline-primary bi bi-clipboard me-2";
+        button.innerHTML=" "+language.distributions.infoDiagramCopyValues;
+        button.onclick=()=>navigator.clipboard.writeText(loadedValues.map(v=>formatNumberMax(v)).join("\n"));
+        valuesButtons.appendChild(button=document.createElement("button"));
+        button.className="btn btn-sm btn-outline-primary bi bi-download me-2";
+        button.innerHTML=" "+language.distributions.infoDiagramSaveValues;
+        button.onclick=saveInputValues;
+        /* Table */
+        const valuesTable=document.createElement("table");
+        valuesTable.className="table table-striped border mt-3 table-sm";
+        let tr,td;
+        const thead=document.createElement("thead");
+        valuesTable.appendChild(thead);
+        thead.appendChild(tr=document.createElement("tr"));
+        const th=document.createElement("th");
+        tr.appendChild(th);
+        th.innerHTML=language.fitter.inputValues;
+        const tbody=document.createElement("tbody");
+        valuesTable.appendChild(tbody);
+        for (let v of loadedValues.map(v=>formatNumberMax(v))) {
+          tbody.appendChild(tr=document.createElement("tr"));
+          tr.appendChild(td=document.createElement("td"));
+          td.innerHTML=v;
+        }
+        /* Add to panel / remove load indicator */
+        inputBodyValuesShowArea.innerHTML="";
+        inputBodyValuesShowArea.appendChild(valuesButtons);
+        inputBodyValuesShowArea.appendChild(valuesTable);
+      },0);
+    }
+  } else {
+    /* Hide values */
+    inputBodyValuesShowButton.innerHTML=language.fitter.inputValuesShow;
+    inputBodyValuesShowArea.style.display="none";
+  }
+}
+
+/**
+ * Saves the input values to a file.
+ */
+function saveInputValues() {
+  const data=loadedValues.map(v=>formatNumberMax(v)).join("\n");
+  if (isDesktopApp) {
+    Neutralino.os.showSaveDialog(language.distributions.infoDiagramSaveValues, {defaultPath: 'table.txt', filters: [
+      {name: language.distributions.infoDiagramSaveValuesTextFiles+' (*.txt)', extensions: ['txt']}
+    ]}).then(file=>{
+      file=file.trim();
+      if (file=='') return;
+      if (!file.toLocaleLowerCase().endsWith(".txt")) file+=".txt";
+      Neutralino.filesystem.writeFile(file,data);
+    });
+  } else {
+    const element=document.createElement('a');
+    element.setAttribute('href','data:text/plain;charset=utf-8,'+encodeURIComponent(data));
+    element.setAttribute('download','table.txt');
+    element.style.display='none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  }
 }
 
 let accordionItemCounter=0;
