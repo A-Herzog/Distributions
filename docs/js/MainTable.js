@@ -717,17 +717,19 @@ async function initTable() {
     info.innerHTML=language.GUI.selectDistribution+": <b>"+distribution.nameWithParameters+"</b>";
     infoArea.appendChild(info);
     addPermaLink(infoArea);
-    if (distribution.discrete) {
-      initDiscreteTable(distribution,values,tableArea);
-    } else {
-      rangeEdit.style.display="";
-      rangeMin.onkeyup=()=>rangeChanged(distribution,values,tableArea);
-      rangeMin.change=()=>rangeChanged(distribution,values,tableArea);
-      rangeMax.onkeyup=()=>rangeChanged(distribution,values,tableArea);
-      rangeMax.change=()=>rangeChanged(distribution,values,tableArea);
-      rangeStep.onkeyup=()=>rangeChanged(distribution,values,tableArea);
-      rangeStep.change=()=>rangeChanged(distribution,values,tableArea);
-      rangeChanged(distribution,values,tableArea);
+    whenReadyCallback=()=>{
+      if (distribution.discrete) {
+        initDiscreteTable(distribution,values,tableArea);
+      } else {
+        rangeEdit.style.display="";
+        rangeMin.onkeyup=()=>rangeChanged(distribution,values,tableArea);
+        rangeMin.change=()=>rangeChanged(distribution,values,tableArea);
+        rangeMax.onkeyup=()=>rangeChanged(distribution,values,tableArea);
+        rangeMax.change=()=>rangeChanged(distribution,values,tableArea);
+        rangeStep.onkeyup=()=>rangeChanged(distribution,values,tableArea);
+        rangeStep.change=()=>rangeChanged(distribution,values,tableArea);
+        rangeChanged(distribution,values,tableArea);
+      }
     }
   }
 }
