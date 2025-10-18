@@ -17,6 +17,11 @@
   }
 }
 
+footer {
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
 footer a {
   color: blue;
   text-decoration-color: blue;
@@ -48,6 +53,10 @@ footer a {
 
 #languageButton:hover {
   color: black;
+}
+
+#colorModeDropdown {
+  display: inline-block;
 }
 
 #distSelect {
