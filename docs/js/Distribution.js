@@ -399,7 +399,7 @@ class ProbabilityDistribution {
         };
 
         const scipySaveButton=document.createElement("button");
-        scipySaveButton.className="btn btn-sm btn-outline-primary bi bi-download";
+        scipySaveButton.className="btn btn-sm btn-outline-primary bi bi-download me-2";
         scipySaveButton.innerHTML=" "+language.distributions.scipySave;
         this.#scipyInfoLine.appendChild(scipySaveButton);
         scipySaveButton.onclick=()=>{
@@ -422,6 +422,12 @@ class ProbabilityDistribution {
             document.body.removeChild(element);
           }
         };
+        const scipySaveAllButton=document.createElement("a");
+        scipySaveAllButton.className="btn btn-sm btn-outline-primary bi bi-filetype-py";
+        scipySaveAllButton.innerHTML=" "+language.distributions.scipySaveAll;
+        this.#scipyInfoLine.appendChild(scipySaveAllButton);
+        scipySaveAllButton.href='info/Distributions.ipynb';
+        scipySaveAllButton.download='Distributions.ipynb';
 
         this.#scipyBlock=document.createElement("div");
         this.#scipyBlock.style.display='none';

@@ -83,6 +83,7 @@ function start() {
     ];
     bottomInfo+="<p class='mt-3'>"+language.GUI.downloadLabel+"</p><p><div class='dropdown'>"+downloadButton+"<ul class='dropdown-menu'><li>"+downloadOptions.join("</li><li>")+"</li></ul>"+"</div></p>";
   }
+  bottomInfo+="<p class='mt-3'>"+language.GUI.downloadPythonLabel+"</p><p><a id='scipyDownloadButton' class='btn btn-primary my-1 bi-filetype-py' href='info/Distributions.ipynb' download>&nbsp;"+language.GUI.downloadPythonButton+"</a></p>";
   bottomInfoArea.innerHTML=bottomInfo;
   openFitterButton.onclick=()=>{
     const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
