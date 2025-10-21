@@ -231,6 +231,8 @@ function loadInputValues(values) {
   inputBodyValuesShowArea.style.display="none";
   outputCard.style.display="none";
   outputBody.innerHTML="";
+  processingInfo.style.display="";
+  processingInfo.innerHTML=language.fitter.processing;
 
   setTimeout(()=>{
     /* Preprocess input values */
@@ -241,6 +243,7 @@ function loadInputValues(values) {
     if (count==0) {
       inputBodyValuesInfo.innerHTML=language.fitter.inputValuesLoadError;
       inputBodyValuesShowButtonArea.style.display="none";
+      processingInfo.style.display="none";
       return;
     }
     loadedValues=values;
@@ -331,6 +334,7 @@ function loadInputValues(values) {
       fitsNotTheseValues.sort((d1,d2)=>d1.name>d2.name);
 
       /* Show results */
+      processingInfo.style.display="none";
       outputCard.style.display="";
       for (let i=0;i<fits.length;i++) addFitOutput(fitterInput, fits[i],i+1);
       for (let i=0;i<fitsNotTheseValues.length;i++) addNoFitOutput(fitsNotTheseValues[i],i+1+fits.length);
