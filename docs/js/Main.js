@@ -52,6 +52,7 @@ function initGUILanguage() {
   }
 
   /* Content */
+  topInfoArea.innerHTML=language.GUI.topInfo;
   distSelectLabel.innerHTML=language.GUI.selectDistribution;
 
   /* Footer */
