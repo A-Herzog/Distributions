@@ -56,6 +56,9 @@ class ProbabilityDistribution {
   #calcError;
   #calcResults;
   #isSmallMode;
+  _divMean;
+  _divStd;
+  _divMedian;
   _checkBoxMean;
   _checkBoxStd;
   _checkBoxMedian;
@@ -74,6 +77,10 @@ class ProbabilityDistribution {
     if (nameWithFormat==null) this.#nameWithFormat=name; else this.#nameWithFormat=nameWithFormat;
     this.#continuous=continuous;
     this.#panel=null;
+
+    this._divMean=document.createElement("div");
+    this._divStd=document.createElement("div");
+    this._divMedian=document.createElement("div");
   }
 
   /**
@@ -941,20 +948,20 @@ class ProbabilityDistribution {
    * @param {Object} parent Parent element
    */
   _addShowE(parent) {
-    const check=document.createElement("div");
+    const check=this._divMean;
     parent.appendChild(check);
     check.className="form-check small";
-    check.style.display="inline-block";
+    if (check.style.display!="none") check.style.display="inline-block";
 
-    const checkbox=document.createElement("input")
+    const checkbox=document.createElement("input");
+    this._checkBoxMean=checkbox;
     check.appendChild(checkbox);
     checkbox.type="checkbox";
-    this._checkBoxMean=checkbox;
     checkbox.className="form-check-input";
     checkbox.id="showE"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
 
-    const label=document.createElement("label");
+    const label=document.createElement("label") ;
     check.appendChild(label);
     label.innerHTML=language.distributions.showExpectedValue;
     label.className="form-check-label pe-3";
@@ -967,20 +974,20 @@ class ProbabilityDistribution {
    * @param {Object} parent Parent element
    */
   _addShowStd(parent) {
-    const check=document.createElement("div");
+    const check=this._divStd;
     parent.appendChild(check);
     check.className="form-check small";
-    check.style.display="inline-block";
+    if (check.style.display!="none") check.style.display="inline-block";
 
-    const checkbox=document.createElement("input")
+    const checkbox=document.createElement("input");
+    this._checkBoxStd=checkbox;
     check.appendChild(checkbox);
     checkbox.type="checkbox";
-    this._checkBoxStd=checkbox;
     checkbox.className="form-check-input";
     checkbox.id="showStd"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
 
-    const label=document.createElement("label");
+    const label=document.createElement("label") ;
     check.appendChild(label);
     label.innerHTML=language.distributions.showStandardDeviation;
     label.className="form-check-label pe-3";
@@ -993,20 +1000,20 @@ class ProbabilityDistribution {
    * @param {Object} parent Parent element
    */
   _addShowMedian(parent) {
-    const check=document.createElement("div");
+    const check=this._divMedian
     parent.appendChild(check);
     check.className="form-check small";
-    check.style.display="inline-block";
+    if (check.style.display!="none") check.style.display="inline-block";
 
-    const checkbox=document.createElement("input")
+    const checkbox=document.createElement("input");
+    this._checkBoxMedian=checkbox;
     check.appendChild(checkbox);
     checkbox.type="checkbox";
-    this._checkBoxMedian=checkbox;
     checkbox.className="form-check-input";
     checkbox.id="showMedian"+this.constructor.name;
     checkbox.onchange=e=>this._fireParameterUpdated();
 
-    const label=document.createElement("label");
+    const label=document.createElement("label") ;
     check.appendChild(label);
     label.innerHTML=language.distributions.showMedian;
     label.className="form-check-label pe-3";
@@ -1417,19 +1424,29 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     const lines=[];
     if (meanValue!==null) {
       lines.push([nameE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
+    } else {
+      this.divMean.style.display="none";
     }
+
     if (varianceValue!==null) {
       lines.push([nameVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
       lines.push([nameStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
+    } else {
+      this._divStd.style.display="none";
     }
+
     if (meanValue!==null && varianceValue!==null && meanValue>0 && isFinite(varianceValue) && isFinite(meanValue)) {
       const scv=varianceValue/(meanValue**2);
       lines.push([nameCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
       lines.push([nameSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
     }
+
     if (medianValue!==null) {
       lines.push([nameMedian+"&nbsp;",exprMedian,"=",medianFormula,"&approx;",formatNumberWithTitle(medianValue)]);
+    } else {
+      this._divMedian.style.display="none";
     }
+
     if (modeValue!==null) {
       lines.push([nameMode+"&nbsp;",exprMode,"=",modeFormula,"&approx;",formatNumberWithTitle(modeValue)]);
     }
@@ -1482,23 +1499,23 @@ class DiscreteProbabilityDistribution extends ProbabilityDistribution {
     /* Draw diagram */
     this.#chartOptions.plugins.annotation={};
     this.#chartOptions.plugins.annotation.annotations={};
-    if (isFinite(this.#mean) && this.#mean>=minX && this.#mean<=maxX) {
+    if (this.#mean!==null && isFinite(this.#mean) && this.#mean>=minX && this.#mean<=maxX) {
       if (this._checkBoxMean && this._checkBoxMean.checked) {
         const x=this.#mean+minX+paddingX;
         this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderWidth: 2, label: {content: "E[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
       }
-      if (this._checkBoxStd && this._checkBoxStd.checked) {
+      if (this._checkBoxStd.checked) {
         if (isFinite(this.#variance) && this.#mean-Math.sqrt(this.#variance)>=minX) {
           const x=this.#mean-Math.sqrt(this.#variance)+minX+paddingX;
           this.#chartOptions.plugins.annotation.annotations.line2={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]-Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
         }
-        if (isFinite(this.#variance) && this.#mean+Math.sqrt(this.#variance)<=maxX) {
+        if (this.#variance!==null && isFinite(this.#variance) && this.#mean+Math.sqrt(this.#variance)<=maxX) {
           const x=this.#mean+Math.sqrt(this.#variance)+minX+paddingX;
           this.#chartOptions.plugins.annotation.annotations.line3={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: "E[X]+Std[X]", display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
         }
       }
     }
-    if (isFinite(this.#median) && this.#median>=minX && this.#median<=maxX && this._checkBoxMedian && this._checkBoxMedian.checked) {
+    if (this.#median!==null && isFinite(this.#median) && this.#median>=minX && this.#median<=maxX && this._checkBoxMedian && this._checkBoxMedian.checked) {
       const x=this.#median+minX+paddingX;
       this.#chartOptions.plugins.annotation.annotations.line1={type: 'line', xMin: x, xMax: x, borderColor: 'blue', borderDash: [5,5], borderWidth: 2, label: {content: language.distributions.infoCharacteristicsMedian, display: true, position: "end", rotation: -90, backgroundColor: 'rgba(0,0,255,0.7)', padding: 2}};
     }
@@ -1719,19 +1736,29 @@ class ContinuousProbabilityDistribution extends ProbabilityDistribution {
     if (infoLines!=null) infoLines.forEach(line=>lines.push(line));
     if (meanValue!==null) {
       lines.push([nameE+"&nbsp;",exprE,"=",meanFormula,"&approx;",formatNumberWithTitle(meanValue)]);
+    } else {
+      this._divMean.style.display="none";
     }
+
     if (varianceValue!==null) {
       lines.push([nameVar+"&nbsp;",exprVar,"=",varianceFormula,"&approx;",formatNumberWithTitle(varianceValue)]);
       lines.push([nameStd+"&nbsp;",exprStd,"=",beginMathML+"<msqrt><mi mathvariant='normal'>Var</mi><mo>[</mo>"+X+"<mo>]</mo></msqrt>"+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(varianceValue))]);
+    } else {
+      this._divStd.style.display="none";
     }
+
     if (meanValue!==null && varianceValue!==null && meanValue>0 && isFinite(varianceValue) && isFinite(meanValue)) {
       const scv=varianceValue/(meanValue**2);
       lines.push([nameCV+"&nbsp;",exprCV,"=",beginMathML+frac(defE("Std",X,false),"<mo>|</mo>"+defE("E",X,false)+"<mo>|</mo>")+endMathML,"&approx;",formatNumberWithTitle(Math.sqrt(scv))]);
       lines.push([nameSCV+"&nbsp;",exprSCV,"=",beginMathML+frac(defE("Var",X,false),"<msup><mrow>"+defE("E",X,false)+"</mrow><mn>2</mn>")+endMathML,"&approx;",formatNumberWithTitle(scv)]);
     }
+
     if (medianValue!==null) {
       lines.push([nameMedian+"&nbsp;",exprMedian,"=",medianFormula,"&approx;",formatNumberWithTitle(medianValue)]);
+    } else {
+      this._divMedian.style.display="none";
     }
+
     if (modeValue!==null) {
       lines.push([nameMode+"&nbsp;",exprMode,"=",modeFormula,"&approx;",formatNumberWithTitle(modeValue)]);
     }
