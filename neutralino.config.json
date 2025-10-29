@@ -43,7 +43,7 @@
     "binaryName": "Distributions",
     "resourcesPath": "/docs/",
     "clientLibrary": "docs/libs/neutralino.js",
-    "binaryVersion": "6.0.0",
-    "clientVersion": "6.0.0"
+    "binaryVersion": "6.2.0",
+    "clientVersion": "6.2.0"
   }
 }
