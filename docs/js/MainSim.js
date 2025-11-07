@@ -119,6 +119,7 @@ function initGUILanguage(distribution, mainTitle, infoText, infoWikipedia, title
   playPauseButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlStart;
   playStepsButton.innerHTML=" "+language.distributions.infoDiagramLawOfLargeNumbersControlSteps;
   playStepsInput.title=language.distributions.infoDiagramLawOfLargeNumbersControlStepsInput;
+  playStepsInputLabel.innerHTML=language.distributions.infoDiagramLawOfLargeNumbersControlSteps;
 
   /* Export buttons */
   tableExport.innerHTML=" "+language.distributions.infoExportTabelle;

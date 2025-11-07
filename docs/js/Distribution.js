@@ -191,6 +191,12 @@ class ProbabilityDistribution {
     name.className="input-group-text has-validation";
     name.innerHTML=shortName+":=";
 
+    const label=document.createElement("label");
+    group.appendChild(label);
+    label.htmlFor=clsName+"-"+id;
+    label.className="visually-hidden";
+    label.innerHTML=shortName;
+
     const input=document.createElement("input");
     group.appendChild(input);
     input.type="text";

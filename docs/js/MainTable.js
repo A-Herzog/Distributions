@@ -50,6 +50,7 @@ function initGUILanguage(distName, mainTitle, isRandomNumbers) {
 
   /* Range editor */
   rangeStepLabel.innerHTML=language.distributions.infoDiagramShowValuesStep+":=";
+  rangeStepLabel2.innerHTML=language.distributions.infoDiagramShowValuesStep;
 
   /* Table */
   copyButton.innerHTML=" "+language.distributions.infoDiagramCopyValues;
