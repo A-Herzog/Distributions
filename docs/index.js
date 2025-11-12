@@ -21,6 +21,7 @@ import {initApp, selectDistribution} from './js/Main.js';
 import {loadSearchStringParameters} from "./js/StringTools.js";
 import {getDistributionByClassName, getAllDistributionParameterIds, getDistributionsByName} from "./js/DistributionSetup.js";
 import {getFloat} from "./js/NumberTools.js";
+import {setPermaLinkLoadingDone} from "./js/Distribution.js";
 
 function start() {
   /* Select language */
@@ -38,23 +39,33 @@ function start() {
   const validKeys=["distribution"];
   getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
   const data=loadSearchStringParameters(validKeys);
+  let useLoader=false;
   if (typeof(data.distribution)=='string') {
     getDistributionByClassName(data.distribution+"Distribution").then(distribution=>{
-      if (distribution!=null) {
-        const values={};
-        for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
-        distribution.setParmeterExtern(values);
-        distSelect.value=distribution.name;
-        setTimeout(()=>selectDistribution(distribution,distributionArea),0);
-      }
+    if (distribution!=null) {
+      const values={};
+      for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
+      distribution.setParmeterExtern(values);
+      distSelect.value=distribution.name;
+      setTimeout(()=>{
+        selectDistribution(distribution,distributionArea);
+        setPermaLinkLoadingDone();
+      },0);
+      useLoader=true;
+    }
   });
   } else {
     /* Select binomial distribution if no parameters are specified */
     distSelect.value=language.distributions.binomial.name;
     getDistributionsByName(distSelect.value).then(dist=>{
-      if (dist!=null) setTimeout(()=>selectDistribution(dist,distributionArea),0);
+      if (dist!=null) setTimeout(()=>{
+        selectDistribution(dist,distributionArea);
+        setPermaLinkLoadingDone();
+      },0);
+      useLoader=true;
     });
   }
+  if (!useLoader) setPermaLinkLoadingDone();
 
   /* More tools & download buttons */
   let bottomInfo="";
@@ -98,5 +109,10 @@ function start() {
     window.open(file,"_blank");
   };
 }
+
+/* Handle browser navigation (back/forward) */
+window.addEventListener("popstate",(event)=>{
+  window.location= event.state?.link || document.location.href;
+});
 
 start();

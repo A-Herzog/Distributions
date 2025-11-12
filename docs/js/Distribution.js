@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export {DiscreteProbabilityDistribution, ContinuousProbabilityDistribution, getDiscreteDefaultCDF, getContinousDefaultCDF};
+export {setPermaLinkLoadingDone, DiscreteProbabilityDistribution, ContinuousProbabilityDistribution, getDiscreteDefaultCDF, getContinousDefaultCDF};
 
 import {language} from "./Language.js";
 import {getInt, getFloat, formatNumber, formatNumberWithTitle, formatPercent} from './NumberTools.js';
@@ -22,6 +22,20 @@ import {format} from './StringTools.js';
 import {beginMathML, endMathML, defE, frac, variable, equals, minus, setR, defF, defP} from "./MathMLTools.js";
 import {isDesktopApp} from "./AppTools.js";
 
+
+
+/**
+ * Flag indicating that the permalink parameters have been loaded and processed.
+ * Only when this is true, the permalink will be updated in the browser history.
+ */
+let permaLinkLoadingDone=false;
+
+/**
+ * Sets the flag indicating that the permalink parameters have been loaded and processed.
+ */
+function setPermaLinkLoadingDone() {
+  permaLinkLoadingDone=true;
+}
 
 
 /**
@@ -580,6 +594,12 @@ class ProbabilityDistribution {
     menuColorModeLight.href=url;
     menuColorModeDark.href=url;
     menuColorModeSystemDefault.href=url;
+
+    if (window.history && window.history.replaceState && permaLinkLoadingDone) {
+      if (window.history.state==null || window.history.state.link!=url) {
+        window.history.pushState({link: url}, '', url);
+      }
+    }
   }
 
   /**
