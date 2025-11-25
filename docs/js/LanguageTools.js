@@ -43,6 +43,6 @@ function selectLanguage(languages) {
   } else {
     let selected=languages.find(language=>language.name==selectedLanguage);
     if (typeof(selected)=='undefined') selected=languages.find(language=>language.name=='default');
-    return selectLanguageFile(languages.find(language=>language.name==selectedLanguage).file);
+    return selectLanguageFile(selected.file);
   }
 }
