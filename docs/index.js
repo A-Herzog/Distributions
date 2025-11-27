@@ -25,7 +25,11 @@ import {setPermaLinkLoadingDone} from "./js/Distribution.js";
 
 function start() {
   /* Select language */
-  if (selectLanguage([{name: "default", file: "index.html"}, {name: "de", file: "index_de.html"}])) return;
+  if (isDesktopApp) {
+    if (selectLanguage([{name: "default", file: "index_webapp.html"}, {name: "de", file: "index_webapp_de.html"}])) return;
+  } else {
+    if (selectLanguage([{name: "default", file: "index.html"}, {name: "de", file: "index_de.html"}])) return;
+  }
 
   /* Select color mode */
   let selectedColorMode=localStorage.getItem('selectedColorMode');
