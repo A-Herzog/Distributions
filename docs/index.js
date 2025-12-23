@@ -46,18 +46,19 @@ function start() {
   let useLoader=false;
   if (typeof(data.distribution)=='string') {
     getDistributionByClassName(data.distribution+"Distribution").then(distribution=>{
-    if (distribution!=null) {
-      const values={};
-      for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
-      distribution.setParmeterExtern(values);
-      distSelect.value=distribution.name;
-      setTimeout(()=>{
-        selectDistribution(distribution,distributionArea);
-        setPermaLinkLoadingDone();
-      },0);
-      useLoader=true;
-    }
-  });
+      if (distribution!=null) {
+        const values={};
+        for (let key in data) if (key!="distribution") values[key]=getFloat(data[key]);
+        distribution.setParmeterExtern(values);
+        distSelect.value=distribution.name;
+        setTimeout(()=>{
+          selectDistribution(distribution,distributionArea);
+          setPermaLinkLoadingDone();
+          distribution.updatePermaLink();
+        },0);
+        useLoader=true;
+      }
+    });
   } else {
     /* Select binomial distribution if no parameters are specified */
     distSelect.value=language.distributions.binomial.name;
@@ -65,9 +66,10 @@ function start() {
       if (dist!=null) setTimeout(()=>{
         selectDistribution(dist,distributionArea);
         setPermaLinkLoadingDone();
+        dist.updatePermaLink();
       },0);
-      useLoader=true;
     });
+    useLoader=true;
   }
   if (!useLoader) setPermaLinkLoadingDone();
 
