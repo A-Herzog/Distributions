@@ -45,6 +45,7 @@ function start() {
   const data=loadSearchStringParameters(validKeys);
   let useLoader=false;
   if (typeof(data.distribution)=='string') {
+    useLoader=true;
     getDistributionByClassName(data.distribution+"Distribution").then(distribution=>{
       if (distribution!=null) {
         const values={};
@@ -56,7 +57,6 @@ function start() {
           setPermaLinkLoadingDone();
           distribution.updatePermaLink();
         },0);
-        useLoader=true;
       }
     });
   } else {
