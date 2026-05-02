@@ -100,6 +100,8 @@ function initDistributionsSelector(distSelect, distributionArea) {
 
   distSelect.title=countDiscrete+" "+language.distributions.countDiscrete+" + "+countContinuous+" "+language.distributions.countContinuous+" = "+(countDiscrete+countContinuous)+" "+language.distributions.countSum;
 
+  distSelect.value=language.distributions.binomial.name; /* Select binomial distribution by default */
+
   distSelect.onchange=()=>{
     getDistributionsByName(distSelect.value).then(dist=>{
       if (dist!=null) selectDistribution(dist,distributionArea);
