@@ -1188,7 +1188,7 @@ class ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName;
+      let searchString="?distribution="+distShortName+"&button=1";
       if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
@@ -1251,7 +1251,7 @@ class ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName+"&random=1";
+      let searchString="?distribution="+distShortName+"&button=1&random=1";
       if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramShowValuesFile+searchString);
     }
@@ -1268,7 +1268,7 @@ class ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName;
+      let searchString="?distribution="+distShortName+"&button=1";
       if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }
@@ -1283,7 +1283,7 @@ class ProbabilityDistribution {
     button.onclick=()=>{
       const params=[];
       for (let key in this._currentParameterValues) params.push(key+"="+this._currentParameterValues[key]);
-      let searchString="?distribution="+distShortName+"&mode=1";
+      let searchString="?distribution="+distShortName+"&button=1&mode=1";
       if (params.length>0) searchString+="&"+params.join("&");
       this._openWindow(language.distributions.infoDiagramSimFile+searchString);
     }

@@ -133,15 +133,15 @@ function start() {
   bottomInfo+="<p class='mt-3'>"+language.GUI.downloadPythonLabel+"</p><p><a id='scipyDownloadButton' class='btn btn-primary my-1 bi-filetype-py' href='info/Distributions.ipynb' download>&nbsp;"+language.GUI.downloadPythonButton+"</a></p>";
   bottomInfoArea.innerHTML=bottomInfo;
   openFitterButton.onclick=()=>{
-    const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
+    const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html?button=1";
     window.open(file,"_blank");
   };
   openLCGButton.onclick=()=>{
-    const file="lcg"+((document.documentElement.lang=='de')?"_de":"")+".html";
+    const file="lcg"+((document.documentElement.lang=='de')?"_de":"")+".html?button=1";
     window.open(file,"_blank");
   };
   openDiceSimulationButton.onclick=()=>{
-    const file="sim"+((document.documentElement.lang=='de')?"_de":"")+".html?dice=1";
+    const file="sim"+((document.documentElement.lang=='de')?"_de":"")+".html?dice=1&button=1";
     window.open(file,"_blank");
   };
 }

@@ -106,7 +106,7 @@ function saveTable() {
 function openFitter() {
   localStorage.setItem('randomNumbers',randomNumbers.map(num=>""+num).join("\n")); /* We do not need locale number; fitter is accepting everything. toLocaleString() is very slow. */
   const file="fitter"+((document.documentElement.lang=='de')?"_de":"")+".html";
-  window.open(file+"?fromPseudoRandomNumbers=1","_blank");
+  window.open(file+"?fromPseudoRandomNumbers=1&button=1","_blank");
 }
 
 /**
@@ -114,7 +114,7 @@ function openFitter() {
  * @returns Array containing: Distribution object, object of distribution parameter values, generate pseudo-random numbers (true) or show pdf/cdf (false), number of pseudo-random numbers to be generated
  */
 async function getDistributionFromSearchString() {
-  const validKeys=["distribution","random","count"];
+  const validKeys=["distribution","random","count","button"];
   getAllDistributionParameterIds().forEach(entry=>validKeys.push(entry));
 
   const data=loadSearchStringParameters(validKeys);
@@ -131,7 +131,7 @@ async function getDistributionFromSearchString() {
   let count=0;
   if (typeof(data.count)!='undefined') count=getPositiveInt(data.count);
   if (count==null || count<100 || count>1_000_000) count=10_000;
-  return [distribution, values, typeof(data.random)!='undefined', count];
+  return [distribution, values, typeof(data.random)!='undefined', count, isDesktopApp || (typeof(data.button)!='undefined' && data.button=="1")];
 }
 
 /**
@@ -306,7 +306,7 @@ function addPermaLink(parent) {
   const permaLink=document.createElement("a");
   permaLinkDiv.appendChild(permaLink);
   permaLink.innerHTML=language.GUI.permaLink;
-  permaLink.href=document.location;
+  permaLink.href=(""+document.location).replace("&button=1","");
 }
 
 /**
@@ -721,9 +721,10 @@ document.addEventListener('readystatechange',event=>{if (event.target.readyState
  * Initializes the complete web app.
  */
 async function initTable() {
-  let distribution, values, rndMode, rndCount;
-  [distribution,values,rndMode,rndCount]=await getDistributionFromSearchString();
+  let distribution, values, rndMode, rndCount, showCloseButon;
+  [distribution,values,rndMode,rndCount,showCloseButon]=await getDistributionFromSearchString();
   if (distribution==null) return;
+  if (!showCloseButon) closeButton.style.display="none";
 
   /* Select color mode */
   let selectedColorMode=localStorage.getItem('selectedColorMode');

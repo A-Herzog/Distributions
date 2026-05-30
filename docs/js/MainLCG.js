@@ -306,11 +306,14 @@ function initLCG() {
 	document.documentElement.dataset.bsTheme=selectedColorMode;
 
   /* Load settings */
-  const params=loadSearchStringParameters(["mul","add","mod","a0"]);
+  const params=loadSearchStringParameters(["mul","add","mod","a0","button"]);
   if (params.mul) inputAN1.value=params.mul;
   if (params.add) inputAN.value=params.add;
   if (params.mod) inputMOD.value=params.mod;
   if (params.a0) inputA0.value=params.a0;
+  if (!isDesktopApp && (typeof(params.button)=='undefined' || params.button!="1")) {
+    closeButton.style.display="none";
+  }
 
 	/* Init app  */
   update();

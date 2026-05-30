@@ -703,11 +703,14 @@ async function initFitter() {
   /* Initializes the GUI language */
   initGUILanguage();
 
-  const params=loadSearchStringParameters(["fromPseudoRandomNumbers"]);
+  const params=loadSearchStringParameters(["fromPseudoRandomNumbers","button"]);
   if (params.fromPseudoRandomNumbers) {
     const data=localStorage.getItem('randomNumbers');
     localStorage.removeItem('randomNumbers');
     if (data!=null) await loadInputValues(data);
+  }
+  if (!isDesktopApp && (typeof(params.button)=='undefined' || params.button!="1")) {
+    closeButton.style.display="none";
   }
 
   /* Input values system */

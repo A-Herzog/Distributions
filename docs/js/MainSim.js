@@ -37,7 +37,7 @@ function addPermaLink(parent) {
   const permaLink=document.createElement("a");
   permaLinkDiv.appendChild(permaLink);
   permaLink.innerHTML=language.GUI.permaLink;
-  permaLink.href=document.location;
+  permaLink.href=(""+document.location).replace("&button=1","");
 }
 
 /**
@@ -834,12 +834,16 @@ async function initSim() {
   let mode=-1;
 
   /* Special modes */
-  const special=loadSearchStringParameters(["dice"]);
+  const special=loadSearchStringParameters(["dice","button"]);
   if (typeof(special.dice)!='undefined') {
     mode=0;
     distribution=await getDistributionByClassName("DiscreteUniformDistribution");
     values={a: 1, b: 6, dice: true};
     distribution.setParmeterExtern(values);
+  }
+
+  if (!isDesktopApp && (typeof(special.button)=='undefined' || special.button!="1")) {
+    closeButton.style.display="none";
   }
 
   /* Distribution depending default modes */
