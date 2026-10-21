@@ -264,6 +264,7 @@ function generateRandomNumber(distribution, values) {
 let chart1, chart2;
 let count=0;
 let sum=0;
+let sum2=0;
 let scaledSum=0;
 let scaledSum2=0;
 let lastMeanValues=[];
@@ -332,6 +333,8 @@ function getPercentTD(value) {
 function doStepLawOfLargeNumbers(distribution, values) {
   const rnd=generateRandomNumber(distribution,values);
   count++;
+  sum+=rnd;
+  sum2+=rnd*rnd;
 
   if (count==1) {
     lastMeanValues.push(rnd);
@@ -365,6 +368,7 @@ function doStepLawOfLargeNumbers(distribution, values) {
   }
 
   const mean=lastMeanValues[lastMeanValues.length-1];
+
   const info=[];
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber+"="+(distribution.discrete?formatNumber(rnd):formatNumber(rnd,5)));
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoSampleValues+"="+count);
@@ -374,7 +378,17 @@ function doStepLawOfLargeNumbers(distribution, values) {
     if (distribution.mean!=0) {
       info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue+"="+formatPercent((mean-distribution.mean)/distribution.mean));
     }
+  } else {
+    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues+"="+formatNumber(mean,5));
   }
+  const EX=(sum/count);
+  const EX2=(sum2/count);
+  const std=Math.sqrt(Math.max(EX2-EX**2,0));
+  info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfTheSampleValues+"="+formatNumber(std,5));
+  if (distribution.variance!=null) {
+    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfDistribution+"="+formatNumber(Math.sqrt(distribution.variance),5));
+  }
+
   if (values.dice) {
     /* Display table */
     info.push("");
@@ -815,6 +829,7 @@ function initCentralLimitTheorem(distribution, values) {
   initCharts(distribution,values,1,chart1data,chart1options,chart2data,chart2options,()=>{
     count=0;
     sum=0;
+    sum2=0;
     scaledSum=0;
     scaledSum2=0;
     histogram=histogram.map(v=>0);
