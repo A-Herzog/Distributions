@@ -86,7 +86,7 @@ function start() {
           selectDistribution(distribution,distributionArea);
           setPermaLinkLoadingDone();
           distribution.updatePermaLink();
-        },0);
+        },100);
       }
     });
   } else {
@@ -97,7 +97,7 @@ function start() {
         selectDistribution(dist,distributionArea);
         setPermaLinkLoadingDone();
         dist.updatePermaLink();
-      },0);
+      },100);
     });
     useLoader=true;
   }
