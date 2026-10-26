@@ -21,6 +21,7 @@ import {getDistributionByClassName, getAllDistributionParameterIds} from "./Dist
 import {isDesktopApp} from "./AppTools.js";
 import {getFloat, getInt, getPositiveInt, formatNumber, formatPercent} from "./NumberTools.js";
 import {loadSearchStringParameters} from "./StringTools.js";
+import {meanConfidenceInterval} from './MathTools.js';
 
 let tableData="";
 
@@ -368,22 +369,29 @@ function doStepLawOfLargeNumbers(distribution, values) {
   }
 
   const mean=lastMeanValues[lastMeanValues.length-1];
+  const EX=(sum/count);
+  const EX2=(sum2/count);
+  const std=Math.sqrt(Math.max(EX2-EX**2,0));
 
   const info=[];
+
+  /* Mean */
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoNewestRandomNumber+"="+(distribution.discrete?formatNumber(rnd):formatNumber(rnd,5)));
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoSampleValues+"="+count);
   if (distribution.mean!=null) {
     info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoExpectedValueOfDistribution+"="+formatNumber(distribution.mean));
-    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues+"="+formatNumber(mean,5));
-    if (distribution.mean!=0) {
-      info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue+"="+formatPercent((mean-distribution.mean)/distribution.mean));
-    }
-  } else {
-    info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues+"="+formatNumber(mean,5));
   }
-  const EX=(sum/count);
-  const EX2=(sum2/count);
-  const std=Math.sqrt(Math.max(EX2-EX**2,0));
+  let ciInfo="";
+  if (count>=2) {
+    const ci=meanConfidenceInterval(count,mean,std,0.95)
+    ciInfo=" <small>(95% "+language.distributions.infoDiagramLawOfLargeNumbersInfoConfidenceInterval+": ["+formatNumber(ci.lower,5)+";"+formatNumber(ci.upper,5)+"])</small>";
+  }
+  info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValues+"="+formatNumber(mean,5)+ciInfo);
+  if (distribution.mean!=null && distribution.mean!=0) {
+      info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue+"="+formatPercent((mean-distribution.mean)/distribution.mean));
+  }
+
+  /* Standard deviation */
   info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfTheSampleValues+"="+formatNumber(std,5));
   if (distribution.variance!=null) {
     info.push(language.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfDistribution+"="+formatNumber(Math.sqrt(distribution.variance),5));

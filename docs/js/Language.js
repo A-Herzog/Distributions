@@ -156,6 +156,7 @@ lang.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValu
 lang.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue="Relative Abweichung Mittelwert zu Erwartungswert";
 lang.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfTheSampleValues="Standardabweichung der Stichprobenwerte"
 lang.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfDistribution="Standardabweichung der Wahrscheinlichkeitsverteilung"
+lang.distributions.infoDiagramLawOfLargeNumbersInfoConfidenceInterval="Konfidenzintervall";
 lang.distributions.infoDiagramLawOfLargeNumbersInfoSum="Summe";
 lang.distributions.infoDiagramCentralLimitTheorem="Zentraler Grenzwertsatz";
 lang.distributions.infoDiagramCentralLimitTheoremWikipedia="https://de.wikipedia.org/wiki/Zentraler_Grenzwertsatz";
@@ -866,6 +867,7 @@ lang.distributions.infoDiagramLawOfLargeNumbersInfoArithmeticMeanOfTheSampleValu
 lang.distributions.infoDiagramLawOfLargeNumbersInfoRelativeDeviationMeanExpectedValue="Relative deviation of mean value from expected value";
 lang.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfTheSampleValues="Standard deviation of the sample values"
 lang.distributions.infoDiagramLawOfLargeNumbersInfoStandardDeviationOfDistribution="Standard deviation of the distribution"
+lang.distributions.infoDiagramLawOfLargeNumbersInfoConfidenceInterval="confidence interval";
 lang.distributions.infoDiagramLawOfLargeNumbersInfoSum="Sum";
 lang.distributions.infoDiagramCentralLimitTheorem="Central limit theorem";
 lang.distributions.infoDiagramCentralLimitTheoremWikipedia="https://en.wikipedia.org/wiki/Central_limit_theorem";
