@@ -583,6 +583,11 @@ class ProbabilityDistribution {
    * Updates the permalink outside the distribution panel area
    */
   updatePermaLink() {
+    if (!permaLinkLoadingDone) {
+      setTimeout(()=>this.updatePermaLink(),200);
+      return;
+    }
+
     if (typeof(PermaLink)=='undefined') return;
     let distShortName=this.constructor.name;
     distShortName=distShortName.substring(0,distShortName.length-"Distribution".length);
@@ -595,7 +600,7 @@ class ProbabilityDistribution {
     menuColorModeDark.href=url;
     menuColorModeSystemDefault.href=url;
 
-    if (window.history && window.history.replaceState && permaLinkLoadingDone) {
+    if (window.history && window.history.replaceState) {
       if (window.history.state==null || window.history.state.link!=url) {
         window.history.pushState({link: url}, '', url);
       }
